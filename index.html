@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Exam prep for NPTEL Cloud Computing (IIT Kharagpur, Prof. Soumya Kanti Ghosh): week notes, formula sheet, most repeated assignment questions, 361 practice questions and timed mock papers.">
 <meta name="color-scheme" content="light dark">
-<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<meta name="theme-color" content="#f2f5f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e161b" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%230b6a87%27/%3E%3Cpath d=%27M10 22h12a4.5 4.5 0 0 0 .6-9 6 6 0 0 0-11.5 1.6A3.8 3.8 0 0 0 10 22z%27 fill=%27%23fff%27/%3E%3C/svg%3E">
+<style>[hidden]{display:none!important}img{max-width:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}</style>
 <title>NPTEL Cloud Computing Prep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -104,6 +107,7 @@ th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:
 .week .body{display:grid;gap:14px;min-width:0}
 .notes{margin:0;padding-left:1.15em;display:grid;gap:7px;max-width:80ch}
 .notes li::marker{color:var(--muted)}
+.notes > li,.week .body > *{min-width:0}
 .vids{display:flex;flex-wrap:wrap;gap:6px}
 .vids a{font-family:var(--mono);font-size:.76rem;text-decoration:none;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink)}
 .vids a:hover{border-color:var(--accent);color:var(--accent)}
@@ -218,13 +222,64 @@ html{scroll-behavior:smooth}
 /* theme toggle: fixed in the top-right corner, aligned with the content column; the tab strip reserves room for it */
 .themebtn{position:fixed;z-index:30;top:calc(env(safe-area-inset-top,0px) + 10px);right:max(16px, calc((100vw - 72rem) / 2 + clamp(16px,4vw,40px)));display:inline-flex;align-items:center;gap:6px;font:inherit;font-family:var(--mono);font-size:.82rem;line-height:1.6;cursor:pointer;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.12)}
 .themebtn svg{width:15px;height:15px;flex:none}
-.themebtn:hover{background:var(--accent);color:var(--on-accent)}
+@media (hover:hover){
+  .themebtn:hover{background:var(--accent);color:var(--on-accent)}
+}
 .top .eyebrow{padding-right:150px}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+code{overflow-wrap:anywhere}
+.exambar{top:calc(env(safe-area-inset-top,0px) + var(--navh,54px))}
+section,.week{scroll-margin-top:calc(var(--navh,54px) + 10px)}
+.totop{position:fixed;z-index:30;right:max(16px, env(safe-area-inset-right,0px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);width:46px;height:46px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.18);display:none;align-items:center;justify-content:center}
+.totop svg{width:20px;height:20px}
+.totop.show{display:inline-flex}
+.btn:active,.chip:active,.opt:active,.pal:active,.tabs a:active{transform:scale(.98)}
+
+/* phones */
 @media (max-width:640px){
-  .themebtn{padding:7px 10px}
+  .themebtn{width:42px;height:42px;padding:0;justify-content:center;top:calc(env(safe-area-inset-top,0px) + 9px)}
   .themebtn span{display:none}
-  .tablist{margin-right:52px}
-  .top .eyebrow{padding-right:52px}
+  .themebtn svg{width:18px;height:18px}
+  .tablist{margin-right:56px}
+  .tabs a{padding:9px 13px}
+  .top .eyebrow{padding-right:56px}
+  .top .wrap{padding-block:26px 22px;gap:14px}
+  section > .wrap{gap:18px;padding-block:32px}
+  h2{font-size:1.55rem}
+  .lede{font-size:1rem}
+  .ticket{grid-template-columns:1fr 1fr}
+  .ticket div{border-right:0;border-bottom:1px dashed var(--line);padding:10px 12px}
+  .ticket div:nth-child(odd){border-right:1px dashed var(--line)}
+  .ticket div:nth-last-child(-n+2){border-bottom:0}
+  .ticket dd{font-size:.92rem}
+  .weeknav a,.vids a{padding:8px 11px}
+  .weeknav,.vids{gap:8px}
+  .week{padding-block:24px}
+  pre.f{font-size:.78rem}
+  .fcard,.day{padding:16px}
+  .toolbar{padding:12px}
+  .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-12px;padding-inline:12px;padding-bottom:2px}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none}
+  .chip,.btn{min-height:42px;padding:9px 14px}
+  .actions{gap:10px}
+  .q{padding:14px;gap:10px}
+  .opt{padding:12px;min-height:48px}
+  .why{font-size:.92rem}
+  .exambar{padding:8px 10px;gap:6px 10px;border-radius:0;margin-inline:-16px;border-inline:0}
+  .exambar .name{display:none}
+  .exambar .navbtns{width:auto}
+  .timer{font-size:1.15rem}
+  .exambar .who{font-size:.76rem}
+  .palette{grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:6px}
+  .pal{height:42px}
+  .navbtns .btn{flex:1 1 auto}
+  .navbtns div{flex:1 1 100%}
+  .tile{padding:12px 14px}
+  .tile .v{font-size:1.55rem}
+  .papers .startrow .btn{flex:1 1 auto}
+  .rep-item,.repgroup h3{padding-top:12px}
 }
 </style>
 <script>
@@ -233,6 +288,7 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
 </head>
 <body>
 <button class="themebtn" id="theme" type="button" aria-label="Switch color theme"></button>
+<button class="totop" id="totop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 
 <header class="top">
   <div class="wrap">
@@ -1739,7 +1795,7 @@ function score(ex) {
 
 function startExam(id, mode) {
   exam = { id, mode, ids: buildPaper(id), ans: {}, flag: {}, lock: {}, rev: {}, cur: 0, start: Date.now(), dur: 3 * 3600, done: false };
-  saveJSON(EXAM_KEY, exam); renderMock(); document.getElementById("mock").scrollIntoView();
+  saveJSON(EXAM_KEY, exam); renderMock(); focusQuestion();
 }
 function submitExam() {
   if (!exam || exam.done) return;
@@ -1751,6 +1807,18 @@ function submitExam() {
   saveJSON(EXAM_KEY, exam); reviewAll = false; renderMock(); document.getElementById("mock").scrollIntoView();
 }
 function persist() { saveJSON(EXAM_KEY, exam); renderMock(); }
+// After moving to another question, bring its card into view below the sticky bars (matters on phones).
+function focusQuestion() {
+  const go = () => {
+    const c = document.querySelector("#mockroot .q"); if (!c) return;
+    const bar = document.querySelector(".exambar");
+    const off = (document.querySelector(".tabs") || { offsetHeight: 0 }).offsetHeight + (bar ? bar.offsetHeight : 0) + 12;
+    const top = c.getBoundingClientRect().top;
+    if (top < off || top > window.innerHeight * 0.5) window.scrollTo({ top: Math.max(0, window.scrollY + top - off), behavior: "instant" });
+  };
+  go();
+  requestAnimationFrame(go); // once more after the sticky bar settles into place
+}
 
 function renderMock() {
   const root = document.getElementById("mockroot");
@@ -1790,7 +1858,7 @@ function renderExam() {
   const N = exam.ids.length;
   const box = el("div", "result");
   const bar = el("div", "exambar");
-  const who = el("span", "who", paperName(exam.id) + " · " + MODES[exam.mode]);
+  const who = el("span", "who name", paperName(exam.id) + " · " + MODES[exam.mode]);
   const timer = el("span", "timer"); timer.id = "timer"; timer.textContent = fmt(remaining());
   let progText;
   if (learn) {
@@ -1801,13 +1869,9 @@ function renderExam() {
     progText = Object.keys(exam.ans).filter(k => exam.ans[k].length).length + "/" + N + " answered";
   }
   const prog = el("span", "who", progText);
-  const right = el("div", "navbtns");
-  const quit = el("button", "btn", "Quit paper"); quit.type = "button";
-  armButton(quit, "Quit paper", "Tap again to discard", () => { exam = null; saveJSON(EXAM_KEY, null); renderMock(); });
   const sub = el("button", "btn primary", "Finish & see score"); sub.type = "button";
   armButton(sub, "Finish & see score", "Tap again to finish", submitExam);
-  const rd = el("div"); rd.append(quit, sub); right.appendChild(rd);
-  bar.append(who, timer, prog, right);
+  bar.append(who, timer, prog, sub);
 
   const grid = el("div", "exam-grid");
   const pos = exam.cur, qi = exam.ids[pos];
@@ -1864,7 +1928,7 @@ function renderExam() {
   const nav = el("div", "navbtns");
   const left = el("div"), rgt = el("div");
   const prev = el("button", "btn", "← Previous"); prev.type = "button"; prev.disabled = pos === 0;
-  prev.addEventListener("click", () => { exam.cur--; persist(); });
+  prev.addEventListener("click", () => { exam.cur--; persist(); focusQuestion(); });
   const flag = el("button", "btn", exam.flag[pos] ? "Unmark" : "Mark for review"); flag.type = "button";
   flag.addEventListener("click", () => { exam.flag[pos] = !exam.flag[pos]; persist(); });
   left.append(prev, flag);
@@ -1874,7 +1938,7 @@ function renderExam() {
     left.appendChild(clr);
   }
   const next = el("button", "btn primary", "Next →"); next.type = "button"; next.disabled = pos === N - 1;
-  next.addEventListener("click", () => { exam.cur++; persist(); });
+  next.addEventListener("click", () => { exam.cur++; persist(); focusQuestion(); });
   rgt.append(next); nav.append(left, rgt);
   card.appendChild(nav);
 
@@ -1887,13 +1951,15 @@ function renderExam() {
     else if ((exam.ans[i] || []).length) b.classList.add("ans");
     if (exam.flag[i]) b.classList.add("flag");
     if (i === pos) { b.classList.add("cur"); b.setAttribute("aria-current", "true"); }
-    b.addEventListener("click", () => { exam.cur = i; persist(); });
+    b.addEventListener("click", () => { exam.cur = i; persist(); focusQuestion(); });
     pal.appendChild(b);
   });
   const lg = el("p", "legend");
   const items = learn ? ["Green = right", "Red = wrong", "Amber = revealed", "Blue = picked, not checked", "Outline = current"] : ["Blue = answered", "Amber underline = marked", "Outline = current"];
   items.forEach(t => lg.appendChild(el("span", null, t)));
-  side.append(pal, lg);
+  const quit = el("button", "btn", "Quit paper"); quit.type = "button";
+  armButton(quit, "Quit paper", "Tap again to discard", () => { exam = null; saveJSON(EXAM_KEY, null); renderMock(); });
+  side.append(pal, lg, quit);
   grid.append(card, side);
   box.append(bar, grid);
   return box;
@@ -1959,6 +2025,19 @@ function renderResult() {
   box.append(tiles, verdict, wk, acts, list);
   return box;
 }
+
+/* ---------- Phone helpers ---------- */
+(function phoneHelpers() {
+  const nav = document.querySelector(".tabs");
+  const setNavH = () => document.documentElement.style.setProperty("--navh", nav.offsetHeight + "px");
+  setNavH();
+  window.addEventListener("resize", setNavH);
+  const up = document.getElementById("totop");
+  const onScroll = () => up.classList.toggle("show", window.scrollY > 900 && !(exam && !exam.done));
+  window.addEventListener("scroll", onScroll, { passive: true });
+  up.addEventListener("click", () => window.scrollTo({ top: 0 }));
+  onScroll();
+})();
 
 setInterval(() => {
   if (!exam || exam.done) return;
