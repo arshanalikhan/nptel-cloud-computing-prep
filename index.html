@@ -1,0 +1,1845 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Exam prep for NPTEL Cloud Computing (IIT Kharagpur, Prof. Soumya Kanti Ghosh): week notes, formula sheet, most repeated assignment questions, 361 practice questions and timed mock papers.">
+<meta name="color-scheme" content="light dark">
+<style>[hidden]{display:none!important}img{max-width:100%}</style>
+<title>NPTEL Cloud Computing Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: one reading column (max 72rem) under a hall-ticket header, sticky section tabs, week sheets with a left label rail, practice as a card list */
+:root{
+  --bg:#f2f5f6; --surface:#ffffff; --ink:#132029; --muted:#51626c; --line:#d5dee2;
+  --accent:#0b6a87; --accent-soft:#e1eff4; --on-accent:#ffffff;
+  --hi:#8f5400; --hi-soft:#fbefd9;
+  --ok:#17703f; --ok-soft:#e1f2e8; --bad:#b3261e; --bad-soft:#fbe6e4;
+  --display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e161b; --surface:#15212a; --ink:#e2eaee; --muted:#95a8b3; --line:#263641;
+    --accent:#5cbcda; --accent-soft:#12313d; --on-accent:#07202a;
+    --hi:#e6ad4d; --hi-soft:#30250f;
+    --ok:#52c98f; --ok-soft:#0f2b1f; --bad:#f27a6f; --bad-soft:#371917;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e161b; --surface:#15212a; --ink:#e2eaee; --muted:#95a8b3; --line:#263641;
+  --accent:#5cbcda; --accent-soft:#12313d; --on-accent:#07202a;
+  --hi:#e6ad4d; --hi-soft:#30250f;
+  --ok:#52c98f; --ok-soft:#0f2b1f; --bad:#f27a6f; --bad-soft:#371917;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+a{color:var(--accent);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:72rem;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:clamp(2.1rem,5.4vw,3.4rem);font-weight:700;line-height:1.02;letter-spacing:-.01em}
+h2{font-size:clamp(1.6rem,3.2vw,2.1rem);font-weight:700;line-height:1.1}
+h3{font-size:1.3rem;font-weight:600;line-height:1.2}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+code,.mono{font-family:var(--mono);font-size:.9em}
+p{margin:0}
+
+/* header */
+.top{background:var(--surface);border-bottom:1px solid var(--line)}
+.top .wrap{display:grid;gap:18px;padding-block:36px 28px}
+.lede{max-width:62ch;color:var(--muted);font-size:1.05rem}
+.ticket{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));border:1px dashed var(--line);border-radius:10px;background:var(--bg)}
+.ticket div{padding:12px 16px;border-right:1px dashed var(--line);min-width:0}
+.ticket div:last-child{border-right:0}
+.ticket dt{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.ticket dd{margin:2px 0 0;font-weight:600;font-variant-numeric:tabular-nums}
+.ticket dd small{display:block;font-weight:400;color:var(--muted);font-size:.82rem}
+#countdown{color:var(--accent)}
+
+/* tabs */
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.tabs a{flex:none;font-family:var(--mono);font-size:.82rem;text-decoration:none;color:var(--ink);padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.tabs a:hover{border-color:var(--accent);color:var(--accent)}
+
+/* sections */
+section{scroll-margin-top:64px;border-bottom:1px solid var(--line)}
+section > .wrap{display:grid;gap:22px;padding-block:44px}
+.sec-head{display:grid;gap:6px}
+.sec-head p{max-width:68ch;color:var(--muted)}
+.tag{display:inline-block;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--hi-soft);color:var(--hi);padding:1px 6px;border-radius:4px;margin-right:6px;vertical-align:2px}
+
+/* plan */
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:10px;align-content:start}
+.day .when{font-family:var(--mono);font-size:.78rem;color:var(--accent);letter-spacing:.04em}
+.day ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+.callout{background:var(--accent-soft);border-radius:10px;padding:16px 18px;max-width:80ch}
+
+/* formulas */
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:14px}
+.fcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:10px;align-content:start;min-width:0}
+.fcard p,.fcard li{font-size:.95rem}
+.fcard ul{margin:0;padding-left:1.1em;display:grid;gap:4px}
+pre.f{margin:0;font-family:var(--mono);font-size:.84rem;line-height:1.55;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow-x:auto;white-space:pre}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+/* notes */
+.weeknav{display:flex;flex-wrap:wrap;gap:6px}
+.weeknav a{font-family:var(--mono);font-size:.8rem;text-decoration:none;padding:4px 10px;border:1px solid var(--line);border-radius:6px;color:var(--ink);background:var(--surface)}
+.week{display:grid;grid-template-columns:150px minmax(0,1fr);gap:28px;padding-block:30px;border-top:1px solid var(--line);scroll-margin-top:64px}
+.week .rail{display:grid;gap:4px;align-content:start}
+.week .num{font-family:var(--mono);font-size:2.4rem;font-weight:600;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.week .lecs{font-family:var(--mono);font-size:.78rem;color:var(--muted)}
+.week .body{display:grid;gap:14px;min-width:0}
+.notes{margin:0;padding-left:1.15em;display:grid;gap:7px;max-width:80ch}
+.notes li::marker{color:var(--muted)}
+.vids{display:flex;flex-wrap:wrap;gap:6px}
+.vids a{font-family:var(--mono);font-size:.76rem;text-decoration:none;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink)}
+.vids a:hover{border-color:var(--accent);color:var(--accent)}
+.vids a b{color:var(--accent);font-weight:600}
+@media (max-width:640px){.week{grid-template-columns:1fr;gap:12px}.week .rail{grid-auto-flow:column;justify-content:start;align-items:baseline;gap:12px}.week .num{font-size:1.8rem}}
+
+/* practice */
+.toolbar{display:grid;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip,.btn{font:inherit;font-family:var(--mono);font-size:.8rem;cursor:pointer;border:1px solid var(--line);border-radius:999px;padding:5px 11px;background:var(--bg);color:var(--ink)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.chip small{opacity:.75}
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.actions .left{display:flex;flex-wrap:wrap;gap:8px}
+.btn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent);border-radius:8px}
+.btn.primary:disabled{opacity:.45;cursor:default}
+.score{font-family:var(--mono);font-size:.84rem;font-variant-numeric:tabular-nums;color:var(--muted)}
+.score b{color:var(--ink)}
+.qlist{display:grid;gap:12px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:12px;min-width:0}
+.q-meta{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px}
+.q-meta .k{color:var(--hi)}
+.q-meta .mine{color:var(--accent);font-weight:600}
+.tag.y{background:var(--accent-soft);color:var(--accent)}
+.notes li.new{list-style:none;margin-left:-1.15em;background:var(--accent-soft);border-radius:8px;padding:10px 12px}
+.q-text{font-weight:500;max-width:80ch}
+.opts{display:grid;gap:7px}
+.opt{font:inherit;text-align:left;display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;align-items:start;cursor:pointer;width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--bg);color:var(--ink)}
+.opt .key{font-family:var(--mono);font-size:.8rem;color:var(--muted);padding-top:2px}
+.opt[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.opt.correct{border-color:var(--ok);background:var(--ok-soft)}
+.opt.correct .key{color:var(--ok);font-weight:600}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .key{color:var(--bad);font-weight:600}
+.opt:disabled{cursor:default;color:var(--ink)}
+.q-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.verdict{font-family:var(--mono);font-size:.8rem;font-weight:600}
+.verdict.ok{color:var(--ok)}.verdict.no{color:var(--bad)}
+.why{font-size:.94rem;color:var(--ink);background:var(--bg);border-radius:8px;padding:10px 12px;max-width:80ch}
+.why b{font-family:var(--mono);font-size:.78rem;letter-spacing:.04em;color:var(--muted);font-weight:500;margin-right:6px}
+
+/* most repeated */
+.repgroup{display:grid;gap:4px}
+.repgroup h3{font-size:1.05rem;font-family:var(--mono);font-weight:600;letter-spacing:.02em;color:var(--accent);padding-top:18px}
+.rep{list-style:none;margin:0;padding:0}
+.rep-item{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.rk{font-family:var(--mono);font-weight:600;color:var(--muted);padding-top:1px;font-variant-numeric:tabular-nums}
+.rb{display:grid;gap:6px;min-width:0;max-width:86ch}
+.rq{font-weight:600}
+.rm{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.strip{display:inline-flex;flex-wrap:wrap;gap:3px}
+.strip span{padding:1px 6px;border-radius:4px;border:1px solid var(--line);color:var(--muted)}
+.strip span.on{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.xr{font-family:var(--mono);font-size:.7rem;font-weight:600;color:var(--hi);background:var(--hi-soft);padding:1px 6px;border-radius:4px}
+.rep-item .show{display:none;justify-self:start}
+.covered .rep-item .ra{display:none}
+.covered .rep-item .show{display:inline-block}
+.covered .rep-item.open .ra{display:block}
+.covered .rep-item.open .show{display:none}
+
+/* mock exams */
+.papers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+.paper{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:grid;gap:8px;align-content:start}
+.paper .src{color:var(--muted);font-size:.93rem}
+.paper .best{font-family:var(--mono);font-size:.78rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.paper .best b{color:var(--ink)}
+.paper .btn{justify-self:start}
+.exambar{position:sticky;top:calc(env(safe-area-inset-top,0px) + 54px);z-index:15;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.exambar .who{font-family:var(--mono);font-size:.8rem;color:var(--muted)}
+.timer{font-family:var(--mono);font-size:1.35rem;font-weight:600;font-variant-numeric:tabular-nums}
+.timer.low{color:var(--bad)}
+.exam-grid{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:14px;align-items:start}
+@media (max-width:820px){.exam-grid{grid-template-columns:1fr}}
+.side{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
+.palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:5px}
+.pal{font:inherit;font-family:var(--mono);font-size:.78rem;height:34px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer;font-variant-numeric:tabular-nums}
+.pal.ans{background:var(--accent-soft);border-color:var(--accent)}
+.pal.flag{box-shadow:inset 0 -3px 0 var(--hi)}
+.pal.cur{outline:2px solid var(--ink);outline-offset:1px}
+.legend{font-family:var(--mono);font-size:.7rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px}
+.navbtns{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
+.navbtns div{display:flex;flex-wrap:wrap;gap:8px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:2px}
+.tile .v{font-family:var(--display);font-size:2rem;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .l{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.pill{display:inline-block;font-family:var(--mono);font-size:.8rem;font-weight:600;padding:2px 10px;border-radius:999px}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.no{background:var(--bad-soft);color:var(--bad)}
+.result{display:grid;gap:18px}
+
+/* traps */
+.traps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:0 28px;margin:0;padding:0;list-style:none}
+.traps li{padding:9px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.traps li b{font-weight:600}
+
+/* sources */
+.src{display:grid;gap:10px;margin:0;padding:0;list-style:none;max-width:85ch}
+.src li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:4px}
+.src li span{color:var(--muted);font-size:.93rem}
+footer .wrap{padding-block:28px;color:var(--muted);font-size:.86rem}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important}}
+html{scroll-behavior:smooth}
+.tabs .themebtn{flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:6px;font:inherit;font-family:var(--mono);font-size:.82rem;cursor:pointer;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.tabs .themebtn svg{width:15px;height:15px}
+</style>
+<script>
+try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); } catch (e) {}
+</script>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">noc26_cs150 · IIT Kharagpur · Prof. Soumya Kanti Ghosh · Jul–Oct 2026</p>
+    <h1>Cloud Computing exam prep</h1>
+    <p class="lede">Notes, a formula sheet and 361 practice questions: all 120 from your own Jul–Oct 2026 assignments with NPTEL's official answers, plus 241 built from the 2019, 2023, 2024–25 and Jan–Apr 2026 runs. Facts were checked against the official lecture transcripts.</p>
+    <dl class="ticket">
+      <div><dt>Exam</dt><dd>Sun 18 Oct 2026 <small id="countdown">3 days to go</small></dd></div>
+      <div><dt>Sessions</dt><dd>9:00–12:00 or 14:00–17:00 <small>Your slot is on the hall ticket</small></dd></div>
+      <div><dt>Score</dt><dd>25% assignments + 75% exam <small>Best 8 of 12 assignments count</small></dd></div>
+      <div><dt>To pass</dt><dd>Exam ≥ 30/75 <small>That is ≥ 40/100 raw, plus assignments ≥ 10/25</small></dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Sections">
+  <div class="wrap">
+    <a href="#plan">3-day plan</a>
+    <a href="#formulas">Numericals</a>
+    <a href="#notes">Week notes</a>
+    <a href="#repeated">Most repeated</a>
+    <a href="#practice">Practice (PYQ style)</a>
+    <a href="#mock">Mock exams</a>
+    <a href="#traps">Last-minute traps</a>
+    <a href="#videos">Videos</a>
+    <a href="#sources">Sources</a>
+    <button class="themebtn" id="theme" type="button" aria-label="Switch color theme"></button>
+  </div>
+</nav>
+
+<main>
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Start here</p>
+      <h2>Three days to the exam</h2>
+      <p>NPTEL does not release past proctored exam papers. The exam uses the same MCQ / multi-select / numerical style as the weekly assignments, and the same concepts come back run after run. So the past assignments are your PYQs. This plan cycles every week through notes, then practice.</p>
+    </div>
+    <p class="callout"><b>What your own assignments show.</b> This run's questions are mostly scenarios ("a team does X, which is MOST appropriate?") rather than definitions. At least 11 of your 120 repeat a Jan–Apr 2026 question almost word for word, and many more test the same idea. A few go past the lectures (Azure Availability Zones, etcd, kube-scheduler, App Engine traffic splits). Do the "My 2026 assignments" set first, then "Older runs".</p>
+    <div class="days">
+      <div class="day">
+        <p class="when">Thu 15 Oct · Day 1</p>
+        <h3>Weeks 0–4</h3>
+        <ul>
+          <li>Read the notes for weeks 1–4, including the blue "Your 2026" boxes</li>
+          <li>Learn the SLA, cloud-economics and OpenStack formulas</li>
+          <li>Practice "My 2026 assignments" weeks 1–4, then W0–W4 from older runs; redo every miss</li>
+          <li>If time: watch L11 SLA and L12 Economics</li>
+        </ul>
+      </div>
+      <div class="day">
+        <p class="when">Fri 16 Oct · Day 2</p>
+        <h3>Weeks 5–8</h3>
+        <ul>
+          <li>Watch L21–L23 (the SLA, economics and MapReduce tutorials)</li>
+          <li>Do every numerical in the practice bank</li>
+          <li>Learn the week 6 security mapping table by heart</li>
+          <li>Go through "Most repeated" with answers hidden</li>
+          <li>Practice W5–W8 (your assignments first)</li>
+        </ul>
+      </div>
+      <div class="day">
+        <p class="when">Sat 17 Oct · Day 3</p>
+        <h3>Weeks 9–12 + mock</h3>
+        <ul>
+          <li>Notes for weeks 9–12 (federation, migration, serverless, dew, 5G)</li>
+          <li>Practice W9–W12 (your assignments first)</li>
+          <li>Afternoon: sit mock Paper 1 (your run) on the 3-hour timer</li>
+          <li>Evening: review your mistakes, then sit Paper 2 if you have time</li>
+          <li>Read the traps list, then sleep</li>
+        </ul>
+      </div>
+      <div class="day">
+        <p class="when">Sun 18 Oct · Exam day</p>
+        <h3>Light review only</h3>
+        <ul>
+          <li>Traps list + formula sheet, nothing new</li>
+          <li>Hall ticket + original photo ID</li>
+          <li>For "select all" questions, judge each option on its own</li>
+          <li>Do the numericals with the formula, not by eye</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="formulas">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Formula sheet</p>
+      <h2>Numericals that keep coming back</h2>
+      <p>Every run has had SLA availability, cloud vs owning cost, MapReduce/HDFS and VM migration problems. Each worked example below follows the method in NPTEL's own solutions.</p>
+    </div>
+    <div class="fgrid">
+      <div class="fcard">
+        <h3>SLA availability</h3>
+<pre class="f">scheduled = hours/day × days
+NPTEL key: availability = 1 − down / (scheduled − down)
+simple   : availability = 1 − down / scheduled
+SLA met if availability ≥ promised %</pre>
+        <p><span class="tag">PYQ</span>18 h/day × 30 days = 540 h, outages 6 + T, promise 98%: (6+T)/(534−T) ≤ 0.02 → T ≤ 4.59, so T = 5 or 6 breaks the SLA.</p>
+        <p>Failed requests allowed = requests × (1 − success%). 10,000 × 0.5% = 50.</p>
+        <p>Lecture 11 defines availability as 1 − downtime/uptime, which is the NPTEL form. Both formulas usually give the same option; if the options are close, use the NPTEL form.</p>
+        <p><span class="tag y">Your 2026</span>99% of 12 h × 30 days = 3.6 h. 99.9% of 720 h = 0.72 h ≈ 43 min.</p>
+      </div>
+      <div class="fcard">
+        <h3>Cloud vs owning (Cloudonomics)</h3>
+<pre class="f">U   = C / B         (utility premium)
+P   = peak demand,  A = average demand
+own : B_T = P × B × T
+cloud: C_T = U × B × A × T = ∫ C·D(t) dt
+cloud cheaper  ⇔  U &lt; P / A</pre>
+        <p><span class="tag">PYQ</span>P = 200, D(t) = 8t, B = 120, C = 150: own = 24,000T, cloud = ∫150·8t dt = 600T². Cloud cheaper when T &lt; 40.</p>
+        <p>Hybrid is often best, and the key factor is the peak-to-average ratio. Utility pricing suits variable demand.</p>
+        <p><span class="tag y">Your 2026</span>Average 75, peak 225, U = 2.8: P/A = 3 &gt; 2.8, so cloud is cheaper.</p>
+      </div>
+      <div class="fcard">
+        <h3>Demand, Cv and penalty</h3>
+<pre class="f">Cv = σ / |μ|
+n independent demands → Cv shrinks by 1/√n
+penalty ∝ ∫ |D(t) − R(t)| dt</pre>
+        <ul>
+          <li>Flat demand: penalty 0, periodic provisioning works</li>
+          <li>Linear demand: fixed-interval provisioning gives a constant penalty</li>
+          <li>Exponential demand: fixed interval falls behind exponentially, so the penalty is exponential (not linear)</li>
+        </ul>
+      </div>
+      <div class="fcard">
+        <h3>MapReduce and HDFS</h3>
+<pre class="f">blocks(file) = ceil(size / block size)
+small files still take 1 block each
+replicas     = blocks × replication (default 3)
+mappers      ≈ number of input splits</pre>
+        <p><span class="tag">PYQ</span>A 2019 question says 6 files make "24 blocks" with 64 MB blocks. It only works as 8 blocks × 3 replicas, so X ≤ 64 MB and Y ≤ 64 MB both fit.</p>
+        <p>Rating-count problems: map emits (key, 1) only for rows that match, reduce sums per key. Keys with zero matches don't appear.</p>
+        <p><span class="tag y">Your 2026</span>700 MB with 128 MB blocks → 6 blocks → 6 map tasks. The Partitioner picks each key's reducer; the Combiner is optional and may run 0, 1 or many times.</p>
+      </div>
+      <div class="fcard">
+        <h3>VM migration time</h3>
+<pre class="f">non-live: total time = downtime = M / B
+use binary units: 1 GB = 2^30 B, 1 MB = 2^20 B
+1024 GB / 16 MB/s = 65,536 s ≈ 18.2 h
+  64 GB /  8 MB/s =  8,192 s ≈ 2.3 h</pre>
+        <p><span class="tag">PYQ</span>The answer keys mark "18 h, 18 h" and "2 h, 2 h": pick the option where both numbers are equal and closest to M / B.</p>
+        <p>Live migration (pre-copy, post-copy) keeps downtime small. Pre-copy uses the most bandwidth.</p>
+        <p><span class="tag y">Your 2026</span>32 GB at 16 MB/s = 32 × 1024 ÷ 16 = 2,048 s ≈ 34 min.</p>
+      </div>
+      <div class="fcard">
+        <h3>Small but frequent</h3>
+<pre class="f">OpenStack vCPUs = physical × overcommit
+  900 × 4.5 = 4,050;  640 × 5 = 3,200
+  (default CPU 16:1, RAM 1.5:1)
+PUE  = total facility power / IT power  (ideal 1.0)
+cache: address bits = tag + index + offset
+  set-assoc: tag = addr − log2(cache / ways)</pre>
+        <p>Ports: 0–1023 well-known, 1024–49151 registered, 49152–65535 dynamic. IPv4 classes: A 1–126, B 128–191, C 192–223, D 224–239.</p>
+      </div>
+    </div>
+    <div class="tbl">
+      <table>
+        <caption class="eyebrow" style="text-align:left;padding-bottom:6px">Downtime budget per 30-day month (720 h)</caption>
+        <thead><tr><th>Availability</th><th>99%</th><th>99.5%</th><th>99.9%</th><th>99.95%</th><th>99.99%</th></tr></thead>
+        <tbody><tr><td>Allowed downtime</td><td>7.2 h</td><td>3.6 h</td><td>43.2 min</td><td>21.6 min</td><td>4.32 min</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="notes">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Week notes</p>
+      <h2>What each week tests</h2>
+      <p>Points marked <span class="tag">PYQ</span> have appeared as assignment questions in at least one past run. The blue <span class="tag y">Your 2026</span> box at the end of each week sums up what your own Jul–Oct 2026 assignment asked. Video links open the official lecture on YouTube.</p>
+    </div>
+    <nav class="weeknav" aria-label="Weeks">
+      <a href="#w1">W1</a><a href="#w2">W2</a><a href="#w3">W3</a><a href="#w4">W4</a><a href="#w5">W5</a><a href="#w6">W6</a><a href="#w7">W7</a><a href="#w8">W8</a><a href="#w9">W9</a><a href="#w10">W10</a><a href="#w11">W11</a><a href="#w12">W12</a>
+    </nav>
+
+    <div>
+    <article class="week" id="w1">
+      <div class="rail"><span class="num">01</span><span class="lecs">L1–L5</span></div>
+      <div class="body">
+        <h3>Introduction to cloud computing</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>NIST definition:</b> 5 essential characteristics (on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service), 3 service models, 4 deployment models. Distractors seen in "which is NOT…": latency, guaranteed zero downtime.</li>
+          <li><b>Evolution:</b> distributed → cluster → grid → utility → cloud.</li>
+          <li><span class="tag">PYQ</span><b>Distributed systems:</b> fault tolerance, resource sharing, scalability, heterogeneity, no global clock. P2P is close to a truly distributed application. <b>Client–server:</b> no virtualization, scales only to a point.</li>
+          <li><span class="tag">PYQ</span><b>Cluster:</b> interconnected stand-alone computers, close together, managed as one resource. Components: PCs/workstations/SMPs, OS, high-speed interconnect, middleware, parallel programming environment.</li>
+          <li><b>Grid:</b> geographically spread, heterogeneous, loosely coupled, virtual organizations. Users in slides include crystallography and reactor simulations.</li>
+          <li><span class="tag">PYQ</span><b>Utility computing:</b> a <i>service-provisioning</i> model; the provider supplies computing resources and <i>infrastructure management</i>, pay-per-use. Pricing depends on scale, payment frequency <i>and</i> commitments.</li>
+          <li><span class="tag">PYQ</span><b>Cloud characteristics (slides):</b> massive scale, homogeneity, virtualization, resilient computing, low-cost software, geographic distribution, service orientation, advanced security.</li>
+          <li><span class="tag">PYQ</span><b>Service models:</b> SaaS = Gmail, Google Docs/Sheets/Slides, Salesforce (the user maintains nothing, so "in SaaS only applications are maintained by the user" is false). PaaS = App Engine, Azure App Service, managed DBs (you manage app + data). IaaS = EC2, Compute Engine, VMs (you manage the OS upward).</li>
+          <li><span class="tag">PYQ</span><b>XaaS</b> ("everything as a service") = service-oriented architecture/infrastructure + cloud.</li>
+          <li><b>Pros/cons:</b> lower cost, elasticity, anywhere access vs needing a constant connection, latency, less control, security, lock-in.</li>
+          <li class="new"><span class="tag y">Your 2026</span>Your assignments asked these as scenarios: who manages the OS decides IaaS vs PaaS (EC2 where you patch the OS = IaaS). Grid = many administrative domains, loosely coupled; cluster = tightly coupled and co-located. Distributed systems do <i>not</i> guarantee lower latency per operation. Type-2 hypervisors run on a host OS (VirtualBox, VMware Workstation).</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=NzZXz3fJf6o" target="_blank" rel="noopener"><b>L1</b> Overview</a>
+          <a href="https://www.youtube.com/watch?v=SqG-b5E9vHs" target="_blank" rel="noopener"><b>L2</b> Overview (contd.)</a>
+          <a href="https://www.youtube.com/watch?v=lOh2x-UACaU" target="_blank" rel="noopener"><b>L3</b> Introduction</a>
+          <a href="https://www.youtube.com/watch?v=fZ3D6HQrWzs" target="_blank" rel="noopener"><b>L4</b> Architecture</a>
+          <a href="https://www.youtube.com/watch?v=57X6frOmwn0" target="_blank" rel="noopener"><b>L5</b> Architecture (contd.)</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w2">
+      <div class="rail"><span class="num">02</span><span class="lecs">L6–L10</span></div>
+      <div class="body">
+        <h3>Architecture, deployment models, virtualization, XML, web services</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>Public cloud:</b> AWS, Azure, GCP. SLAs are <i>default and restrictive</i>. <b>Private:</b> Eucalyptus, OpenStack in your own DC, Amazon VPC. <b>Community:</b> shared by orgs with common compliance needs. <b>Hybrid:</b> private + public, cloud bursting.</li>
+          <li><span class="tag">PYQ</span><b>On-site private cloud:</b> bulk data import/export is limited by your own network capacity. <b>Outsourced private cloud:</b> check network dependency, SLAs, multi-tenancy/co-residency, and legal issues about where data lives.</li>
+          <li><span class="tag">PYQ</span><b>Cloud stack terms:</b> inside a cluster manager, computer managers are linked by a high-speed network. Data Object Storage (DOS) stores user credentials and is usually one per cloud.</li>
+          <li><span class="tag">PYQ</span><b>Hypervisor = VMM.</b> Type-1 bare-metal (Xen, ESXi, Hyper-V) has lower overhead; Type-2 hosted (VirtualBox, VMware Workstation).</li>
+          <li><span class="tag">PYQ</span><b>Full virtualization:</b> unmodified guest, trap/binary translation. <b>Para-virtualization:</b> guest OS modified to make hypercalls; faster (speed is an advantage, not a drawback). <b>Hardware-assisted:</b> Intel VT-x / AMD-V.</li>
+          <li><span class="tag">PYQ</span><b>VM architecture goals (Popek–Goldberg):</b> equivalence, resource control, efficiency. A gap between host CPU and guest CPU readings is normal overhead (context switches, memory management, I/O emulation).</li>
+          <li><span class="tag">PYQ</span><b>XML:</b> derived from SGML. Well-formed = one root, properly nested and closed, case-sensitive, quoted attributes. A parser must stop and report an error on a document that isn't well-formed. Namespaces use the <code>xmlns</code> attribute (not "xmlsn"). Names can't start with a digit or "xml".</li>
+          <li><span class="tag">PYQ</span><b>Parsers:</b> DOM loads the whole tree; SAX pushes events (low memory, little control); StAX pulls events (low memory, you control the flow).</li>
+          <li><span class="tag">PYQ</span><b>Web services = XML + HTTP.</b> SOAP = message format; WSDL = description (<code>portType</code> = operations + messages); UDDI = registry for discovery. They help reuse components, solve interoperability and connect existing software, and pass firewalls over HTTP. They are not built for ultra-low latency.</li>
+          <li><span class="tag">PYQ</span><b>EDI</b> has low errors and high accuracy; web services do similar work and are cheaper to implement.</li>
+          <li><span class="tag">PYQ</span><b>SOA roles:</b> service provider, service requestor, service broker/registry (publish → find → bind).</li>
+          <li class="new"><span class="tag y">Your 2026</span>Full (hardware-assisted) virtualization runs the guest unmodified using VT-x/AMD-V; para-virtualization needs hypercalls. Pick <b>DOM</b> when you must randomly access and modify a document that fits in memory; SAX/StAX are forward-only streams. WSDL describes the interface, UDDI finds it. SOA: publish (provider → registry), find (requestor → registry), bind (requestor → provider).</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=4xrYN2Ecmas" target="_blank" rel="noopener"><b>L6</b> Deployment models</a>
+          <a href="https://www.youtube.com/watch?v=R4spydpBbYk" target="_blank" rel="noopener"><b>L7</b> Virtualization</a>
+          <a href="https://www.youtube.com/watch?v=u6q_hD73qwM" target="_blank" rel="noopener"><b>L8</b> XML basics</a>
+          <a href="https://www.youtube.com/watch?v=S6REPwyWoxE" target="_blank" rel="noopener"><b>L9</b> XML basics II</a>
+          <a href="https://www.youtube.com/watch?v=GtJGB1WxRW8" target="_blank" rel="noopener"><b>L10</b> Web services, SOA</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w3">
+      <div class="rail"><span class="num">03</span><span class="lecs">L11–L15</span></div>
+      <div class="body">
+        <h3>SLA, cloud economics, managing data, MapReduce, OpenStack</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>SLA</b> = formal contract between service provider and consumer. The SLA contains SLOs; <b>KPIs aggregate into SLOs</b>, not into the SLA.</li>
+          <li><span class="tag">PYQ</span><b>SLA contents:</b> availability (% uptime), response time, MTTR, RTO/RPO, penalties/credits, monitoring. Not low-level implementation details such as the exact encryption algorithm.</li>
+          <li><b>SLA types:</b> off-the-shelf / non-negotiable (public cloud) vs customized / negotiable. Multilevel SLA: corporate level, customer level, service level.</li>
+          <li><span class="tag">PYQ</span><b>Monitoring problem:</b> "bias towards vendors" means the vendor picks the monitored parameters to its own advantage, hence trusted third-party monitoring.</li>
+          <li><span class="tag">PYQ</span><b>Economics:</b> CapEx → OpEx; utility pricing pays off with variable demand; cloud is cheaper when U &lt; P/A; hybrid hinges on peak-to-average ratio. See the formula sheet.</li>
+          <li><span class="tag">PYQ</span><b>Parallel databases:</b> shared memory, shared disk, <b>shared nothing</b> (tables partitioned across nodes; SQL optimizer handles distributed joins). Row store → OLTP; column store → data warehouse (e.g. Teradata).</li>
+          <li><span class="tag">PYQ</span><b>GFS:</b> single master + chunkservers, 64 MB chunks, 3 replicas, master talks to chunkservers by <b>heartbeat</b> messages. HDFS: NameNode + DataNodes. BigTable: sparse sorted map (row, column, timestamp). Dynamo: key-value, eventual consistency.</li>
+          <li><span class="tag">PYQ</span><b>MapReduce:</b> map takes key/value pairs and emits zero or more intermediate pairs; shuffle/sort groups by key; each reducer handles one key's list. Combiner = local mini-reduce that shrinks shuffle data; partition function picks the reducer; map tasks run where the data is.</li>
+          <li><span class="tag">PYQ</span><b>OpenStack:</b> Nova = compute (manages <b>ephemeral</b> storage, which lasts until the VM is terminated; nova-scheduler picks the host); Neutron = networking (IP, gateway, DNS, L2; DHCP agent); Cinder = block storage; Swift = object storage; Glance = images; Keystone = identity/authentication; Horizon = dashboard; Heat = orchestration; Ceilometer = telemetry.</li>
+          <li class="new"><span class="tag y">Your 2026</span>Multilevel SLA = corporate + customer + service level. The official key says the provider is bound by the <b>service-level</b> SLA, the most specific one. 99.9% of 720 h = 0.72 h. Sub-second fraud detection needs streaming (Kafka + Flink, Kinesis, Pulsar); a nightly batch job is the wrong choice. Spark over petabytes reads from object storage (S3/GCS). 640 CPUs × 5 = 3,200 vCPUs.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=9Btb72NZwg4" target="_blank" rel="noopener"><b>L11</b> SLA</a>
+          <a href="https://www.youtube.com/watch?v=HmQhz0DPF9g" target="_blank" rel="noopener"><b>L12</b> Cloud economics</a>
+          <a href="https://www.youtube.com/watch?v=Dr6MSqRFaZQ" target="_blank" rel="noopener"><b>L13</b> Managing data</a>
+          <a href="https://www.youtube.com/watch?v=XWNEhv-b2PM" target="_blank" rel="noopener"><b>L14</b> MapReduce</a>
+          <a href="https://www.youtube.com/watch?v=R4CUs7I9Irs" target="_blank" rel="noopener"><b>L15</b> OpenStack</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w4">
+      <div class="rail"><span class="num">04</span><span class="lecs">L16–L20</span></div>
+      <div class="body">
+        <h3>OpenStack demo, Microsoft Azure, Google Cloud Platform</h3>
+        <ul class="notes">
+          <li><b>OpenStack demo:</b> launch an instance from Horizon: pick an image (Glance), a flavor, a key pair, a security group and a network; attach a volume (Cinder).</li>
+          <li><span class="tag">PYQ</span><b>Azure</b> is Microsoft's public cloud. The <b>App Service plan</b> is the hosting container for Web, API, Mobile and Function apps (region, instance size and count, pricing tier). It does not define security.</li>
+          <li><span class="tag">PYQ</span><b>Azure Web Apps</b> are highly scalable and self-patching. For FTP/local Git deployment you create a <b>deployment user</b>; enter that password, not your portal password.</li>
+          <li><b>Azure extras seen in 2026:</b> secrets → Managed Identity + Key Vault; deployment slots, auto-swap warm-up on Premium; max data disks depends on VM size; Hyperscale SQL tier grows storage automatically.</li>
+          <li><span class="tag">PYQ</span><b>GCP categories:</b> Compute = Compute Engine (IaaS), <b>App Engine</b> (PaaS, no patching), GKE, Cloud Run, Cloud Functions. Storage = Cloud Storage (object, global edge caching), <b>Cloud SQL</b> (managed MySQL/PostgreSQL), Datastore/Firestore (NoSQL), Bigtable, Spanner. App services / big data = <b>BigQuery</b>, Cloud Endpoints, Pub/Sub.</li>
+          <li><span class="tag">PYQ</span><b>Pick the GCP DB:</b> global strong consistency + transactions → Spanner; huge time-series/IoT writes → Bigtable; analytics warehouse → BigQuery; relational app DB → Cloud SQL; event-driven containers without a cluster → Cloud Run.</li>
+          <li><span class="tag">PYQ</span><b>Commands:</b> <code>gcloud app deploy app.yaml</code> deploys; the app is at <code>https://PROJECT_ID.appspot.com</code>; <code>gcloud app browse</code> opens it in a browser (it does not start a local server). Google APIs let you integrate Google services into your app. Storage class for hot, worldwide content: multi-regional / Standard; Nearline for infrequent access.</li>
+          <li class="new"><span class="tag y">Your 2026</span>Azure: <b>Hyperscale</b> separates compute and storage (up to 100 TB); <b>Availability Zones</b> are separate data centers in one region with their own power, cooling and network; Premium (P1v3+) gives up to 20 deployment slots; <b>HTTPS Only</b> blocks http://. GCP: Spanner for global relational data; GKE manages Kubernetes clusters, Cloud Run needs none; Pub/Sub → BigQuery → Looker Studio for IoT dashboards; <code>gcloud app services set-traffic default --splits=v3=1</code> sends all traffic to v3. OpenStack: a Cinder volume survives VM deletion; Neutron routes tenant traffic. Several of these are not in the lecture transcripts, so expect some general cloud knowledge.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=TOOSVsxEIpo" target="_blank" rel="noopener"><b>L16</b> OpenStack demo</a>
+          <a href="https://www.youtube.com/watch?v=Mkuf4pTqIdU" target="_blank" rel="noopener"><b>L17</b> Azure case study</a>
+          <a href="https://www.youtube.com/watch?v=jOhZ80XbymI" target="_blank" rel="noopener"><b>L18</b> Azure demo</a>
+          <a href="https://www.youtube.com/watch?v=FYjXsXdbZTo" target="_blank" rel="noopener"><b>L19</b> GCP case study</a>
+          <a href="https://www.youtube.com/watch?v=XTW3ujxnndo" target="_blank" rel="noopener"><b>L20</b> GCP demo</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w5">
+      <div class="rail"><span class="num">05</span><span class="lecs">L21–L25</span></div>
+      <div class="body">
+        <h3>Tutorials (SLA, economics, MapReduce) and resource management</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>The three tutorials are the numericals.</b> Week 5 assignments always have an SLA availability problem, a D(t) cost problem and a MapReduce counting problem. Practise them in the bank.</li>
+          <li><span class="tag">PYQ</span><b>Objectives of resource management:</b> scalability, QoS, improved throughput, reduced latency, reduced overhead, energy efficiency. "Increased overhead/latency" are distractors.</li>
+          <li><span class="tag">PYQ</span><b>Approach → category</b> (asked almost every run):
+            <div class="tbl" style="margin-top:6px"><table>
+              <thead><tr><th>Category</th><th>Approaches named in slides</th></tr></thead>
+              <tbody>
+                <tr><td>Provisioning</td><td>Network queueing model, adaptive resource provisioning, deadline-driven provisioning</td></tr>
+                <tr><td>Allocation</td><td>Intelligent multi-agent model, energy-aware allocation, market-based</td></tr>
+                <tr><td>Adaptation</td><td>Reinforcement-learning guided control policy, web-service based prototype, VM-based</td></tr>
+                <tr><td>Mapping</td><td>Matching resources users need with what the provider has</td></tr>
+                <tr><td>Scheduling</td><td>When an activity starts/ends (duration, predecessors, relationships)</td></tr>
+              </tbody></table></div>
+          </li>
+          <li><span class="tag">PYQ</span><b>Power:</b> performance per watt does not follow Moore's law; power vs number of cores is nonlinear (not linear), though more active cores do draw more power.</li>
+          <li><span class="tag">PYQ</span><b>Load falls:</b> live-migrate VMs onto busier nodes and shut down idle nodes. <b>Load rises:</b> wake nodes, spread VMs out. Consolidation saves power but raises SLA-violation risk.</li>
+          <li><span class="tag">PYQ</span><b>Energy saving:</b> energy-aware VM scheduling, better data-center design, manage VMs and infrastructure together, minimize inefficiency.</li>
+          <li><span class="tag">PYQ</span><b>Logical vs physical resources:</b> execution, monitoring, communication are logical; CPU, memory, network, storage, database are physical.</li>
+          <li class="new"><span class="tag y">Your 2026</span>12 h/day × 30 days × 1% = 3.6 h. Map tasks = number of blocks (700 MB ÷ 128 MB → 6). The <b>Partitioner</b> picks the reducer (hash by default); the <b>Combiner</b> is optional and may run 0, 1 or many times. Pay-as-you-go avoids upfront spending; elasticity avoids paying for idle resources. Packing VMs and powering off hosts = energy-aware scheduling. U = 2.8 &lt; P/A = 3, so cloud is cheaper.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=AvL3bY9tUwI" target="_blank" rel="noopener"><b>L21</b> SLA tutorial</a>
+          <a href="https://www.youtube.com/watch?v=JiNgg2dfBhU" target="_blank" rel="noopener"><b>L22</b> Economics tutorial</a>
+          <a href="https://www.youtube.com/watch?v=ENYSofxVJ1U" target="_blank" rel="noopener"><b>L23</b> MapReduce tutorial</a>
+          <a href="https://www.youtube.com/watch?v=Imj8L-po4kw" target="_blank" rel="noopener"><b>L24</b> Resource mgmt I</a>
+          <a href="https://www.youtube.com/watch?v=M38DDZvr-YI" target="_blank" rel="noopener"><b>L25</b> Resource mgmt II</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w6">
+      <div class="rail"><span class="num">06</span><span class="lecs">L26–L30</span></div>
+      <div class="body">
+        <h3>Cloud security</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>Basic components:</b> confidentiality, integrity, availability (not reliability or efficiency). Also authenticity and non-repudiation.</li>
+          <li><span class="tag">PYQ</span><b>Attack → property:</b>
+            <div class="tbl" style="margin-top:6px"><table>
+              <thead><tr><th>Attack</th><th>Breaks</th><th>Threat class</th></tr></thead>
+              <tbody>
+                <tr><td>Interception / snooping</td><td>Confidentiality</td><td>Disclosure</td></tr>
+                <tr><td>Modification</td><td>Integrity</td><td>Deception, disruption, usurpation</td></tr>
+                <tr><td>Interruption / DoS</td><td>Availability</td><td>Disruption (and usurpation)</td></tr>
+                <tr><td>Fabrication / replay of a token</td><td>Authenticity</td><td>Deception</td></tr>
+                <tr><td>Spoofing / masquerade</td><td>Authenticity</td><td>Deception + usurpation</td></tr>
+                <tr><td>Repudiation of origin, denial of receipt</td><td>Non-repudiation</td><td>Deception</td></tr>
+              </tbody></table></div>
+          </li>
+          <li><span class="tag">PYQ</span><b>Passive attacks:</b> release of message contents, traffic analysis. <b>Active:</b> masquerade, replay, modification, DoS.</li>
+          <li><span class="tag">PYQ</span><b>Authentication</b> = verifying identity; <b>authorization</b> = deciding whether an operation is allowed. An IDS raises alerts on suspected attacks. Digital signatures (sender's private key) give non-repudiation. Penetration testing exploits weaknesses and needs written authorization.</li>
+          <li><span class="tag">PYQ</span><b>Gartner's cloud risks:</b> privileged user access, regulatory compliance & audit, <b>data location</b>, data segregation, recovery, investigative support, <b>long-term viability</b> (vendor lock-in, provider bankruptcy).</li>
+          <li><span class="tag">PYQ</span><b>Switch provider when:</b> it goes bankrupt or shuts the service down (also unacceptable price rises or quality drops).</li>
+          <li><span class="tag">PYQ</span><b>Co-residence attacks on EC2:</b> map the cloud with nmap, <b>hping</b> (TCP SYN traceroute) and wget; side channels can extract RSA and AES keys.</li>
+          <li><span class="tag">PYQ</span><b>Rogue hypervisor rootkits</b> hide from malware detection and open covert channels to dump unauthorized code. <b>Web-service attacks:</b> injection, <b>flooding</b> (DoS), XSS, WSDL/metadata spoofing.</li>
+          <li><b>Collaborative SaaS:</b> access control across domains, role mapping, trust; risk-based access control. <b>Cloud broker:</b> ranks providers by QoS, trust and price for the customer.</li>
+          <li><span class="tag">PYQ</span><b>Fault tolerance:</b> replication = keeping consistent copies on disks in separate physical locations.</li>
+          <li class="new"><span class="tag y">Your 2026</span>A bug that changes data breaks <b>integrity</b>; a fake login page breaks <b>authenticity</b> before anything leaks. Active: session hijacking, replay, man-in-the-middle, masquerade, DoS. Passive: sniffing, eavesdropping, traffic analysis, monitoring. Reconnaissance = DNS enumeration, port scans, OSINT (exploiting a bug is a later phase). Custom kernel module → IaaS. Backups replicated abroad → data location. Open standards and portable tech reduce lock-in.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=LcAPj95KeSA" target="_blank" rel="noopener"><b>L26</b> Security I</a>
+          <a href="https://www.youtube.com/watch?v=5QxzlIESCG4" target="_blank" rel="noopener"><b>L27</b> Security II</a>
+          <a href="https://www.youtube.com/watch?v=KOH13vkv6VU" target="_blank" rel="noopener"><b>L28</b> Security III</a>
+          <a href="https://www.youtube.com/watch?v=fNRRV1EczGI" target="_blank" rel="noopener"><b>L29</b> Collaborative SaaS</a>
+          <a href="https://www.youtube.com/watch?v=RKhKbcntWOg" target="_blank" rel="noopener"><b>L30</b> Cloud broker</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w7">
+      <div class="rail"><span class="num">07</span><span class="lecs">L31–L35</span></div>
+      <div class="body">
+        <h3>Mobile cloud, fog computing, geospatial cloud</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>MCC components:</b> <b>Profiler</b> monitors execution (time, power, network traffic); <b>Solver</b> decides which parts run on the phone vs the cloud; <b>Synchronizer</b> collects split results and hides the split from the user.</li>
+          <li><span class="tag">PYQ</span><b>MCC features:</b> fewer device resources used, services reached through APIs, better reliability (cloud backup), faster app development; lower running cost for compute-heavy apps; some services run on the device and some in the cloud.</li>
+          <li><span class="tag">PYQ</span><b>Cloudlet:</b> small data center near users (campus, stadium). <b>One hop</b> away over Wi-Fi/short-range radio, so lower latency and battery use. "Multi-hop" is the trap.</li>
+          <li><b>MCC challenges:</b> depends on WAN conditions, bandwidth, latency, security of data in transit. Offloading decisions use bandwidth/RTT, battery left, local CPU time.</li>
+          <li><span class="tag">PYQ</span><b>Fog devices:</b> cellular base stations, routers, switches, Wi-Fi gateways (they can run applications). <b>Enablers:</b> virtualization and SOA.</li>
+          <li><span class="tag">PYQ</span><b>Fog benefits:</b> low latency and location awareness, wide geographical distribution, very many nodes, heterogeneity, mobility support, real-time apps, less data moving across the network. Traps: homogeneity, immobility, "higher response time than cloud".</li>
+          <li><span class="tag">PYQ</span><b>Hops:</b> cloud = multiple hops, fog = one hop.</li>
+          <li><span class="tag">PYQ</span><b>Geospatial cloud:</b> integrates <i>heterogeneous</i> back-end data services that can be inside or outside the cloud. Geographic info is static or dynamic and varies in scale; city population is dynamic. Enterprise GIS instances: resource, data and interface services.</li>
+          <li><span class="tag">PYQ</span><b>Interoperability levels:</b> data, <b>service</b> (ability to exchange information to be consumed), security.</li>
+          <li class="new"><span class="tag y">Your 2026</span>Never offload millisecond safety tasks (collision avoidance) to a distant cloud. Dynamic offloading balances execution time, energy and utilization. Under 20 ms → cloudlet. Fog fixes the latency of distant data centers, and fog nodes don't store everything permanently. Splitting a raster into tiles needs boundary handling between neighbouring tiles.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=MavppiPIaZc" target="_blank" rel="noopener"><b>L31</b> Mobile cloud I</a>
+          <a href="https://www.youtube.com/watch?v=D2GLd8RU8vY" target="_blank" rel="noopener"><b>L32</b> Mobile cloud II</a>
+          <a href="https://www.youtube.com/watch?v=cvPjM8NN_mw" target="_blank" rel="noopener"><b>L33</b> Fog I</a>
+          <a href="https://www.youtube.com/watch?v=XJtFgzn4ug8" target="_blank" rel="noopener"><b>L34</b> Fog II</a>
+          <a href="https://www.youtube.com/watch?v=2djVEM3g0Ig" target="_blank" rel="noopener"><b>L35</b> Geo-spatial cloud</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w8">
+      <div class="rail"><span class="num">08</span><span class="lecs">L36–L40</span></div>
+      <div class="body">
+        <h3>Docker intro, green cloud, sensor cloud, IoT cloud</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>Docker parts:</b> image = read-only template (filesystem layers + metadata); container = runtime instance of an image; Dockerfile = build recipe; <b>Docker Engine/daemon</b> builds images and runs containers; client (CLI) talks to the daemon over a REST API; <b>Docker Hub</b> = public registry; private registry also stores images; <b>Compose</b> = multi-container apps.</li>
+          <li><span class="tag">PYQ</span><b>Commands:</b> <code>docker ps</code> running, <code>docker ps -a</code> all, <code>docker images</code>, <code>docker rmi</code> deletes an image, <code>docker rm</code> deletes a container, <code>docker pull/push/run/build</code>.</li>
+          <li><span class="tag">PYQ</span><b>VMs vs containers:</b> VMs reach hardware through a hypervisor and carry their own kernel; containers share the host kernel and are isolated by namespaces + cgroups. Volumes outlive containers; the writable layer dies with the container.</li>
+          <li><span class="tag">PYQ</span><b>Green cloud:</b> PUE = total facility power / IT equipment power. A green broker schedules apps to cut energy. Consolidate VMs and power off idle hosts; DVFS.</li>
+          <li><span class="tag">PYQ</span><b>Sensor cloud:</b> lets sensor networks spread over a large area be used by many users on demand. The sensor-cloud proxy exposes sensors as cloud services; the network is still managed from the sensor-cloud interface through a sensor network proxy. In plain WSNs sensor data is <i>not</i> easily shared. Sensors are too weak for full virtualization, so virtual sensors aggregate physical ones.</li>
+          <li><span class="tag">PYQ</span><b>IoT platform building blocks:</b> things, gateway, network & cloud. Vehicles lending networking and processing to other vehicles = IaaS.</li>
+          <li class="new"><span class="tag y">Your 2026</span><code>docker network ls</code> lists networks; <code>docker rmi</code> removes images. <b>etcd</b> stores Kubernetes cluster state. Type-1: ESXi, Xen, Hyper-V Server; Type-2: VirtualBox. Sensor-cloud middleware abstracts heterogeneous sensors. Encrypt IoT data in transit (TLS). Edge cuts latency but never to zero.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=ImKcT5G7HaQ" target="_blank" rel="noopener"><b>L36</b> Docker</a>
+          <a href="https://www.youtube.com/watch?v=3KricvCicss" target="_blank" rel="noopener"><b>L37</b> Green cloud</a>
+          <a href="https://www.youtube.com/watch?v=Bs83bva2KvQ" target="_blank" rel="noopener"><b>L38</b> Sensor cloud</a>
+          <a href="https://www.youtube.com/watch?v=gIPdoP8t1lY" target="_blank" rel="noopener"><b>L39</b> IoT cloud</a>
+          <a href="https://www.youtube.com/watch?v=JaNLJty-SwI" target="_blank" rel="noopener"><b>L40</b> Summary</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w9">
+      <div class="rail"><span class="num">09</span><span class="lecs">L41–L44</span></div>
+      <div class="body">
+        <h3>Cloud–fog–edge, resource management, cloud federation</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>Real-time trap:</b> "fog supports real-time interaction but cloud doesn't" is false (both do); "fog reduces latency vs cloud" is true.</li>
+          <li><span class="tag">PYQ</span><b>Cloud–fog model:</b> three layers (client/edge, fog, cloud). Fog servers hold a fog server manager + VMs using <i>server</i> virtualization; fog VMs report to the fog server manager; if fog lacks resources the request goes to the cloud.</li>
+          <li><span class="tag">PYQ</span><b>Resource-management algorithms:</b> discovery, <b>benchmarking</b> (measures CPU/storage/network performance), load balancing, placement.</li>
+          <li><span class="tag">PYQ</span><b>Service-placement taxonomy:</b> control plane design (centralized/distributed), <b>placement characteristic (online/offline)</b>, system dynamicity (static/dynamic), mobility support.</li>
+          <li><span class="tag">PYQ</span><b>Offloading:</b> moves server, app and data <i>to the edge</i>; augments user devices. Cloud → edge by server offloading; device → edge by application partitioning.</li>
+          <li><b>Placement rule:</b> edge → fog → cloud by distance. Time-critical work at edge/fog (an autonomous car brakes at the edge); heavy, delay-tolerant work in the cloud.</li>
+          <li><span class="tag">PYQ</span><b>Federation benefits:</b> maximize resource utilization, minimize power, load balancing, global utility, wider footprint. "Minimize utilization / maximize power" are the traps.</li>
+          <li><span class="tag">PYQ</span><b>Federation coupling:</b> loosely coupled (little control, no advanced features); partially coupled (CSPs agree on terms for using each other's resources); tightly coupled (cross-site networks, cross-site VM migration).</li>
+          <li><span class="tag">PYQ</span><b>Federation architectures:</b> hybrid/bursting (private + public for peaks), broker, <b>aggregated</b> (partner clouds pool resources into a bigger virtual infrastructure), multiplier. Interop via open standards (OCCI, CIMI, REST); trust via federated identity + enforced SLAs.</li>
+          <li class="new"><span class="tag y">Your 2026</span>Edge = immediate local action (per machine or camera); fog = regional aggregation (plant, roadside unit); cloud = global orchestration, history, model training. The earlier you filter, the less raw data reaches the cloud (edge &lt; fog &lt; cloud-only). More RAM/CPU on the same node = <b>vertical</b> scaling. Users moving between edge servers → service migration at handover. A broker finding a second CSP = federation; trust matters because providers are independent.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=7rEYTCGh0pE" target="_blank" rel="noopener"><b>L41</b> Cloud–fog overview</a>
+          <a href="https://www.youtube.com/watch?v=BETivOhAkMA" target="_blank" rel="noopener"><b>L42</b> Resource mgmt I</a>
+          <a href="https://www.youtube.com/watch?v=VnPiwcuZ12Q" target="_blank" rel="noopener"><b>L43</b> Resource mgmt II</a>
+          <a href="https://www.youtube.com/watch?v=6lyr0D6AKR0" target="_blank" rel="noopener"><b>L44</b> Cloud federation</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w10">
+      <div class="rail"><span class="num">10</span><span class="lecs">L45–L50</span></div>
+      <div class="body">
+        <h3>Cloud/VM migration, containers, Docker, Kubernetes</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>VM migration</b> moves running VMs/apps from one physical host to another. Reasons in the key: take a physical machine out of service, relieve congested hosts.</li>
+          <li><span class="tag">PYQ</span><b>Non-live:</b> suspend, copy, resume; total time = downtime = memory / bandwidth (see formula sheet). <b>Live:</b> pre-copy (copy memory in rounds while running, then a short stop-and-copy; uses the most bandwidth) and post-copy (move CPU state first, fetch pages on demand; each page sent once).</li>
+          <li><span class="tag">PYQ</span><b>Live migration costs:</b> across distant DCs, latency and bandwidth variability matter most; energy rises with re-sending dirty pages.</li>
+          <li><span class="tag">PYQ</span><b>Containers:</b> lightweight virtualization packaging code + all dependencies; no full guest OS; higher density, weaker isolation than VMs.</li>
+          <li><span class="tag">PYQ</span><b>Docker advantages:</b> facilitates microservices, packages software, models networks; builds are reproducible, which helps continuous delivery. Private registry stores images; daemon + REST API + client.</li>
+          <li><span class="tag">PYQ</span><b>Kubernetes:</b> orchestrates, schedules, scales and restarts containers across a cluster. Workers are <b>nodes</b>; pods are the smallest deployable unit; it works at container level, not hardware level (it provides no hypervisor).</li>
+          <li class="new"><span class="tag y">Your 2026</span>A higher page-dirtying rate makes live migration longer; compression and deduplication cut the data sent. Post-copy starts the VM at the destination first. <b>kube-scheduler</b> places pods, kubelet runs them, kube-proxy handles service networking. Dockerfile → <code>docker build</code> → image → <code>docker run</code> → container. Namespaces isolate; cgroups limit resources. 32 GB at 16 MB/s ≈ 2,048 s ≈ 34 min. Named volumes survive container deletion.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=1hwpIuUtOqY" target="_blank" rel="noopener"><b>L45</b> Migration I</a>
+          <a href="https://www.youtube.com/watch?v=u9sEejB2lJ0" target="_blank" rel="noopener"><b>L46</b> Migration II</a>
+          <a href="https://www.youtube.com/watch?v=fdm6ioq1_jE" target="_blank" rel="noopener"><b>L47</b> Containers I</a>
+          <a href="https://www.youtube.com/watch?v=ksQSxusEzIY" target="_blank" rel="noopener"><b>L48</b> Docker</a>
+          <a href="https://www.youtube.com/watch?v=V4cvdmJDvmI" target="_blank" rel="noopener"><b>L49</b> Docker demo I</a>
+          <a href="https://www.youtube.com/watch?v=uuQPMb1HlmQ" target="_blank" rel="noopener"><b>L50</b> Docker demo II</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w11">
+      <div class="rail"><span class="num">11</span><span class="lecs">L51–L55</span></div>
+      <div class="body">
+        <h3>Dew computing, serverless / FaaS, sustainable cloud</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>Dew computing:</b> on-premises computers provide functions that are <i>independent</i> of cloud services and <i>collaborative</i> with them. Works offline, syncs later (cloud-side sync resolves conflicts). Trade-off: local autonomy vs consistency. Fits places with patchy internet.</li>
+          <li><span class="tag">PYQ</span><b>Serverless = FaaS + BaaS.</b> Event-driven, stateless, short-lived functions; not always running (events start them); limited run time (AWS Lambda max 15 min); cold starts; local storage is ephemeral.</li>
+          <li><span class="tag">PYQ</span><b>Control:</b> PaaS gives developers more control over the deployment environment than serverless. Cloud computing's focus was sysadmins; serverless focuses on programmers.</li>
+          <li><span class="tag">PYQ</span><b>AWS Lambda:</b> <b>Lambda layers</b> share libraries and custom runtimes; <b>log streams</b> hold custom logging (not "runtimes"). BigQuery = Google's serverless warehouse; Redshift = AWS warehouse.</li>
+          <li><span class="tag">PYQ</span><b>Sustainable cloud:</b> cloud data centers have chassis and racks of servers; VMs/workloads can move to a remote CDC to balance load. Research areas include application design, capacity planning, renewable energy, cooling, energy and thermal management. "Environment sandboxing" is not one.</li>
+          <li class="new"><span class="tag y">Your 2026</span>Dew = local independence + later sync, with conflict detection and resolution on reconnect. Cold start = environment setup delay. Lambda's 15-minute cap rules out 40–45 minute jobs in one call. Independent invocations scale horizontally. Redshift = AWS's distributed data warehouse.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=ImZNewj0VJM" target="_blank" rel="noopener"><b>L51</b> Dew computing</a>
+          <a href="https://www.youtube.com/watch?v=7aJ3gh8GiFo" target="_blank" rel="noopener"><b>L52</b> Serverless I</a>
+          <a href="https://www.youtube.com/watch?v=UHnThUaT88c" target="_blank" rel="noopener"><b>L53</b> Serverless II</a>
+          <a href="https://www.youtube.com/watch?v=Ed84mh89czU" target="_blank" rel="noopener"><b>L54</b> Sustainable I</a>
+          <a href="https://www.youtube.com/watch?v=CYY0lRKQwb8" target="_blank" rel="noopener"><b>L55</b> Sustainable II</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="week" id="w12">
+      <div class="rail"><span class="num">12</span><span class="lecs">L56–L60</span></div>
+      <div class="body">
+        <h3>5G, CPS, spatial cloud, Internet of Health Things</h3>
+        <ul class="notes">
+          <li><span class="tag">PYQ</span><b>5G:</b> eMBB (very high data rates, lower cost per bit), URLLC (low latency, high reliability), mMTC (massive IoT). MCC for 5G: shared resources and better reliability. Providers should offer full end-to-end orchestration with defined SLAs, self-service and automation.</li>
+          <li><span class="tag">PYQ</span><b>CPS:</b> sensors → control → actuators in a closed loop. A CPCC framework is a <i>system</i> environment that builds and provisions CPS from <i>cloud computing</i>-based sensor, processing, control and data services.</li>
+          <li><span class="tag">PYQ</span><b>Spatial cloud:</b> shared resource pooling for participating organizations; geospatial data (maps, coordinates, satellite images); disaster management and weather. A spatial trajectory is the time-ordered points of a moving object. Mobility analytics runs on the cloud; an ITS's key aspect is efficient mobility; V2V shares safety data over DSRC / IEEE 802.11p.</li>
+          <li><span class="tag">PYQ</span><b>IoHT:</b> wearables → fog/edge gateway → cloud analytics. In fog, latency is fixed because application modules sit at the Area Gateway. Fog–edge <i>reduces</i> network congestion.</li>
+          <li class="new"><span class="tag y">Your 2026</span>Spatial cloud = maps, GPS, satellite imagery, flood-risk mapping. Spatial trajectory = time-ordered positions; spatial crowdsourcing = location tasks handed to mobile users. Vehicle sensors (edge) + roadside units (fog) + fleet analytics (cloud). 5G: <b>eMBB</b> high data rates (video, AR), <b>mMTC</b> massive IoT, <b>URLLC</b> ultra-reliable low latency.</li>
+        </ul>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=RrysAKUW-Fc" target="_blank" rel="noopener"><b>L56</b> Cloud in 5G era</a>
+          <a href="https://www.youtube.com/watch?v=mae7tFwilm4" target="_blank" rel="noopener"><b>L57</b> CPS and cloud</a>
+          <a href="https://www.youtube.com/watch?v=MzK8P1NafSo" target="_blank" rel="noopener"><b>L58</b> Spatial cloud</a>
+          <a href="https://www.youtube.com/watch?v=ohp1ZmiGN6s" target="_blank" rel="noopener"><b>L59</b> IoHT part A</a>
+          <a href="https://www.youtube.com/watch?v=GpUY97K2j1E" target="_blank" rel="noopener"><b>L60</b> IoHT part B</a>
+        </div>
+      </div>
+    </article>
+    </div>
+  </div>
+</section>
+
+<section id="repeated">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Most repeated</p>
+      <h2>Questions that keep coming back</h2>
+      <p>I compared five runs: 2019, Jul–Oct 2023 (NPTEL's official solutions), the 2024–25 compilation, Jan–Apr 2026 and your Jul–Oct 2026 run. Each row is one idea, ranked by how many runs asked it. Filled boxes show which runs. <span class="xr">Same wording</span> marks questions your run repeated almost word for word from Jan–Apr 2026.</p>
+    </div>
+    <div class="actions">
+      <button class="btn" id="cover" type="button" aria-pressed="false">Hide answers to test yourself</button>
+      <p class="score" id="repcount"></p>
+    </div>
+    <div id="replist"></div>
+  </div>
+</section>
+
+<section id="practice">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Practice bank</p>
+      <h2>Your assignments and past runs, by week</h2>
+      <p>"My 2026 assignments" holds all 120 questions from your own Jul–Oct 2026 assignments, reworded, with NPTEL's official answers. "Older runs" holds questions on concepts asked in earlier runs, reworded, with fresh numbers for the numericals. Single-answer questions mark as soon as you pick. For "select all" questions, pick every option you think is right, then press Check. Your answers stay in this browser.</p>
+    </div>
+    <div class="toolbar">
+      <div class="chips" id="chips" role="group" aria-label="Filter by week"></div>
+      <div class="actions">
+        <div class="left">
+          <button class="btn" id="shuffle" type="button">Shuffle</button>
+          <button class="btn" id="reveal" type="button" aria-pressed="false">Show all answers</button>
+          <button class="btn" id="reset" type="button">Reset this set</button>
+        </div>
+        <p class="score" id="score" aria-live="polite"></p>
+      </div>
+    </div>
+    <div class="qlist" id="qlist"></div>
+  </div>
+</section>
+
+<section id="mock">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Full mock exams</p>
+      <h2>Sit a full paper under exam conditions</h2>
+      <p>NPTEL never publishes its past proctored papers, so each paper here is built from one source of previous assignments. Every paper has 50 questions covering all 12 weeks, at 2 marks each, on a 3-hour timer, and shows no answers until you submit. NPTEL doesn't publish the real question count either, only that the exam is 3 hours of MCQs. The pass line shown is the certificate rule: exam ≥ 30/75, which is ≥ 40/100 raw. A paper in progress survives a page reload, and the clock keeps running.</p>
+    </div>
+    <div id="mockroot"></div>
+  </div>
+</section>
+
+<section id="traps">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Read on exam morning</p>
+      <h2>Last-minute traps</h2>
+      <p>Each line is a statement that past answer keys turned on. If you can say why each is right, you are ready.</p>
+    </div>
+    <ul class="traps">
+      <li><b>KPIs → SLOs</b>, and the SLA contains SLOs. "KPIs aggregate to SLA" is false.</li>
+      <li>Cloud is cheaper when <b>U &lt; P/A</b>, not greater.</li>
+      <li>Public cloud SLAs are <b>default and restrictive</b>.</li>
+      <li>Utility pricing depends on scale, frequency <b>and commitments</b>.</li>
+      <li>Client–server: <b>no</b> virtualization, <b>limited</b> scaling.</li>
+      <li>Para-virtualization is <b>faster</b>; its cost is modifying the guest OS.</li>
+      <li>Namespace attribute is <b>xmlns</b>. Parser <b>stops</b> on non-well-formed XML.</li>
+      <li>Web services platform = <b>XML + HTTP</b>; UDDI = registry; WSDL portType = operations + messages.</li>
+      <li>Ephemeral storage → <b>Nova</b>, lasts until the VM is terminated. Block → Cinder, object → Swift, identity → Keystone.</li>
+      <li>GFS master ↔ chunkservers by <b>heartbeat</b>. SQL-scaling parallel DB = <b>shared nothing</b>.</li>
+      <li>BigQuery = <b>app services</b>, App Engine = <b>compute</b>, Cloud SQL = <b>storage</b>.</li>
+      <li>App Service plan does <b>not</b> define security. Deployment password ≠ portal password.</li>
+      <li>RL control policy → <b>adaptation</b>; network queueing → <b>provisioning</b>; multi-agent → <b>allocation</b>.</li>
+      <li>Performance/watt does <b>not</b> follow Moore's law. Power vs cores is <b>nonlinear</b>.</li>
+      <li>Fabrication → <b>authenticity</b>; interception → confidentiality; modification → integrity; interruption → availability.</li>
+      <li>Spoofing = <b>deception + usurpation</b>. Replay and DoS are <b>active</b> attacks.</li>
+      <li>hping = <b>TCP SYN traceroute</b> for co-residence mapping.</li>
+      <li>Cloudlet = <b>single hop</b>. Cloud = multi-hop, fog = one hop.</li>
+      <li>Fog benefits include <b>heterogeneity</b> and <b>mobility</b>, never homogeneity or immobility.</li>
+      <li>Both fog and cloud support real-time; fog just has <b>lower latency</b>.</li>
+      <li>Docker <b>Hub</b> = registry; <b>Engine</b> builds and runs; <b>Compose</b> = multi-container.</li>
+      <li><b>docker rmi</b> deletes an image; <b>docker ps -a</b> lists stopped containers too.</li>
+      <li>VMs use a <b>hypervisor</b>; containers use <b>namespaces + cgroups</b> and share the kernel.</li>
+      <li>PUE = <b>total facility / IT power</b>.</li>
+      <li>Sensor data is <b>not</b> easily shared in plain WSNs. IoT blocks: <b>things, gateway, network & cloud</b>.</li>
+      <li>Tightly coupled federation = <b>cross-site networks + VM migration</b>; partially coupled = agreement on terms.</li>
+      <li>Federation benefits: <b>maximize</b> utilization, <b>minimize</b> power.</li>
+      <li>Pre-copy and post-copy are <b>live</b> migration. Non-live: downtime = total time.</li>
+      <li>Kubernetes works at <b>container</b> level; workers are <b>nodes</b>.</li>
+      <li>Serverless = <b>FaaS + BaaS</b>; PaaS gives <b>more</b> control than serverless.</li>
+      <li>FaaS functions have <b>time limits</b> (Lambda 15 min) and are <b>not</b> always running.</li>
+      <li>Lambda <b>layers</b> = shared libraries/runtimes; <b>log streams</b> = custom logging.</li>
+      <li>Dew = <b>independent</b> of and <b>collaborative</b> with the cloud.</li>
+      <li>"Environment sandboxing" is <b>not</b> a sustainable-cloud research category.</li>
+      <li>Area Gateway → latency fixed in <b>fog</b>. Fog–edge <b>reduces</b> congestion.</li>
+      <li>ITS key aspect = efficient <b>mobility</b>. eMBB = high data rates, <b>lower cost per bit</b>.</li>
+      <li>Multilevel SLA = corporate + customer + service; the provider is bound by the <b>service-level</b> one.</li>
+      <li>Full virtualization: guest <b>unmodified</b> (VT-x/AMD-V). Para: guest <b>modified</b>, hypercalls.</li>
+      <li>DOM = random access and edits in memory; SAX/StAX = <b>forward-only</b> streams.</li>
+      <li><b>Partitioner</b> picks the reducer; <b>Combiner</b> is optional (0, 1 or many runs).</li>
+      <li>Session hijacking is <b>active</b>; eavesdropping and sniffing are <b>passive</b>.</li>
+      <li>Fake login page = <b>authenticity</b>; a bug changing balances = <b>integrity</b>.</li>
+      <li>More RAM/CPU on the same node = <b>vertical</b> scaling; more nodes = horizontal.</li>
+      <li><b>kube-scheduler</b> places pods; <b>etcd</b> stores cluster state; kubelet runs pods.</li>
+      <li>docker build → <b>image</b> → docker run → container. Namespaces <b>isolate</b>, cgroups <b>limit</b>.</li>
+      <li>eMBB = video/AR bandwidth; <b>mMTC</b> = massive IoT; <b>URLLC</b> = low-latency control.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="videos">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Videos</p>
+      <h2>Where to watch</h2>
+      <p>All 60 lectures are linked inside each week above. With three days left, don't try to watch everything. These are the ones that pay off most.</p>
+    </div>
+    <div class="fgrid">
+      <div class="fcard">
+        <h3>Watch if you watch nothing else</h3>
+        <div class="vids">
+          <a href="https://www.youtube.com/watch?v=AvL3bY9tUwI" target="_blank" rel="noopener"><b>L21</b> SLA tutorial</a>
+          <a href="https://www.youtube.com/watch?v=JiNgg2dfBhU" target="_blank" rel="noopener"><b>L22</b> Economics tutorial</a>
+          <a href="https://www.youtube.com/watch?v=ENYSofxVJ1U" target="_blank" rel="noopener"><b>L23</b> MapReduce tutorial</a>
+          <a href="https://www.youtube.com/watch?v=LcAPj95KeSA" target="_blank" rel="noopener"><b>L26</b> Security I</a>
+          <a href="https://www.youtube.com/watch?v=R4CUs7I9Irs" target="_blank" rel="noopener"><b>L15</b> OpenStack</a>
+          <a href="https://www.youtube.com/watch?v=6lyr0D6AKR0" target="_blank" rel="noopener"><b>L44</b> Cloud federation</a>
+          <a href="https://www.youtube.com/watch?v=1hwpIuUtOqY" target="_blank" rel="noopener"><b>L45</b> Migration I</a>
+          <a href="https://www.youtube.com/watch?v=7aJ3gh8GiFo" target="_blank" rel="noopener"><b>L52</b> Serverless I</a>
+        </div>
+        <p>The first three are where the numericals come from.</p>
+      </div>
+      <div class="fcard">
+        <h3>Full playlists</h3>
+        <ul>
+          <li><a href="https://nptel.ac.in/courses/106105167" target="_blank" rel="noopener">NPTEL course page</a>: all 60 lectures (weeks 1–12) with slides and transcripts under Downloads.</li>
+          <li><a href="https://www.youtube.com/playlist?list=PL-FqPEn1dZJDg-6LHNYnappA6DcXz3ieZ" target="_blank" rel="noopener">YouTube playlist, weeks 1–8</a> (42 videos, official uploads).</li>
+          <li>Weeks 9–12 aren't in that playlist; use the links in the week notes above.</li>
+          <li><a href="https://www.youtube.com/watch?v=uCH4jlJr3b0" target="_blank" rel="noopener">Week 1–12 revision video</a> (community upload, not reviewed here).</li>
+        </ul>
+        <p>Watch at 1.5–2× and pause on slides with lists; list slides are where most assignment questions come from.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Sources</p>
+      <h2>Original question sets</h2>
+      <p>The practice bank above was written from these. Open them to read the original questions. Third-party keys can be wrong, so trust the method on this page if they disagree.</p>
+    </div>
+    <ul class="src">
+      <li><b>Your Jul–Oct 2026 assignment solutions</b><span>NPTEL's official solutions for your run, saved in <code>cloud_computing/pyqs/2026-jul-oct-your-assignments/</code>. All 120 questions are in the practice bank under "My 2026 assignments" and make up mock Paper 1. Open the PDFs for the exact wording.</span></li>
+      <li><b>Official lecture transcripts (991 pages)</b><span>Every lecture, word for word, saved in <code>cloud_computing/course-material/</code>. I used it to check the formula sheet and notes. To look something up, search the PDF for the lecture title, e.g. "Lecture 21 : SLA-Tutorial" (p. 408) or "Lecture 22 : Cloudonomics-Tutorial" (p. 424).</span></li>
+      <li><a href="https://archive.nptel.ac.in/content/storage2/courses/downloads_new/LectureNotes/106105167/106105167.zip" target="_blank" rel="noopener">Official lecture slides (zip, 39 MB)</a><span>NPTEL's slides for the course, from the Downloads tab of the NPTEL course page. Their server refused automated downloads, so open this link in your own browser and save it to <code>cloud_computing/pyqs/</code>.</span></li>
+      <li><a href="https://myquizprep.pages.dev/solutions/cloud-computing-apr26/all-weeks" target="_blank" rel="noopener">Jan–Apr 2026 run, weeks 0–12 (130 questions)</a><span>A copy is saved in <code>cloud_computing/pyqs/2026-jan-apr-run/</code>; it loads the site's scripts, so open it while online. Same syllabus as yours; at least 11 of your questions repeat from it. Third-party key; I checked every answer. 64 GB at 8 MB/s works out to ≈2.3 h (key: 2 h). The multilevel-SLA answer (service level) matches your official key.</span></li>
+      <li><a href="https://www.scribd.com/document/680524614/Cloud-com-all-assignments-answers" target="_blank" rel="noopener">Official NPTEL solutions, 12 weeks (2023 run)</a><span>NPTEL's own solution PDFs with worked numericals and slide references. The best single source.</span></li>
+      <li><a href="https://www.scribd.com/document/867797323/Nptel-Cc-2025-Qa" target="_blank" rel="noopener">2022–2025 assignment compilation</a><span>Shows how often the same questions repeat across runs. The font in the PDF drops some letters.</span></li>
+      <li><a href="https://www.scribd.com/document/723621428/nptel-previous-year-qurestions" target="_blank" rel="noopener">2019 run assignments (weeks 1–7)</a><span>Older 8-week version; weeks 1–8 content is unchanged.</span></li>
+      <li><a href="https://onlinecourses.nptel.ac.in/noc26_cs150" target="_blank" rel="noopener">Your course on SWAYAM/NPTEL</a><span>Your own 12 graded assignments and their released solutions are the most relevant of all. Redo them after this bank.</span></li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">Made for NPTEL noc26_cs150 (Cloud Computing, Jul–Oct 2026). Check exam time and centre on your hall ticket.</div></footer>
+
+<script>
+// Your own Jul–Oct 2026 assignments (official answers), reworded. [week, question, options, correct, explanation, kind, "y"]
+const MINE = [
+[1,"Resource pooling in cloud computing means:",["Each customer gets a permanently dedicated physical server","Shared infrastructure whose resources are assigned dynamically to many customers","Resources are reachable only from a local network","Users reserve hardware by hand before use"],[1],"One of the five NIST characteristics; resources are assigned and reassigned with demand.","","y"],
+[1,"A team rents EC2 VMs and installs, patches and runs its own OS, web server, runtime and apps. The provider gives only virtual compute, storage and network. Service model?",["SaaS","PaaS","IaaS","FaaS"],[2],"You manage the OS upward: IaaS.","","y"],
+[1,"Cloud infrastructure kept for one organization's exclusive use, on-premises or hosted by a third party, is a:",["Public cloud","Hybrid cloud","Community cloud","Private cloud"],[3],"Private cloud, either on-site or outsourced.","","y"],
+[1,"Which statement about virtualization is MOST accurate?",["Each VM always shares the host OS kernel","VMs with different OSs can run on one physical machine at the same time","Virtualization exists only in cloud computing","Virtualization prevents overcommitment"],[1],"Kernel sharing describes containers; overcommitment is a common feature.","","y"],
+[1,"Distributed systems: (i) scale by adding nodes; (ii) gain fault tolerance through replication; (iii) guarantee lower latency for every operation than a centralized system.",["(i) and (ii)","Only (iii)","(i) and (iii)","All three"],[0],"Network coordination can make some operations slower, so (iii) is false.","","y"],
+[1,"SOA + cloud, where almost any IT capability is delivered as a network service, is called:",["FTP","SNTP","XaaS","FaaS"],[2],"FaaS is one specific model, not the umbrella term.","","y"],
+[1,"A Type-2 (hosted) hypervisor:",["Runs directly on hardware with no OS beneath","Runs as an application on a host OS","Always has lower overhead than Type-1","Can run only one VM at a time"],[1],"VirtualBox, VMware Workstation. Type-1 has lower overhead.","","y"],
+[1,"Advantages of PaaS: (i) developers focus on the app; (ii) automatic platform updates; (iii) full control of physical hardware; (iv) faster deployment.",["(i), (ii), (iv)","(ii), (iii)","(i), (iii)","All four"],[0],"PaaS users don't control hardware.","","y"],
+[1,"Which is most clearly IaaS?",["Microsoft Word Online","Amazon EC2 virtual machines","Google Docs","Salesforce CRM"],[1],"The rest are SaaS.","","y"],
+[1,"Many geographically spread, heterogeneous resources across several administrative domains, loosely coupled to work on one large task, form a:",["Cluster","Grid","Node","Hypervisor"],[1],"Clusters are tightly coupled and co-located.","","y"],
+
+[2,"The guest OS issues hypercalls instead of running certain privileged instructions directly. This is:",["Full virtualization","Hardware-assisted virtualization","Para-virtualization","Containerization"],[2],"Lower overhead, but the guest OS must be modified.","","y"],
+[2,"Key trait of full (hardware-assisted) virtualization compared with para-virtualization:",["The guest OS must be modified to make hypercalls","The guest OS runs unmodified; the hypervisor and CPU extensions (VT-x, AMD-V) handle privileged instructions","Guest and host share one kernel","No hypervisor is involved"],[1],"Option A is para-virtualization; C is containers.","","y"],
+[2,"Most accurate about a public cloud:",["Dedicated to one organization behind its own firewall","Open to the general public; owned and run by a cloud provider","Shared only by orgs with common regulations","Always isolates data better than a private cloud"],[1],"A is private, C is community.","","y"],
+[2,"An app must navigate, randomly access and modify parts of a moderate XML document in memory. Best parser API?",["SAX","StAX","DOM","None; parsed XML can't change"],[2],"DOM builds a tree you can edit. SAX and StAX are forward-only streams.","","y"],
+[2,"Which correctly separates host OS, guest OS and hypervisor?",["Host OS runs in a VM; guest OS on bare metal","The hypervisor creates and manages VMs; each guest OS runs in a VM; with Type-2 the host OS is what the hypervisor runs on","Guest and host OS are always identical","The hypervisor is the hardware under the host OS"],[1],"Roles in a hosted setup.","","y"],
+[2,"Moving a private cloud into a third-party data center: what must be evaluated? (i) SLAs; (ii) data-protection compliance; (iii) network latency to users.",["Only (i)","(i) and (ii)","(ii) and (iii)","All three"],[3],"Apps now depend on external connectivity, contracts and data location.","","y"],
+[2,"Which technology describes a web service's interface (operations, messages, how to invoke)?",["UDDI","WSDL","SMTP","HTML"],[1],"UDDI is the registry.","","y"],
+[2,"SOAP web services provide: (i) platform independence; (ii) XML messages; (iii) discovery via UDDI; (iv) guaranteed microsecond latency.",["(i), (ii), (iii)","(ii), (iv)","Only (i)","All four"],[0],"XML processing adds overhead, so no microsecond guarantee.","","y"],
+[2,"Which problems do traditional web services address? (i) crossing firewalls over HTTP/HTTPS; (ii) interoperability across languages and OSs; (iii) ultra-low-latency real-time calls; (iv) discovery via UDDI.",["Only (i) and (ii)","(i), (ii), (iv) yes; (iii) no","Only (ii)","All four"],[1],"Same question as the Jan–Apr 2026 run.","","y"],
+[2,"Which mapping of SOA operations is correct?",["Publish: provider → registry; Find: requestor → registry; Bind: requestor → provider","Publish: requestor → provider; Find: provider → registry; Bind: registry → requestor","Bind: provider → registry; Publish: requestor → registry; Find: provider → requestor","Find: provider → registry; Publish: requestor → registry; Bind: provider → provider"],[0],"The publish–find–bind triangle.","","y"],
+
+[3,"Least likely to be specified in an operational cloud SLA:",["Recovery Time Objective (RTO)","Exact encryption algorithm and key storage procedures","Mean Time To Repair (MTTR)","Penalty / credit calculation for downtime"],[1],"Implementation details belong in security documents.","","y"],
+[3,"A multilevel SLA has which levels? (i) corporate; (ii) customer; (iii) service.",["Only (i)","(i) and (ii)","(ii) and (iii)","All three"],[3],"Corporate applies to all customers, customer level to one client, service level to one service.","","y"],
+[3,"Three-tier SLA: corporate 95%, customer 98%, service 99.9% uptime. After an outage the provider is bound to honour the:",["Corporate SLA (broadest)","Customer SLA (middle)","Service-level SLA (most specific)","Lowest one, at the provider's choice"],[2],"The official key picks the most specific, service-level agreement.","","y"],
+[3,"Which pair quantifies reliability and recoverability in an SLA?",["Availability (uptime %) and MTTR","Lines of code and number of microservices","Staff count and office locations","CPU clock and RAM size"],[0],"Uptime % for reliability, mean time to recovery for recoverability.","","y"],
+[3,"99.9% availability over a 30-day (720 h) month allows at most:",["≈0.72 h (≈43 min)","≈7.2 h","≈3.6 h","≈72 min"],[0],"(1 − 0.999) × 720 = 0.72 h.","num","y"],
+[3,"What mainly lets a parallel database answer big analytical queries faster?",["Using only SQL","Running the query across many nodes at once","Dropping indexes","Keeping all data on one server"],[1],"Partitioned data, parallel execution.","","y"],
+[3,"Fraud detection must flag ~500,000 transactions/s within a few hundred ms. Which choice is LEAST suitable?",["Kafka feeding Flink","Kinesis with a real-time app","A nightly batch job on a data warehouse","Pulsar with a stream processor"],[2],"Batch adds hours of delay.","","y"],
+[3,"Petabytes of satellite images must be processed in parallel by Spark clusters. Storage?",["Local SSD on one VM","Object storage such as S3 or GCS","A relational database server","Browser cache"],[1],"Scales without limit and plugs into Spark/Hadoop.","","y"],
+[3,"A word-count job on 2 TB fails when a reducer runs out of disk during merge. Likely cause and fix?",["Inefficient mapper; rewrite it","No combiner ran; configure one to shrink map output locally","Shuffle didn't dedupe keys; add reducers","Network saturated; add nodes"],[1],"Same question as the Jan–Apr 2026 run.","","y"],
+[3,"An OpenStack node has 640 physical CPUs and a CPU allocation ratio of 5:1. Maximum vCPUs?",["3000","3200","3400","3500"],[1],"640 × 5 = 3,200.","num","y"],
+
+[4,"Which Azure SQL Database tier separates compute and storage so storage grows automatically up to 100 TB without downtime?",["Basic","Business Critical","Hyperscale","Standard"],[2],"Hyperscale is built for very large databases.","","y"],
+[4,"Two Azure VMs sit in different Availability Zones of one region, and one data center loses power. Then:",["Both VMs go down (same region)","The other VM keeps running, because zones are isolated","Azure moves the failed VM to another region","Both share cooling and networking"],[1],"Zones are separate data centers with their own power, cooling and network.","","y"],
+[4,"Which App Service tier supports the most deployment slots?",["Basic","Standard","Premium (P1v3 and higher)","Free"],[2],"Premium allows up to 20 slots.","","y"],
+[4,"Users can still open an App Service over http://. Which setting stops unencrypted access?",["Managed Identity","Always On","HTTPS Only","Deployment slots"],[2],"Redirects all HTTP to HTTPS.","","y"],
+[4,"GCP database for structured relational data with global consistency and horizontal scale:",["Firestore","Cloud SQL","Cloud Spanner","Memorystore"],[2],"Cloud SQL scales mainly vertically; Firestore is NoSQL; Memorystore is a cache.","","y"],
+[4,"A 100 GB disk must survive after its VM is terminated. Which OpenStack service?",["Nova","Swift","Cinder","Keystone"],[2],"Cinder volumes live independently of the VM.","","y"],
+[4,"GKE vs Cloud Run:",["GKE supports only VMs","Cloud Run needs you to manage Kubernetes clusters","GKE manages Kubernetes clusters; Cloud Run runs containers with no cluster to manage","Both need manual control-plane management"],[2],"Cloud Run is serverless containers.","","y"],
+[4,"Millions of IoT events per minute need real-time ingest, an analytical warehouse and dashboards. GCP stack?",["Cloud SQL + Cloud Functions + Looker","Pub/Sub + BigQuery + Looker Studio","Firestore + Compute Engine + Bigtable","Cloud Storage + Memorystore + App Engine"],[1],"Pub/Sub ingests, BigQuery stores and queries, Looker Studio visualizes.","","y"],
+[4,"Route all production traffic to version v3 of an App Engine service:",["gcloud app services set-traffic default --splits=v3=1","gcloud app deploy --traffic=v3","gcloud app versions promote v3","gcloud app services update v3"],[0],"A split of v3=1 sends 100% of traffic to v3.","","y"],
+[4,"Which OpenStack service routes tenant traffic between internal and external networks?",["Nova","Neutron","Keystone","Swift"],[1],"Virtual networks, routers, DHCP, security groups, floating IPs.","","y"],
+
+[5,"99% availability; the app runs 12 h/day. Maximum downtime in a 30-day month?",["3.6 h","6 h","7.2 h","9 h"],[0],"12 × 30 = 360 h; 1% of 360 = 3.6 h.","num","y"],
+[5,"A server switches on extra CPU cores for a traffic spike. Its power use:",["Falls","Stays the same","Rises as more cores are active","Depends only on RAM"],[2],"Each active core draws power; DVFS helps efficiency but total rises.","","y"],
+[5,"Which characteristic most directly avoids large upfront hardware spending?",["Elastic scalability","Pay-as-you-go pricing","Fault tolerance","Multi-tenancy"],[1],"Pay only for what you use.","","y"],
+[5,"HDFS block size 128 MB; a 700 MB file; one map task per block. How many map tasks?",["5","6","7","8"],[1],"5 full blocks + 60 MB = 6 blocks.","num","y"],
+[5,"Which component creates and manages virtual machines?",["OS kernel","Hypervisor","BIOS","Device driver"],[1],"The hypervisor (VMM).","","y"],
+[5,"Which MapReduce component decides which reducer receives a key?",["Combiner","Partitioner","RecordWriter","InputSplit"],[1],"Hash partitioner by default.","","y"],
+[5,"Which MapReduce component is optional and may run zero, one or many times?",["Mapper","Reducer","Combiner","RecordReader"],[2],"So the job must be correct without it.","","y"],
+[5,"Servers idle at 15% CPU, so the provider packs VMs onto fewer servers and powers off the rest, within SLA. Strategy?",["Round-robin","Energy-aware scheduling","First-come-first-serve","Fair scheduling"],[1],"Consolidation for energy.","","y"],
+[5,"(1) Elasticity lets users grow or shrink resources with demand. (2) Elasticity helps avoid paying for unused resources.",["Both true","Both false","Only 1","Only 2"],[0],"Release resources when demand drops.","","y"],
+[5,"Average demand 75 units, peak 225 units, utility premium 2.8. Which is true?",["Cloud cost < owning cost","Cloud cost > owning cost","Equal","None of these"],[0],"P/A = 3 > U = 2.8.","num","y"],
+
+[6,"Customer records are encrypted, but a software bug wrongly changes account balances. Which objective failed?",["Confidentiality only","Integrity only","Availability only","Confidentiality and availability"],[1],"Encryption protects secrecy, not correctness.","","y"],
+[6,"An employee opens a fake VPN portal that perfectly copies the real one. Before any password is typed, which property is already broken?",["Confidentiality","Integrity","Availability","Authenticity"],[3],"The portal falsely claims to be the real service.","","y"],
+[6,"Which is NOT a passive attack?",["Packet sniffing","Traffic analysis","Session hijacking","Network monitoring"],[2],"Hijacking injects or alters packets: active.","","y"],
+[6,"Which attack cannot directly modify data in transit?",["Replay","Man-in-the-middle","Eavesdropping","Masquerading"],[2],"Eavesdropping only listens.","","y"],
+[6,"A Denial-of-Service attack is best described as:",["Silently monitoring traffic","Flooding a server so legitimate users can't be served","Impersonating a user","Modifying data in transit"],[1],"An active attack on availability.","","y"],
+[6,"Least likely to be part of reconnaissance:",["DNS enumeration of subdomains","Port and service scanning","Exploiting a buffer overflow for admin rights","OSINT from websites and social media"],[2],"That is the exploitation phase.","","y"],
+[6,"(I) Authentication decides whether a user may access a resource. (II) Authorization decides what an authenticated user may do.",["I true, II false","I false, II true","Both true","Both false"],[1],"Authentication only verifies who you are.","","y"],
+[6,"A bank must install a custom Linux kernel module, set OS-level firewall rules and run proprietary DB software, without owning servers. Model?",["SaaS","PaaS","IaaS","FaaS"],[2],"Only IaaS gives OS-level control.","","y"],
+[6,"Backups of confidential data are silently replicated to another country. Which concern is violated?",["Data location","Recovery","Virtualization","Resource pooling"],[0],"Laws may restrict where data is stored.","","y"],
+[6,"Best practice to reduce vendor lock-in:",["Use provider-specific APIs","Build on open standards and portable technology","Store data in proprietary formats","Use only managed proprietary services"],[1],"Containers and open standards ease migration.","","y"],
+
+[7,"Least suitable to offload to a remote cloud in MCC:",["GPU-heavy image rendering","Large-scale ML inference","Emergency collision avoidance needing millisecond response","Video transcoding"],[2],"Network delay makes it unsafe; handle locally or at the edge.","","y"],
+[7,"A mobile app gets extra resources in a user surge and releases them later. Characteristic?",["Resource pooling","Rapid elasticity","Location independence","Broad network access"],[1],"Scale up and down automatically.","","y"],
+[7,"Dynamic computation offloading mainly optimizes:",["Screen brightness and storage","Execution time, energy use and resource utilization","Camera and refresh rate","Subscription cost only"],[1],"Performance vs battery, given network conditions.","","y"],
+[7,"Mobile AR needs end-to-end response below 20 ms. Infrastructure?",["A distant public cloud","A nearby cloudlet on a fast local network","Local storage only","An offline app"],[1],"Cloudlets cut the network delay.","","y"],
+[7,"Patient records are stored in the cloud. Which requirement keeps unauthorized users out?",["Elasticity","Data confidentiality","Resource pooling","Load balancing"],[1],"Only authorized people may read medical data.","","y"],
+[7,"Which cloud limitation does fog computing mainly address?",["Weak virtualization","High latency from distant data centers","No storage","Weak servers"],[1],"Compute moves closer to devices.","","y"],
+[7,"Which statement about fog nodes is FALSE?",["They filter and aggregate sensor data","They sit close to IoT devices","They permanently store all enterprise data","They reduce traffic to distant clouds"],[2],"Fog storage is short-term; the cloud keeps long-term data.","","y"],
+[7,"(1) Geospatial cloud processes huge satellite imagery in parallel across nodes. (2) Distributed storage and parallel frameworks beat a single workstation on big geospatial data.",["Both true; 2 explains 1","Both true; 2 doesn't explain 1","Only 1 true","Only 2 true"],[0],"Parallelism is the reason.","","y"],
+[7,"A large raster is split into tiles for parallel processing. What must be handled to keep results correct?",["Client screen resolution","Boundary effects between neighbouring tiles","Keyboard latency","Number of GIS users"],[1],"Filters and terrain analysis need neighbouring pixels; use overlap.","","y"],
+[7,"A wearable ECG must flag abnormalities within milliseconds. Architecture?",["Sensors → remote cloud → doctor","Sensors → fog/edge node → cloud","Sensors → local storage → weekly upload","Sensors → FTP server → desktop GIS"],[1],"Detect nearby; use the cloud for history and training.","","y"],
+
+[8,"Which command removes a Docker image you no longer need?",["docker rm","docker rmi","docker delete","docker remove"],[1],"docker rm removes containers.","","y"],
+[8,"Which command lists all Docker networks?",["docker network ls","docker network show","docker net ps","docker networks"],[0],"Shows ID, name, driver and scope.","","y"],
+[8,"Most accurate comparison of VMs and containers:",["VMs share the host kernel; containers have their own","Containers share the host kernel; VMs virtualize hardware and run their own guest kernels","Both always need separate guest OSs","Containers need more resources than VMs"],[1],"That is why containers are lighter.","","y"],
+[8,"Main role of etcd in a Kubernetes cluster:",["Running containers","Storing cluster state and configuration","Scheduling pods","Providing images"],[1],"A distributed key-value store backing the control plane.","","y"],
+[8,"Which is a Type-2 (hosted) hypervisor?",["VMware ESXi","Xen","Oracle VirtualBox","Microsoft Hyper-V Server"],[2],"ESXi, Xen and Hyper-V Server are Type-1.","","y"],
+[8,"Of 100 servers only 40 are busy; the rest are nearly idle. Best way to cut energy?",["Spread VMs evenly over all 100","Consolidate VMs and put idle servers in low-power state","Raise CPU frequency everywhere","Duplicate every VM"],[1],"VM consolidation.","","y"],
+[8,"Why is middleware placed between WSNs and cloud services in a sensor cloud?",["To make sensor nodes bigger","To abstract heterogeneous sensors and expose them as cloud resources","To stop sensors communicating","To replace sensing"],[1],"Discovery, protocol translation, virtualization.","","y"],
+[8,"Best architecture for both low latency and large-scale analytics:",["Device → cloud only","Device → edge/fog → cloud","Device → database only","Device → hypervisor → cloud"],[1],"Local for speed, cloud for scale.","","y"],
+[8,"Sensitive IoT data crosses public networks to the cloud. Most important protection in transit?",["Encryption (e.g., TLS)","Faster CPU","Higher sampling rate","VM consolidation"],[0],"Stops reading or tampering on the way.","","y"],
+[8,"(1) Edge processing reduces delay compared with a distant cloud. (2) Edge processing removes all network latency.",["1 true, 2 false","2 true, 1 false","Both true","Both false"],[0],"Some communication delay always remains.","","y"],
+
+[9,"A factory needs millisecond anomaly detection per machine plus plant-wide aggregation before sending summaries to the cloud. Placement?",["All processing in the cloud","Machine level at the edge, plant level at fog nodes","All processing on sensors","Plant-wide processing only in the cloud"],[1],"Edge for speed, fog for regional aggregation.","","y"],
+[9,"Detection near each camera, regional congestion analysis at roadside micro data centers, long-term trends in the cloud. Architecture?",["Cloud-only","Fog-only","Edge–fog–cloud","Edge-only"],[2],"Three layers, three scopes.","","y"],
+[9,"Order by raw data sent toward the cloud, lowest to highest:",["Edge processing → fog processing → cloud-only","Cloud-only → fog → edge","Fog → cloud-only → edge","Edge → cloud-only → fog"],[0],"The earlier you filter, the less you send.","","y"],
+[9,"A fog node runs short of memory and gets more RAM and CPU on the same node. This is:",["Horizontal scaling","Temporal scaling","Geographic scaling","Vertical scaling"],[3],"Scale up = bigger node; scale out = more nodes.","","y"],
+[9,"Division of responsibilities in edge–fog–cloud:",["Edge does global optimization; cloud makes sensor decisions","Edge acts locally, fog coordinates regionally, cloud orchestrates globally","All layers do the same tasks","Only the cloud decides"],[1],"By proximity and scope.","","y"],
+[9,"First-stage video processing must happen within 10 ms of the camera; model training needs heavy compute. Placement?",["Both in a distant cloud","Both on the smallest IoT device","First stage at the edge, training in the cloud","First stage in the cloud, training at the edge"],[2],"Latency-critical near, compute-heavy far.","","y"],
+[9,"A device moves quickly between edge servers while its task is offloaded. Most critical issue?",["Static CPU allocation","Service migration and task continuity during handover","Cloud storage capacity","VM image size"],[1],"Mobility forces migration.","","y"],
+[9,"The primary CSP lacks capacity, so a broker finds a second CSP and negotiates terms. Which federation function?",["Resource federation and inter-provider provisioning","VM deletion in one CSP","Local container orchestration","Hardware virtualization"],[0],"Brokers provision across providers.","","y"],
+[9,"Why is trust management important in a cloud federation?",["Resources come from independent providers with different security and reliability policies","All CSPs belong to one organization","Federation removes authentication","Only physical servers need trust"],[0],"Behaviour must be verified across providers.","","y"],
+[9,"Main advantage of a hybrid cloud federation for sensitive workloads:",["No security controls needed","Forces all work to the public cloud","Private-cloud control for sensitive work plus public-cloud scale for the rest","Prevents workload migration"],[2],"Balance of control and scalability.","","y"],
+
+[10,"During live migration, which most increases total migration time?",["Low page-dirtying rate","High page-dirtying rate","More CPU cores at the destination","Smaller VM memory"],[1],"Dirty pages must be sent again.","","y"],
+[10,"Which live-migration technique starts the VM at the destination first and fetches pages on demand?",["Cold migration","Pre-copy","Post-copy","Offline image transfer"],[2],"Pages arrive via page faults or background push.","","y"],
+[10,"What best reduces data sent (and energy) in pre-copy migration?",["Raise the dirtying rate","Compress and deduplicate memory pages","Run pre-copy rounds forever","Turn off dirty-page tracking"],[1],"Less data on the wire.","","y"],
+[10,"Many edge devices overload nearby fog nodes. Key strategy?",["More storage on one fog node","Static task allocation","Load balancing across fog nodes","Send everything to the cloud"],[2],"Same question as the Jan–Apr 2026 run.","","y"],
+[10,"Which Kubernetes component assigns a newly created pod to a worker node?",["kubelet","kube-scheduler","kube-proxy","Container registry"],[1],"The kubelet then runs the pod on that node.","","y"],
+[10,"Dockerfile → docker build → ______ → docker run",["Volume","Image","Running container","Kubernetes pod"],[1],"docker run creates a container from the image.","","y"],
+[10,"Namespaces and cgroups in containers:",["Namespaces set quotas; cgroups isolate","Namespaces isolate processes and resources; cgroups limit resource use","Both only build images","Neither is needed"],[1],"Isolation vs control.","","y"],
+[10,"A 32 GB VM over a 16 MB/s link, cold migration. Approximate transfer time?",["≈15 min","≈34 min","≈1 h","≈2 h"],[1],"32 × 1024 ÷ 16 = 2,048 s ≈ 34 min.","num","y"],
+[10,"A database container is deleted, but its files were in a named volume. The data:",["Is deleted with the container","Is still in the volume","Becomes an image","Returns only if the container restarts"],[1],"Volumes have their own lifecycle.","","y"],
+[10,"Which statement about containers and VMs is correct?",["Containers need a full guest OS per app","They always isolate equally","Containers share the host kernel; VMs virtualize a whole machine","Containers can't run on VMs"],[2],"Containers can run inside VMs.","","y"],
+
+[11,"Defining feature of dew computing compared with conventional cloud:",["Needs a permanent fast connection","Local independence: works offline and syncs when connected","No cloud component at all","Storage only, no computation"],[1],"Complements the cloud, doesn't replace it.","","y"],
+[11,"A weather station in remote mountains keeps recording for hours offline and syncs when the link returns. Paradigm?",["Edge","Fog","Dew","Central cloud"],[2],"Autonomous offline operation + sync.","","y"],
+[11,"Two users edit the same record offline; on reconnect the cloud finds conflicting versions. Needed mechanism?",["CPU scheduling","Conflict detection and resolution during sync","Container image creation","Load balancing"],[1],"Restore a consistent state.","","y"],
+[11,"Letting dew devices edit data offline mainly introduces which challenge?",["Virtualization overhead","Detecting and resolving conflicts on reconnect","Losing all local data","Never reaching the cloud"],[1],"The autonomy vs consistency trade-off.","","y"],
+[11,"An idle serverless function gets a request and the platform must first initialize its environment. This delay is a:",["Warm start","Cold start","Cache miss","Boot failure"],[1],"Extra latency on the first call.","","y"],
+[11,"Why are serverless functions usually stateless?",["To save electricity","Because local storage is unlimited","So they can scale and run in parallel without conflicts","To avoid APIs"],[2],"Same question as the Jan–Apr 2026 run.","","y"],
+[11,"A 45-minute batch job can't run in a single AWS Lambda invocation because:",["Lambda has no internet","The maximum timeout is 15 minutes","Lambda can't do batch work","Lambda must be stateful"],[1],"Split the job or use containers, AWS Batch or EC2.","","y"],
+[11,"1,000 independent requests arrive at once and the provider starts many function instances. Which property allows this?",["Stateful execution","Horizontal scaling of independent invocations","One fixed VM per user","Permanent local storage"],[1],"Independent invocations scale out.","","y"],
+[11,"Each scientific task needs 40 uninterrupted minutes; the FaaS limit is 15 minutes. The problem is:",["Functions can't reach databases","The task exceeds the maximum invocation time","FaaS can't do numerical work","Functions can't run in parallel"],[1],"Execution time limit.","","y"],
+[11,"Managed service built for large analytical queries over structured data with distributed processing:",["Amazon Redshift","Amazon EC2","AWS Lambda","Amazon Route 53"],[0],"A columnar cloud data warehouse.","","y"],
+
+[12,"MCC benefits mobile devices by: 1 offloading heavy tasks; 2 extending battery life; 3 guaranteeing zero latency; 4 giving large storage.",["1, 2 and 4 only","1 and 3 only","2 and 3 only","All of them"],[0],"Wireless links always add some delay.","","y"],
+[12,"City planners store roads, buildings, GPS points and satellite images in a cloud system for analysis. This is mainly:",["Mobile cloud computing","Spatial cloud computing","Serverless computing","Batch computing"],[1],"Geospatial data management.","","y"],
+[12,"Which task most likely relies on spatial cloud computing?",["Sorting a payroll sheet","Real-time flood-risk mapping from terrain and rainfall across a region","Compiling code","Streaming music"],[1],"Large-scale geospatial analytics.","","y"],
+[12,"Real-time sensor–actuator feedback in CPS is essential for:",["Data archiving","Closed-loop control","Static analysis","Batch processing"],[1],"Same question as the Jan–Apr 2026 run.","","y"],
+[12,"A GPS taxi logs (x1,y1,t1), (x2,y2,t2) … (xn,yn,tn). This sequence is a:",["Spatial trajectory","Spatial database","Road topology","Spatial index"],[0],"Time-ordered positions of a moving object.","","y"],
+[12,"Outsourcing location- and time-specific data collection to a crowd of mobile users is:",["Spatial trajectory","Spatial crowdsourcing","Time series","Road network graph"],[1],"E.g., reporting road conditions at given spots.","","y"],
+[12,"The primary objective of V2V communication is:",["Internet access in cars","Exchanging safety data such as speed, position and braking","Infotainment","Uploading to cloud storage"],[1],"Same question as the Jan–Apr 2026 run.","","y"],
+[12,"Onboard sensors, roadside units that preprocess and react locally, and fleet-wide cloud analytics together form:",["Cloud-only computing","Edge computing with no cloud","An integrated edge–fog–cloud architecture","A single central server"],[2],"Vehicle = edge, roadside unit = fog.","","y"],
+[12,"A major benefit of real-time mobility analytics in cities:",["No more traffic laws","Adjusting traffic signals live to vehicle density","Cheaper car manufacturing","No accidents ever"],[1],"Same question as the Jan–Apr 2026 run.","","y"],
+[12,"Very high-resolution video and AR content for mobile users fits which 5G category?",["eMBB","mMTC","URLLC","NFC"],[0],"mMTC = massive IoT; URLLC = low-latency control.","","y"]
+];
+
+// [week, question, options, correct indexes, explanation, kind]
+const QS = [
+[0,"A client opens a TCP connection from source port 51,200. Which range is that port in?",["Well-known (0–1023)","Registered (1024–49151)","Dynamic / private (49152–65535)","Reserved, not usable"],[2],"IANA ranges: 0–1023 well-known, 1024–49151 registered, 49152–65535 dynamic (ephemeral)."],
+[0,"In classful addressing, 10.20.30.40 is a Class ___ address.",["A","B","C","D"],[0],"First octet 1–126 → A; 128–191 → B; 192–223 → C; 224–239 → D."],
+[0,"Which OSI layer handles data representation, encryption and format translation?",["Session","Presentation","Transport","Application"],[1],"Presentation is layer 6."],
+[0,"Which device works mainly at the Network layer (Layer 3)?",["Hub","Repeater","Switch","Router / gateway"],[3],"Hub and repeater are L1, a switch is L2, router/gateway is L3."],
+[0,"Usual transport protocols for (live video call, email, DNS lookup), in that order:",["TCP, UDP, TCP","UDP, TCP, UDP","UDP, UDP, TCP","TCP, TCP, TCP"],[1],"Real-time media uses UDP, SMTP uses TCP, DNS queries normally use UDP."],
+[0,"Direct-mapped cache: tag 6 bits, index 10 bits, block 1 byte. Main memory and cache sizes?",["64 KB and 1 KB","32 KB and 1 KB","64 KB and 4 KB","16 KB and 1 KB"],[0],"Address = 16 bits → 2^16 = 64 KB. Cache = 2^10 lines × 1 B = 1 KB.","num"],
+[0,"16-way set-associative cache of 64 KB, 32-bit addresses. How many tag bits?",["18","19","20","22"],[2],"index + offset = log2(64 KB ÷ 16) = log2(4 KB) = 12, so tag = 32 − 12 = 20. Block size doesn't change it.","num"],
+[0,"Which protocol is matched to the right TCP/IP layer?",["ICMP → Transport","DHCP → Application","Ethernet → Network","TELNET → Transport"],[1],"DHCP and TELNET are Application; ICMP is Network; Ethernet is Link."],
+
+[1,"Which is NOT one of NIST's five essential characteristics of cloud computing?",["On-demand self-service","Resource pooling","Guaranteed zero latency","Measured service"],[2],"The five: on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service."],
+[1,"Select all NIST essential characteristics.",["Broad network access","Rapid elasticity","Low latency","Measured service"],[0,1,3],"Latency is a performance measure, not an essential characteristic."],
+[1,"A team edits a spreadsheet together in Google Sheets in the browser. From the user's view this is:",["IaaS","PaaS","SaaS","FaaS"],[2],"A finished application used over the web is SaaS."],
+[1,"A start-up deploys its own web app; the provider handles OS patches, middleware and runtime. Best fit?",["SaaS","PaaS","IaaS","On-premise"],[1],"You bring the code, the provider runs the platform: PaaS."],
+[1,"Which statements about PaaS are true? (select all)",["Hides infrastructure management from the developer","Can bundle databases, messaging and web services","Always gives root access to the underlying VM","Speeds up building and deploying applications"],[0,1,3],"Root access to VMs is an IaaS trait."],
+[1,"Interconnected stand-alone computers, usually in one place, working as one integrated computing resource form a:",["Grid","Cluster","Cloud","Peer"],[1],"That is the course's definition of a cluster."],
+[1,"Key components of cluster computing (select all):",["Parallel programming environment","A single shared CPU for all nodes","SMP or PC/workstation nodes","High-speed interconnect and middleware"],[0,2,3],"Clusters are many stand-alone nodes joined by fast interconnect and middleware."],
+[1,"Utility computing is a ______ model in which the provider makes computing resources and ______ available to the customer.",["service-provisioning; infrastructure management","infrastructure management; service-provisioning","cloud computing; resource management","resource management; billing"],[0],"Order matters in this fill-in."],
+[1,"True or false: in utility computing, pricing differs between customers only on scale and payment frequency.",["True","False"],[1],"Pricing also depends on commitments."],
+[1,"In the classic client–server model: (i) virtualization is a core concept; (ii) the system scales without limit.",["Only (i)","Only (ii)","Both","Neither"],[3],"No virtualization, and it scales only to a point."],
+[1,"Which property is most typical of distributed computing?",["Centralized control","Fault tolerance","Single point of failure","Limited scalability"],[1],"Distributed systems are designed to avoid single points of failure."],
+[1,"SOA combined with cloud computing, where almost any IT capability is offered as a service, is called:",["XaaS","SNMP","FTP","EDI"],[0],"Everything as a Service."],
+[1,"Which one is a public cloud platform?",["Hyper-V on company-owned servers","Microsoft Azure","A private OpenStack in the company's data center","VMware vSphere for internal use"],[1],"The others are virtualization or private-cloud software."],
+[1,"Which statement about virtualization is most accurate?",["Every VM shares the host OS kernel","VMs with different operating systems can share one physical machine","Virtualization exists only in the cloud","Virtualization prevents overcommitment"],[1],"Kernel sharing describes containers, not VMs."],
+[1,"Distributed systems are the natural choice when the job is (select all):",["Data-intensive, with data spread across sites","Compute-intensive and parallel","Latency-critical but limited to one machine"],[0,1],"A single-machine job gains nothing from distribution."],
+[1,"Peer-to-peer computing is closer to a truly distributed application than client–server.",["True","False"],[0],"P2P has no central server."],
+[1,"In SaaS, only the applications are maintained by the user.",["True","False"],[1],"In SaaS the provider maintains the application too."],
+
+[2,"Public clouds usually come with ______ and ______ SLAs.",["customized, negotiable","default, restrictive","loosely coupled, default","restrictive, customized"],[1],"Off-the-shelf SLAs that you cannot negotiate."],
+[2,"Which are private cloud technologies? (select all)",["Eucalyptus","Amazon VPC","Gmail","Google Docs"],[0,1],"Gmail and Docs are public SaaS."],
+[2,"Infrastructure shared by several organizations with the same compliance needs is a:",["Public cloud","Private cloud","Community cloud","Hybrid cloud"],[2],"Shared concerns define a community cloud."],
+[2,"For an outsourced private cloud, which should be checked? (select all)",["Network dependency and SLAs","Multi-tenancy / co-residency risk","Where the data is hosted (legal and regulatory)"],[0,1,2],"All three are listed concerns."],
+[2,"In an on-site private cloud, on-demand bulk data import/export is limited by the organization's network capacity.",["True","False"],[0],"Real-time processing can also suffer from those network limits."],
+[2,"Para-virtualization means:",["Running an unmodified guest with full trapping","Modifying the guest OS to call the hypervisor for privileged operations","Emulating all hardware in software","Containers sharing the host kernel"],[1],"Hypercalls replace trapped instructions."],
+[2,"Speed and flexibility are disadvantages of para-virtualization.",["True","False"],[1],"They are its advantages. The drawback is modifying the guest OS."],
+[2,"What best separates a Type-1 hypervisor from a Type-2?",["Type-1 runs on a host OS","Type-1 runs directly on hardware, so overhead is lower","Only Type-2 can run several OSs","Type-1 is only for desktops"],[1],"Bare-metal vs hosted."],
+[2,"Goals of a virtual machine architecture (select all):",["Equivalence","Resource control","Efficiency","Kernel portability"],[0,1,2],"Popek–Goldberg requirements."],
+[2,"Hypervisor and Virtual Machine Monitor (VMM) are:",["Different layers","The same thing","Type-1 and Type-2 respectively","Cluster managers"],[1],"Synonyms."],
+[2,"If an XML document is not well-formed, the parser should:",["Continue and ignore it","Stop and report an error","Auto-correct the tags","Convert it to HTML"],[1],"XML processors must not recover silently."],
+[2,"Which attribute declares an XML namespace?",["xmlsn","xmlns","namespace","xsd"],[1],"The past question used the misspelling xmlsn as the trap."],
+[2,"Huge XML file, little memory, and the program wants to pull events when ready. Which API?",["DOM","SAX","StAX","XSLT"],[2],"DOM loads the whole tree; SAX pushes; StAX pulls."],
+[2,"XML descends from which language?",["CSV","SGML","UML","JavaScript"],[1],"XML is a simplified subset of SGML."],
+[2,"The basic web services platform is:",["XML + HTTP","CSS + HTTP","XML + HTML","Java + RMI"],[0],"XML for data, HTTP for transport."],
+[2,"Which is the registry/directory for discovering web services?",["SOAP","WSDL","UDDI","HTTP"],[2],"Universal Description, Discovery and Integration."],
+[2,"In WSDL, <portType> describes:",["The TCP/UDP port","The operations and the messages involved","The transport protocol","Only data types"],[1],"Binding describes the protocol; types describe data."],
+[2,"SOA relationships involve which three roles?",["Provider, requestor, broker/registry","Provider, requestor, hypervisor","Client, server, router","Producer, consumer, queue"],[0],"Publish, find, bind."],
+[2,"Compared with EDI, web services:",["Have higher error rates","Give similar capability at lower implementation cost","Need private networks","Cannot cross firewalls"],[1],"EDI: low errors, high accuracy, but expensive."],
+[2,"Data Object Storage (DOS): (i) stores user credentials; (ii) is usually one per cloud.",["Only (i)","Only (ii)","Both","Neither"],[2],"Both are true per the course."],
+[2,"Which problems do classic web services handle well? (select all)",["Crossing firewalls over HTTP/HTTPS","Interoperability across languages and OSs","Ultra-low-latency real-time calls","Service discovery through UDDI"],[0,1,3],"XML over HTTP is not built for ultra-low latency."],
+[2,"Web services are NOT mainly used to:",["Reuse application components","Solve interoperability problems","Connect existing software","Implement the basic client–server paradigm"],[3],"The first three are the stated uses."],
+
+[3,"A formal contract between a service provider and a service consumer is a(n):",["SLO","KPI","SLA","Utility premium"],[2],"Service Level Agreement."],
+[3,"Multiple KPIs are aggregated into a(n):",["SLA","SLO","Invoice","RTO"],[1],"KPIs → SLOs; the SLA contains SLOs."],
+[3,"Which item is least likely to appear in an operational cloud SLA?",["Uptime percentage","Mean time to repair","Exact encryption algorithm and key storage steps","Service credits for downtime"],[2],"SLAs state outcomes, not low-level implementation."],
+[3,"In SLA monitoring, availability is measured as:",["Response speed","Percentage of uptime over the period","Number of users","Elastic headroom"],[1],"Uptime as a % of the observation period."],
+[3,"An app runs 24 h/day for 30 days. Outages total 4 h plus T h. The SLA promises 99% availability. Which T values break the SLA? (select all)",["2","3","4","6"],[2,3],"720 h scheduled. NPTEL form: (4+T)/(716−T) ≤ 0.01 → T ≤ 3.13. Simple form: 4+T ≤ 7.2 → T ≤ 3.2. Either way 4 and 6 violate.","num"],
+[3,"A service promises 99.8% success on 50,000 requests per day. How many failures per day are allowed?",["10","50","100","1,000"],[2],"50,000 × 0.002 = 100.","num"],
+[3,"When is the cloud cheaper than owning?",["Utility premium > peak/average","Utility premium < peak/average","Utility premium = peak/average","Always"],[1],"Owning pays for peak all the time; cloud pays for average at a premium."],
+[3,"Peak demand 120 units, average 40 units, utility premium 2.5. Which is cheaper?",["Cloud","Owning","Equal","Can't tell"],[0],"P/A = 3 > U = 2.5.","num"],
+[3,"Peak 300 units, D(t) = 4t, owned unit cost 100, cloud unit cost 140. For which T is cloud cheaper? (select all)",["80","100","110","150"],[0,1],"Owned = 300×100×T = 30,000T. Cloud = ∫140·4t dt = 280T². Cheaper when 280T² < 30,000T → T < 107.1.","num"],
+[3,"Peak 250 units, D(t) = 5t, owned unit cost 120, cloud unit cost 150. Which T makes cloud cheaper?",["50","100","150","200"],[0],"Owned = 30,000T. Cloud = 375T². Cheaper when T < 80.","num"],
+[3,"Adding n independent demands changes the coefficient of variation by:",["Increasing it by √n","Reducing it by 1/√n","No change","Multiplying by n"],[1],"Cv = σ/|μ|; aggregation smooths demand."],
+[3,"Coefficient of variation is defined as:",["|mean| / standard deviation","Standard deviation / |mean|","|mean| × standard deviation","Variance / mean"],[1],"Cv = σ / |μ|."],
+[3,"The key factor in deciding a hybrid (owned + utility) model is:",["Network latency","Peak-to-average demand ratio","Interoperability","Number of users"],[1],"Same ratio that decides cloud vs owning."],
+[3,"Utility (pay-per-use) pricing helps most when demand is:",["Flat","Prepaid","Variable","Fixed by contract"],[2],"Flat demand is best served by owned capacity."],
+[3,"Which parallel database architecture partitions tables across nodes so SQL runs in parallel?",["Shared memory","Shared disk","Shared nothing","Shared cache"],[2],"The SQL optimizer handles distributed joins."],
+[3,"(1) Row stores suit transaction processing. (2) Column stores suit data warehouses.",["Both true","Only 1","Only 2","Both false"],[0],"OLTP vs OLAP."],
+[3,"The GFS master keeps in touch with chunkservers using:",["Command messages","Heartbeat messages","Query messages","Multicast"],[1],"Regular heartbeats."],
+[3,"Which function takes key/value pairs and emits zero or more intermediate pairs?",["Map","Partition","Reduce","Combine"],[0],"Map."],
+[3,"(1) Map turns one set of key-value pairs into another. (2) Each reducer groups map output by the same key.",["Both true","Only 1","Only 2","Both false"],[0],"Standard MapReduce flow."],
+[3,"In OpenStack, ephemeral storage lasts until ______ and is managed by ______.",["the VM is terminated; Nova","the volume is deleted; Cinder","forever; Swift","reboot; Glance"],[0],"Block volumes (Cinder) outlive the VM."],
+[3,"Which OpenStack service handles identity and authentication?",["Nova","Keystone","Neutron","Glance"],[1],"Keystone also provides the service catalog."],
+[3,"Block storage volumes in OpenStack come from:",["Swift","Cinder","Nova","Horizon"],[1],"Swift is object storage."],
+[3,"During provisioning, which service configures IP, gateway, DNS and L2 connectivity?",["Neutron","Cinder","Keystone","Glance"],[0],"Networking service."],
+[3,"A node has 48 physical cores and CPU overcommit is 16:1. How many vCPUs can be allocated?",["64","384","768","1,024"],[2],"48 × 16 = 768.","num"],
+[3,"'Bias towards vendors' in SLA monitoring means:",["Vendors choose the monitored parameters to suit themselves","The customer picks the parameters","A balanced approach","No monitoring at all"],[0],"Hence the case for third-party monitoring."],
+[3,"A classic data warehousing database is:",["Teradata","SQLite","Redis","MongoDB"],[0],"Teradata is the slide example."],
+
+[4,"(1) Azure is a public cloud platform. (2) The Azure App Service plan defines security policy.",["1 true, 2 false","1 false, 2 true","Both true","Both false"],[0],"The plan is the hosting container: region, size, instance count, pricing tier."],
+[4,"When deploying to Azure Web Apps by FTP/local Git, which password do you enter?",["Azure portal login password","Deployment user password","Windows password","No password"],[1],"A separate deployment user is created for this."],
+[4,"Azure Web Apps lack scalability.",["True","False"],[1],"They are highly scalable and self-patching."],
+[4,"Match GCP services: BigQuery, App Engine, Cloud SQL →",["Storage, App services, Compute","App services, Compute, Storage","Compute, Storage, App services","Compute, App services, Storage"],[1],"Per the course's GCP grouping."],
+[4,"Which statements about GCP storage are true? (select all)",["Cloud Storage is object storage with global edge caching","Datastore is a NoSQL document database","Cloud SQL is Google's petabyte-scale analytics warehouse","BigQuery manages relational databases for you"],[0,1],"The last two swap Cloud SQL and BigQuery."],
+[4,"Which are true for Google App Engine? (select all)",["Part of GCP compute","A PaaS offering","You must patch the OS yourself","Part of GCP storage"],[0,1],"With App Engine you just deploy code."],
+[4,"Which command deploys an app to App Engine?",["gcloud app deploy app.yaml","gcloud app browse","gsutil mb","kubectl apply"],[0],"gcloud app browse opens the deployed app in a browser."],
+[4,"Strong consistency, multi-row transactions and global scale on GCP point to:",["Firestore","Cloud Spanner","Bigtable","BigQuery"],[1],"Spanner is the globally consistent relational DB."],
+[4,"Petabytes of time-series IoT data, very high write rate, no joins:",["BigQuery","Cloud SQL","Bigtable","Firestore"],[2],"Wide-column, millisecond latency."],
+[4,"Event-driven containers on GCP without managing a cluster:",["Compute Engine","GKE Standard","Cloud Run","App Engine Flexible"],[2],"Serverless containers."],
+[4,"An Azure App Service must read secrets without storing credentials anywhere. Use:",["App Settings","Storage access keys","Managed Identity + Key Vault","A service principal secret"],[2],"No secret to leak."],
+[4,"The maximum number of data disks on an Azure VM depends on:",["Subscription type","Operating system","VM size / SKU","Region"],[2],"Each size has a disk limit."],
+[4,"OpenStack VMs on one tenant network can talk to each other but get no IP automatically. Likely cause?",["Neutron L3 agent","Neutron DHCP agent","Nova conductor","Glance"],[1],"DHCP hands out addresses."],
+[4,"Which OpenStack component chooses the compute host for a new VM?",["Neutron","Nova scheduler","Keystone","Cinder"],[1],"nova-scheduler."],
+[4,"Google APIs mainly help you to:",["Migrate apps to GCP","Auto-scale apps","Provide object storage","Integrate Google services into your application"],[3],"Per the 2023 key."],
+[4,"Which GCP Cloud Storage class suits hot web content and video streamed worldwide?",["Nearline","Coldline","Multi-regional / Standard","Archive"],[2],"Nearline and colder classes are for infrequent access."],
+
+[5,"Objectives of resource management (select all):",["Scalability","Improved throughput","Increased overhead","Reduced latency"],[0,1,3],"Reduced overhead is the objective."],
+[5,"Reinforcement-learning guided control policy is an approach to:",["Resource provisioning","Resource allocation","Resource adaptation","Resource mapping"],[2],"Adaptation also includes the web-service based prototype."],
+[5,"The network queueing model is an approach to:",["Resource provisioning","Resource adaptation","Resource scheduling","Resource discovery"],[0],"Adaptive provisioning is the other provisioning example."],
+[5,"Intelligent multi-agent model and energy-aware allocation are approaches to:",["Resource allocation","Resource adaptation","Resource modeling","Resource estimation"],[0],"Both are allocation approaches."],
+[5,"Matching the resources a user needs with those a provider has is called:",["Provisioning","Adaptation","Mapping","Brokering"],[2],"Resource mapping."],
+[5,"The ability to adjust resources dynamically to meet user requirements is:",["Provisioning","Adaptation","Mapping","Modeling"],[1],"Resource adaptation."],
+[5,"Deciding when an activity starts or ends, from its duration and predecessors, is resource:",["Allocation","Mapping","Scheduling","Modeling"],[2],"Resource scheduling."],
+[5,"Performance per watt follows Moore's law.",["True","False"],[1],"It does not."],
+[5,"Power consumption grows linearly with the number of active cores.",["True","False"],[1],"Nonlinear, though more active cores do raise instantaneous power."],
+[5,"When load drops, VM management can (select all):",["Live-migrate VMs onto more utilized nodes","Shut down idle nodes","Spread VMs onto more nodes","Raise the replication factor"],[0,1],"Consolidate, then power down."],
+[5,"Ways to save energy in a cloud (select all):",["Energy-aware VM scheduling","Better data-center design","Maximize inefficiency for non-essential tasks","Manage VMs and the underlying infrastructure together"],[0,1,3],"Inefficiency should be minimized."],
+[5,"32 VMs on 8 hosts at 50% CPU are consolidated onto 5 hosts at ~75%. Most likely result?",["Less power, higher SLA-violation risk","More power, better SLA","Less power, SLA unaffected","No change"],[0],"Fewer hosts on, less headroom."],
+[5,"To avoid hotspots in a cluster, use:",["Bigger HDFS blocks","VM migration / load balancing","Higher replication","Fewer reducers"],[1],"Move load off hot hosts."],
+[5,"Map inputs (user, shop, stars): M1 {(u1,P,5) (u2,Q,4) (u3,P,5)}, M2 {(u1,R,5) (u4,Q,5) (u2,P,3)}, M3 {(u5,P,5) (u6,R,5) (u7,S,2)}. The reducer counts 5-star ratings per shop. Output?",["<P,3> <Q,1> <R,2>","<P,4> <Q,2> <R,2> <S,1>","<P,3> <Q,2> <R,2>","<P,5> <Q,5> <R,5>"],[0],"Mappers emit (shop,1) only for 5-star rows: P from u1, u3, u5; Q from u4; R from u1, u6. S never gets a 5.","num"],
+[5,"HDFS block size 128 MB. Files: 100 MB, 130 MB, 1 KB, 300 MB. How many blocks before replication?",["5","6","7","21"],[2],"1 + 2 + 1 + 3 = 7. With replication 3 the cluster stores 21 replicas.","num"],
+[5,"HDFS block size 64 MB, replication 3. Files: 10 KB, 70 MB, 64 MB. How many block replicas are stored?",["4","9","12","15"],[2],"Blocks = 1 + 2 + 1 = 4; × 3 replicas = 12.","num"],
+[5,"What most improves MapReduce performance in the cloud?",["More reducers","Higher replication","Running mappers where the data blocks live","Larger blocks only"],[2],"Data locality avoids network transfer."],
+[5,"Increasing the HDFS block size generally gives:",["More parallelism","Fewer mappers and less scheduling overhead","More shuffle traffic","Less fault tolerance"],[1],"One map task per split."],
+[5,"Penalty cost: which are true? (select all)",["Flat demand → zero penalty","Penalty ∝ ∫|D(t) − R(t)| dt","Exponential demand falls behind only linearly","Exponential demand → exponential penalty"],[0,1,3],"Fixed-interval provisioning falls exponentially behind exponential demand."],
+[5,"Which of these is a logical resource?",["Network","Computer","Database","Execution"],[3],"The others are physical."],
+[5,"A reducer runs out of disk while merging intermediate word-count data. Best fix?",["Rewrite the mapper","Configure a combiner to shrink map output locally","Add bandwidth","Fewer reducers"],[1],"A combiner pre-aggregates on each mapper."],
+[5,"Which part of MapReduce processes one or more chunks of data and produces output?",["Mapper function","Reducer","Map task","Task tracker"],[2],"Per the course key, it is the map task."],
+
+[6,"Fabrication is an attack on:",["Confidentiality","Integrity","Availability","Authenticity"],[3],"Fake messages break authenticity."],
+[6,"Interception is an attack on:",["Confidentiality","Integrity","Availability","Authenticity"],[0],"Someone reads what they shouldn't."],
+[6,"Modification attacks target ______ and interruption targets ______.",["integrity; availability","availability; integrity","confidentiality; authenticity","authenticity; confidentiality"],[0],"Classic four-way mapping."],
+[6,"Which are passive attacks? (select all)",["Traffic analysis","Release of message contents","Replay","Denial of service"],[0,1],"Replay and DoS are active."],
+[6,"Spoofing falls under which threat classes? (select all)",["Disclosure","Deception","Disruption","Usurpation"],[1,3],"Per the course's taxonomy."],
+[6,"Slow HTTP POSTs keep connections open until the server's pool runs out. Threat class?",["Disclosure","Deception","Disruption","Usurpation"],[2],"Service is interrupted."],
+[6,"An attacker replays a stolen session token. Which property is mainly broken?",["Confidentiality","Availability","Authenticity","Integrity"],[2],"The server is fooled about who is acting."],
+[6,"What gives non-repudiation for an online payment?",["Strong password over HTTPS","Shared symmetric key","Logging IPs","Signing with the sender's private key"],[3],"Only the sender holds that key."],
+[6,"(I) Authorization verifies who a user is. (II) Non-repudiation stops a sender denying a message.",["I true, II false","I false, II true","Both true","Both false"],[1],"Statement I describes authentication."],
+[6,"(I) An IDS raises alerts when it suspects an attack. (II) Authentication decides whether an operation is allowed.",["I true, II false","I false, II true","Both true","Both false"],[0],"Statement II describes authorization."],
+[6,"Reliability and efficiency are the basic components of security.",["True","False"],[1],"Confidentiality, integrity, availability."],
+[6,"A law says citizens' data must stay in the country. Which cloud risk is this?",["Data location","Investigative support","Recovery","Privileged user access"],[0],"Gartner's data location risk."],
+[6,"Vendor lock-in is mainly a ______ risk.",["Long-term viability","Data segregation","Privileged access","Recovery"],[0],"Hard to move away if the provider changes or fails."],
+[6,"When should you switch cloud providers? (select all)",["Contract price drops","Provider goes bankrupt","Provider shuts down the service","Service quality improves"],[1,2],"The other two are reasons to stay."],
+[6,"Which tool did TCP SYN traceroutes when mapping co-residence on Amazon EC2?",["wget","nmap","ipconfig","hping"],[3],"hping sends SYNs with increasing TTLs."],
+[6,"Side-channel attacks on co-resident VMs can extract RSA and AES keys.",["True","False"],[0],"Cache-based side channels."],
+[6,"Risks from rogue hypervisor rootkits (select all):",["Hide from normal malware detection","Open a covert channel to dump unauthorized code","Improper VM configuration","Vulnerable apps like VMchat"],[0,1],"The last two are other virtualization risks."],
+[6,"A web-service attack sending huge numbers of requests to cause denial of service is:",["Injection","Flooding","XSS","WSDL spoofing"],[1],"Flooding."],
+[6,"Which activity exploits vulnerabilities to show real impact and needs written authorization?",["Reconnaissance","Vulnerability scanning","Penetration testing","Forensics"],[2],"Scanning only finds weaknesses."],
+[6,"In fault tolerance, replication keeps consistent copies of data on disks in separate physical locations.",["True","False"],[0],"True per the key."],
+[6,"Interception, interruption, modification, fabrication: which one attacks availability?",["Interception","Interruption","Modification","Fabrication"],[1],"Interruption stops the service."],
+
+[7,"Match MCC components (Profiler, Solver, Synchronizer):",["Monitors execution; picks what runs where; merges split results","Picks what runs where; monitors; merges","Merges; monitors; picks","Monitors; merges; picks"],[0],"Profiler collects time/power/traffic data."],
+[7,"Code offloading with a cloudlet: (1) cuts latency using a multi-hop network; (2) can save battery using short-range radio.",["Only 1","Only 2","Both","Neither"],[1],"Cloudlets are one hop away."],
+[7,"Features of mobile cloud computing (select all):",["Uses fewer device resources","Devices reach services through APIs","Lower reliability because data sits in the cloud","Slower app development"],[0,1],"MCC improves reliability and speeds development."],
+[7,"In MCC, services are executed:",["All in the cloud","Some on the device, some in the cloud","All heavy ones on the device","None"],[1],"Partitioned execution."],
+[7,"MCC helps mobile devices by (select all):",["Extending storage","Running heavy analytics","Removing wireless delays completely","Scaling resources on demand"],[0,1,3],"Nothing removes wireless delay completely."],
+[7,"For compute-intensive apps, mobile cloud computing:",["Increases running cost","Reduces running cost","Shortens battery life","Has no effect"],[1],"Offloading saves device energy and cost."],
+[7,"A small server cluster in a campus cafeteria serving AR apps on students' phones is a:",["Hyperscale data center","Cloudlet","Hotspot","Satellite node"],[1],"A data center in a box near users."],
+[7,"Least useful input for an energy–delay offloading decision:",["Current bandwidth and RTT","Battery left","Number of installed apps","Local CPU time estimate"],[2],"Unrelated to the cost of this task."],
+[7,"Which are fog devices? (select all)",["Cellular base stations","Network routers","Wi-Fi gateways","None of these"],[0,1,2],"All can host fog applications."],
+[7,"Advantages of fog computing (select all):",["Less data moving across the network","Serving real-time applications","More congestion","Infinite storage"],[0,1],"Processing near the source."],
+[7,"Fog computing enablers (select all):",["Virtualization","Big data","Service-oriented architecture","None"],[0,2],"Per the course key."],
+[7,"Client-to-server distance is ______ in cloud computing and ______ in fog computing.",["one hop; multiple hops","multiple hops; one hop","one hop; one hop","multiple; multiple"],[1],"Fog nodes sit next to users."],
+[7,"Benefits of fog computing (select all):",["Immobility","Low latency and location awareness","Homogeneity","Wide geographical distribution"],[1,3],"Fog is heterogeneous and supports mobility."],
+[7,"Which statements about fog are FALSE? (select all)",["Fog nodes sit near users","Fog supports real-time apps","Fog response time is much higher than the cloud's","Routers and Wi-Fi gateways cannot run applications"],[2,3],"Fog responds faster, and those devices can run apps."],
+[7,"______ interoperability ensures information can be exchanged and consumed.",["Data level","Service level","Security level","Network level"],[1],"Service-level interoperability."],
+[7,"Geospatial cloud: (1) must integrate heterogeneous back-end data services; (2) data services may be inside or outside the cloud.",["Only 1","Only 2","Both","Neither"],[2],"Both true."],
+[7,"(1) Geographic information can be static or dynamic. (2) It varies in scale. (3) A city's population is static.",["1 & 2 true, 3 false","2 & 3 true","1 & 3 true","All true"],[0],"Population changes, so it is dynamic."],
+[7,"Enterprise GIS instances include (select all):",["Resource service","Data service","Interface service","None"],[0,1,2],"All three."],
+[7,"Players see lag in a mobile cloud game when switching between Wi-Fi and 4G. Main MCC challenge?",["Too few games installed","Dependence on WAN conditions for remote execution","Too much CPU on the phone","Cache clearing"],[1],"Remote execution rides on the network."],
+
+[8,"(1) Docker Hub builds images and creates containers. (2) Docker Compose is a registry for images.",["Only 1","Only 2","Both","Neither"],[3],"Engine builds and runs; Hub is the registry; Compose defines multi-container apps."],
+[8,"(1) An image is a lightweight, standalone executable package with everything needed to run software. (2) A container is a runtime instance of an image.",["Only 1","Only 2","Both","Neither"],[2],"Both are the course's definitions."],
+[8,"Which command deletes a local image?",["docker rm","docker rmi","docker rvi","docker push"],[1],"docker rm deletes containers."],
+[8,"Which command lists all containers, running and stopped?",["docker ps","docker ps -a","docker images","docker run"],[1],"Plain docker ps shows running ones only."],
+[8,"Docker Hub is a registry used to host Docker images.",["True","False"],[0],"Public registry."],
+[8,"Docker volumes:",["Live in the container's writable layer","Are deleted when the container stops","Persist independently of the container","Attach to one container only"],[2],"The writable layer is what disappears."],
+[8,"______ get virtual access to host resources through a hypervisor.",["Containers","Virtual machines","Both","Images"],[1],"Containers go through the host kernel."],
+[8,"What isolates a Docker container from the host?",["A hypervisor","Linux namespaces and cgroups","VM snapshots","Docker Swarm"],[1],"Kernel features, no hypervisor."],
+[8,"Power Usage Effectiveness (PUE) is:",["IT power / total facility power","Total facility power / IT equipment power","Total × IT power","None"],[1],"Ideal value is 1.0."],
+[8,"A data center draws 1.8 MW in total; IT equipment uses 1.2 MW. PUE?",["0.67","1.2","1.5","1.8"],[2],"1.8 ÷ 1.2 = 1.5.","num"],
+[8,"A green broker can schedule applications to reduce energy use.",["True","False"],[0],"True."],
+[8,"Best green-cloud strategy that still protects SLAs:",["Keep all servers on","Random VM placement","Consolidate VMs and power down idle hosts","Use the oldest hardware first"],[2],"Consolidation."],
+[8,"______ lets networks spread over a large area connect and be used by many users on demand.",["Serverless","IoT cloud","Sensor cloud","Green cloud"],[2],"Sensor cloud."],
+[8,"(1) A sensor-cloud proxy exposes sensor resources as cloud services. (2) The sensor network is still managed from the sensor-cloud interface through a sensor network proxy.",["Only 1","Only 2","Both","Neither"],[2],"Both true."],
+[8,"Sensor data can be shared easily by different user groups without extra effort.",["True","False"],[1],"That limitation is why sensor clouds exist."],
+[8,"Basic building blocks of an IoT platform (select all):",["Gateway","Images","Network and cloud","Containers"],[0,2],"Things, gateway, network & cloud."],
+[8,"In vehicular data clouds, vehicles lending networking and processing to other vehicles is closest to:",["SaaS","PaaS","IaaS","BaaS"],[2],"Network and data processing as a service."],
+[8,"Biggest practical challenge of putting WSNs into a sensor cloud:",["Sensors can't support full virtualization (tiny CPU/memory)","Sensors have unlimited power","Sensor data is trivial","Sensors run Kubernetes"],[0],"Hence virtual sensors built from aggregates."],
+
+[9,"(I) Fog supports real-time interaction but cloud does not. (II) Fog reduces latency compared with the cloud.",["Only I","Only II","Both","Neither"],[1],"Both support real-time; fog is faster."],
+[9,"In the cloud–fog–edge paradigm, base stations, routers and Wi-Fi gateways can run applications.",["True","False"],[0],"True."],
+[9,"Cloud–fog environment model: which are true? (select all)",["Three layers: client (edge), fog, cloud","VMs in the fog layer report to the cloud server manager","Requests go to the cloud if the fog layer lacks resources","Fog servers manage requests with container virtualization"],[0,2],"Fog VMs report to the fog server manager, and fog servers use server virtualization."],
+[9,"Which resource-management algorithm captures the performance of CPU, storage and network?",["Discovery","Load balancing","Placement","Benchmarking"],[3],"Benchmarking."],
+[9,"In the service-placement taxonomy, online vs offline classifies the:",["Control plane design","Placement characteristic","System dynamicity","Mobility support"],[1],"Placement characteristic."],
+[9,"Offloading: which are true? (select all)",["It moves server, app and data from edge to cloud","It augments the computing of user devices","Cloud → edge uses server offloading","Device → edge uses application partitioning"],[1,2,3],"Offloading moves things onto the edge."],
+[9,"Which are NOT benefits of cloud federation? (select all)",["Minimize resource utilization","Load balancing","Maximize power consumption","Global utility"],[0,2],"Federation maximizes utilization and minimizes power."],
+[9,"Cross-site networks and cross-site VM migration appear in a ______ federation.",["Loosely coupled","Partially coupled","Tightly coupled","None"],[2],"Tightly coupled."],
+[9,"CSPs sign an agreement on the terms under which one partner cloud may use another's resources. This is:",["Loosely coupled","Partially coupled","Tightly coupled","Aggregated"],[1],"Partially coupled."],
+[9,"Two or more partner clouds pool resources to offer a bigger virtual infrastructure. Architecture?",["Hybrid/bursting","Aggregated","Broker","Multiplier"],[1],"Aggregated."],
+[9,"Hybrid architecture adds public-cloud capacity to an on-premise private cloud to meet peaks.",["True","False"],[0],"Also called bursting."],
+[9,"Different cloud service providers join together to form a federation.",["True","False"],[0],"That is the definition."],
+[9,"Order from closest to the device to farthest:",["Cloud → Fog → Edge","Edge → Fog → Cloud","Fog → Edge → Cloud","Edge → Cloud → Fog"],[1],"Edge is on or at the device."],
+[9,"An autonomous car must brake instantly on seeing an obstacle. Process it at the:",["Cloud","Fog","Edge","Data warehouse"],[2],"No network round trip."],
+[9,"What most enables interoperability in a cloud federation?",["Proprietary APIs","Closed policies","Open standards such as OCCI, CIMI, REST","One dominant CSP"],[2],"Open standards."],
+[9,"Most critical for trust among federated CSPs:",["Identical hardware","Same prices","Federated identity management and enforced SLAs","Central ownership"],[2],"Identity + SLA enforcement."],
+[9,"Time-critical tasks run at edge/fog; heavy but delay-tolerant tasks go to the cloud.",["True","False"],[0],"That is the offloading rule."],
+
+[10,"VM memory 256 GB, link 64 MB/s, non-live migration. Total migration time and downtime?",["≈68 min and ≈68 min","≈68 min and ≈0","≈4 h and ≈4 h","≈34 min and ≈34 min"],[0],"256×2^30 ÷ (64×2^20) = 4,096 s ≈ 68 min. Non-live: downtime = total time.","num"],
+[10,"VM memory 512 GB, link 32 MB/s, non-live. Closest total time?",["2.3 h","4.5 h","9 h","18 h"],[1],"512×1024 ÷ 32 = 16,384 s ≈ 4.55 h.","num"],
+[10,"VM memory 1024 GB, link 16 MB/s, non-live. Total time and downtime?",["16 h, 16 h","18 h, 18 h","20 h, 25 h","24 h, 20 h"],[1],"65,536 s ≈ 18.2 h; both numbers are equal for non-live.","num"],
+[10,"Pre-copy and post-copy are approaches to:",["Live migration","Non-live migration","Hybrid backup","Snapshots"],[0],"Both keep the VM running most of the time."],
+[10,"Which migration technique usually uses the most network bandwidth?",["Cold","Pre-copy","Post-copy","Offline image copy"],[1],"Pre-copy re-sends pages dirtied in each round."],
+[10,"In post-copy migration:",["Memory is copied before the VM stops","CPU state moves first and pages are fetched on demand","The VM never pauses","Disk is copied twice"],[1],"Each page crosses once."],
+[10,"Reasons to migrate VMs, per the course key (select all):",["No reason; the user's whim","Take a physical machine out of service","Relieve congested hosts","Make the VM bigger"],[1,2],"Maintenance and load relief."],
+[10,"VM migration moves running applications or VMs from one physical host to another.",["True","False"],[0],"Definition."],
+[10,"What makes live migration across distant data centers hard?",["Equal clock speeds","High latency and variable bandwidth between sites","Local storage at source","More snapshots"],[1],"The network is the bottleneck."],
+[10,"(1) A private Docker registry stores images. (2) Docker on a host is a daemon with a REST API plus a client that talks to it.",["Only 1","Only 2","Both","Neither"],[2],"Both true."],
+[10,"Key advantages of Docker (select all):",["Facilitating microservices","Modeling networks","Packaging software","None"],[0,1,2],"All three are listed."],
+[10,"Workers in a Kubernetes cluster are called:",["Pods","Nodes","Control plane","Centers"],[1],"Pods run on nodes."],
+[10,"Kubernetes operates at the hardware level.",["True","False"],[1],"Container level."],
+[10,"Which is NOT a Kubernetes responsibility?",["Restarting failed containers","Scheduling containers on nodes","Hardware virtualization via hypervisor extensions","Load-balancing service replicas"],[2],"Kubernetes has no hypervisor."],
+[10,"In Docker, filesystem layers plus metadata that can be started as containers is a(n):",["OS","Microservice","VM","Image"],[3],"Image."],
+[10,"Containers need a full guest operating system.",["True","False"],[1],"They share the host kernel."],
+[10,"High-density workload: containers vs VMs?",["Containers isolate better","VMs have lower overhead","Containers give higher density but weaker isolation","Same overhead"],[2],"Shared kernel trade-off."],
+[10,"Which Docker component carries out the build instructions in a Dockerfile?",["Docker Hub","Docker CLI","Docker daemon","Registry"],[2],"The CLI only sends the request."],
+[10,"Docker builds are more reproducible than traditional builds, which helps continuous delivery.",["True","False"],[0],"True."],
+[10,"What raises energy use most during live migration in fog?",["Small memory","Short distance","Re-sending dirty memory pages","Low CPU"],[2],"More rounds, more traffic."],
+
+[11,"Serverless technologies fall into two groups:",["BaaS and YaaS","FaaS and BaaS","FaaS and YaaS","PaaS and IaaS"],[1],"Functions + backend services."],
+[11,"(1) Each FaaS function gets unlimited run time. (2) Functions are always running and ready.",["Only 1","Only 2","Both","Neither"],[3],"Time-limited, and started by events."],
+[11,"Maximum timeout for one AWS Lambda invocation:",["5 min","15 min","1 hour","Unlimited"],[1],"15 minutes."],
+[11,"______ are the AWS serverless mechanism for sharing libraries and custom runtimes.",["Runtimes","Lambda layers","Log streams","Step Functions"],[1],"Lambda layers."],
+[11,"Runtimes let you annotate Lambda code with custom logging statements.",["True","False"],[1],"That is log streams."],
+[11,"Which is FALSE?",["Serverless gives more control over the deployment environment than PaaS","Serverless runs event-driven, fine-grained apps","Serverless bills per use","Serverless scales automatically"],[0],"PaaS gives more control."],
+[11,"The focus of cloud computing was ______ and of serverless is ______.",["programmers; sysadmins","sysadmins; programmers","users; vendors","vendors; users"],[1],"Serverless frees programmers from servers."],
+[11,"A common serverless performance problem:",["Hypervisor overhead","Cold-start latency","Disk fragmentation","Driver conflicts"],[1],"First call after idle is slow."],
+[11,"Why are serverless functions stateless?",["To save electricity","Because storage is unlimited","So they can scale and run in parallel freely","To avoid APIs"],[2],"Any instance can serve any request."],
+[11,"Why is local disk unreliable for persistent data in FaaS?",["It's encrypted","Functions run on different hosts and local storage is ephemeral","It's slow","Disk access is blocked"],[1],"Use external storage."],
+[11,"Dew computing: on-premises computers provide functions that are ______ of cloud services and ______ with them.",["independent; collaborative","dependent; collaborative","independent; serverless","serverless; collaborative"],[0],"The definition from the lecture."],
+[11,"What sets dew apart from edge computing?",["Both need constant internet","Dew nodes work fully offline and sync later","Edge only stores","Dew replaces the cloud"],[1],"Offline-first."],
+[11,"Best fit for dew computing:",["Global stock trading","Rural schools with patchy internet","Supercomputer weather runs","Central banking"],[1],"Works offline, syncs when online."],
+[11,"Main trade-off of dew computing:",["Latency vs virtualization","Local autonomy vs data-consistency complexity","Scale vs storage","Security vs offline use"],[1],"Offline edits must be reconciled."],
+[11,"Which layer resolves conflicts after dew devices worked offline?",["Physical sensors","The dew device","The cloud-side synchronization service","Network routing"],[2],"Cloud sync."],
+[11,"Which is NOT a research category in sustainable cloud computing?",["Renewable energy","Capacity planning","Environment sandboxing","Cooling management"],[2],"Sandboxing is a security idea."],
+[11,"In the sustainable cloud model, VMs can be migrated to a remote cloud data center to balance load.",["True","False"],[0],"True."],
+[11,"Cloud data centers consist of chassis and racks that hold the servers processing IT workloads.",["True","False"],[0],"True."],
+[11,"BigQuery is a fully managed serverless data warehouse from ______; Redshift is from ______.",["Google; AWS","AWS; Google","Microsoft; AWS","Google; Oracle"],[0],"Google and Amazon."],
+
+[12,"In which environment is latency fixed because application modules sit at the Area Gateway?",["Fog","Cloud","Serverless","None"],[0],"Fog."],
+[12,"Spatial cloud supports ______ for participating organizations.",["Individual allocation","Exclusive ownership","Shared resource pooling","Restricted access"],[2],"Shared goals, shared pool."],
+[12,"Fog–edge computing increases network congestion.",["True","False"],[1],"It reduces congestion."],
+[12,"A CPCC framework is a ______ environment that builds and provisions CPS made of ______-based sensor, processing, control and data services.",["system; cloud computing","cloud computing; system","system; edge computing","edge; system"],[0],"Order matters."],
+[12,"Key features of MCC for 5G (select all):",["Higher resource use by apps","Better reliability from cloud backup","Shared resources for mobile apps","None"],[1,2],"Two features."],
+[12,"The key aspect of an intelligent transportation system is efficient:",["Cost","Mobility","Speed","Delivery"],[1],"Mobility."],
+[12,"With 5G and cloud, providers should offer:",["Limited orchestration","Manual SLAs","Limited self-service","Full end-to-end orchestration with defined SLAs, self-service and automation"],[3],"Per the lecture."],
+[12,"Mobility analytics uses the cloud for computation and storage.",["True","False"],[0],"True."],
+[12,"Benefit of 5G enhanced mobile broadband (eMBB):",["Slower data rates","Higher latency","Lower cost per bit and much higher data rates","Fewer devices"],[2],"eMBB is the bandwidth use case."],
+[12,"Real-time sensor–actuator feedback in CPS is needed for:",["Archiving","Closed-loop control","Static analysis","Batch jobs"],[1],"Closed-loop control."],
+[12,"A time-ordered sequence of points traced by a moving object is a:",["Time series","Road map","Spatial trajectory","Crowdsourcing task"],[2],"Spatial trajectory."],
+[12,"Main goal of V2V communication:",["Internet in cars","Sharing safety data like speed, position and braking","Infotainment","Cloud upload"],[1],"Safety messages."],
+[12,"Low-latency V2X safety messaging mainly uses:",["Bluetooth","Home Wi-Fi 802.11n","DSRC / IEEE 802.11p","NFC"],[2],"DSRC."],
+[12,"Wearables → nearby gateway preprocessing → cloud analytics describes:",["Edge only","IoT without cloud","Cloud–fog–edge IoHT architecture","Pure central cloud"],[2],"Internet of Health Things."],
+[12,"Which domain benefits most from spatial cloud computing?",["Game leaderboards","Weather forecasting and disaster management","Chat apps","Office documents"],[1],"Large geospatial datasets."],
+[12,"ECG alerts must fire within a few hundred ms. Best design?",["Batch analytics in a far cloud","Cloud over satellite","Fog/edge preprocessing + low-latency 5G access","Upload once a day"],[2],"Process near the patient."]
+].concat(MINE);
+
+const KEY = "ccprep-v1";
+const LET = "ABCDEF";
+let store = {};
+try { store = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { store = {}; }
+let filter = "mine";
+try { filter = localStorage.getItem(KEY + "-f") || "mine"; } catch (e) {}
+let reveal = false;
+let order = QS.map((_, i) => i);
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(store)); localStorage.setItem(KEY + "-f", filter); } catch (e) {} }
+function inSet(i) {
+  const q = QS[i];
+  if (filter === "all") return true;
+  if (filter === "num") return q[5] === "num";
+  if (filter === "mine") return q[6] === "y";
+  if (filter === "past") return q[6] !== "y";
+  return String(q[0]) === filter;
+}
+function visible() { return order.filter(inSet); }
+
+function buildChips() {
+  const box = document.getElementById("chips");
+  const defs = [
+    ["mine", "My 2026 assignments", QS.filter(q => q[6] === "y").length],
+    ["past", "Older runs", QS.filter(q => q[6] !== "y").length],
+    ["all", "All", QS.length],
+    ["num", "Numericals", QS.filter(q => q[5] === "num").length]
+  ];
+  for (let w = 0; w <= 12; w++) defs.push([String(w), w === 0 ? "W0 prereq" : "W" + w, QS.filter(q => q[0] === w).length]);
+  box.innerHTML = "";
+  defs.forEach(([id, label, n]) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.dataset.f = id;
+    b.setAttribute("aria-pressed", String(filter === id));
+    b.innerHTML = label + " <small>" + n + "</small>";
+    b.addEventListener("click", () => { filter = id; save(); buildChips(); render(); });
+    box.appendChild(b);
+  });
+}
+
+function card(i, n) {
+  const [w, text, opts, ans, expl, kind, src] = QS[i];
+  const multi = ans.length > 1;
+  const st = store[i] || { sel: [], done: false };
+  const show = st.done || reveal;
+  const el = document.createElement("article");
+  el.className = "q"; el.id = "q" + i; el.dataset.n = n;
+
+  const meta = document.createElement("div");
+  meta.className = "q-meta";
+  const parts = ["Q" + n, w === 0 ? "W0 prereq" : "Week " + w];
+  meta.innerHTML = parts.map(p => "<span>" + p + "</span>").join("") +
+    (src === "y" ? '<span class="mine">Your Jul–Oct 2026 assignment</span>' : "") +
+    (kind === "num" ? '<span class="k">Numerical</span>' : "") +
+    "<span>" + (multi ? "Select all that apply" : "One answer") + "</span>";
+  el.appendChild(meta);
+
+  const p = document.createElement("p");
+  p.className = "q-text"; p.textContent = text;
+  el.appendChild(p);
+
+  const box = document.createElement("div");
+  box.className = "opts";
+  opts.forEach((o, k) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "opt";
+    const key = document.createElement("span"); key.className = "key"; key.textContent = LET[k];
+    const t = document.createElement("span"); t.textContent = o;
+    b.append(key, t);
+    const picked = st.sel.includes(k);
+    b.setAttribute("aria-pressed", String(picked && !show));
+    if (show) {
+      b.disabled = true;
+      if (ans.includes(k)) b.classList.add("correct");
+      else if (picked) b.classList.add("wrong");
+    } else {
+      b.addEventListener("click", () => pick(i, k));
+    }
+    box.appendChild(b);
+  });
+  el.appendChild(box);
+
+  const foot = document.createElement("div");
+  foot.className = "q-foot";
+  if (multi && !show) {
+    const c = document.createElement("button");
+    c.type = "button"; c.className = "btn primary"; c.textContent = "Check";
+    c.disabled = st.sel.length === 0;
+    c.addEventListener("click", () => check(i));
+    foot.appendChild(c);
+  }
+  if (st.done) {
+    const v = document.createElement("span");
+    v.className = "verdict " + (st.ok ? "ok" : "no");
+    v.textContent = st.ok ? "Correct" : "Not quite";
+    foot.appendChild(v);
+  }
+  if (foot.childNodes.length) el.appendChild(foot);
+
+  if (show) {
+    const why = document.createElement("p");
+    why.className = "why";
+    const lab = document.createElement("b");
+    lab.textContent = "Answer " + ans.map(a => LET[a]).join(", ");
+    why.append(lab, document.createTextNode(expl || ""));
+    el.appendChild(why);
+  }
+  return el;
+}
+
+function redraw(i) {
+  const old = document.getElementById("q" + i);
+  if (old) old.replaceWith(card(i, Number(old.dataset.n)));
+  updateScore();
+}
+function pick(i, k) {
+  const q = QS[i];
+  const st = store[i] || { sel: [], done: false };
+  if (st.done) return;
+  if (q[3].length === 1) { st.sel = [k]; st.done = true; st.ok = k === q[3][0]; }
+  else { st.sel = st.sel.includes(k) ? st.sel.filter(x => x !== k) : st.sel.concat(k); }
+  store[i] = st; save(); redraw(i);
+}
+function check(i) {
+  const st = store[i];
+  if (!st || !st.sel.length) return;
+  st.done = true;
+  st.ok = st.sel.slice().sort().join() === QS[i][3].slice().sort().join();
+  save(); redraw(i);
+}
+function updateScore() {
+  const ids = visible();
+  let done = 0, ok = 0;
+  ids.forEach(i => { const s = store[i]; if (s && s.done) { done++; if (s.ok) ok++; } });
+  const pct = done ? Math.round(ok * 100 / done) : 0;
+  document.getElementById("score").innerHTML =
+    "<b>" + done + "</b>/" + ids.length + " answered · <b>" + ok + "</b> correct" + (done ? " (" + pct + "%)" : "");
+}
+function render() {
+  const list = document.getElementById("qlist");
+  list.innerHTML = "";
+  const frag = document.createDocumentFragment();
+  visible().forEach((i, n) => frag.appendChild(card(i, n + 1)));
+  list.appendChild(frag);
+  updateScore();
+}
+
+document.getElementById("shuffle").addEventListener("click", e => {
+  const b = e.currentTarget;
+  if (b.dataset.on === "1") { order = QS.map((_, i) => i); b.dataset.on = "0"; b.textContent = "Shuffle"; }
+  else {
+    order = QS.map((_, i) => i);
+    for (let j = order.length - 1; j > 0; j--) { const r = Math.floor(Math.random() * (j + 1)); [order[j], order[r]] = [order[r], order[j]]; }
+    b.dataset.on = "1"; b.textContent = "Original order";
+  }
+  render();
+});
+document.getElementById("reveal").addEventListener("click", e => {
+  reveal = !reveal;
+  e.currentTarget.setAttribute("aria-pressed", String(reveal));
+  e.currentTarget.textContent = reveal ? "Hide answers" : "Show all answers";
+  render();
+});
+let resetArmed = null;
+document.getElementById("reset").addEventListener("click", e => {
+  const b = e.currentTarget;
+  if (!resetArmed) {
+    b.textContent = "Tap again to clear";
+    resetArmed = setTimeout(() => { resetArmed = null; b.textContent = "Reset this set"; }, 3000);
+    return;
+  }
+  clearTimeout(resetArmed); resetArmed = null; b.textContent = "Reset this set";
+  visible().forEach(i => delete store[i]);
+  save(); render();
+});
+
+(function countdown() {
+  const el = document.getElementById("countdown");
+  const exam = new Date("2026-10-18T09:00:00+05:30").getTime();
+  const days = Math.ceil((exam - Date.now()) / 86400000);
+  if (days > 1) el.textContent = days + " days to go";
+  else if (days === 1) el.textContent = "Tomorrow";
+  else if (days === 0) el.textContent = "Today";
+  else el.textContent = "Exam day has passed";
+})();
+
+buildChips();
+render();
+
+/* ---------- Light / dark toggle ---------- */
+(function themeToggle() {
+  const btn = document.getElementById("theme");
+  const root = document.documentElement;
+  const mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
+  const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  function current() {
+    const t = root.getAttribute("data-theme");
+    if (t === "light" || t === "dark") return t;
+    return mq && mq.matches ? "dark" : "light";
+  }
+  function paint() {
+    const dark = current() === "dark";
+    btn.innerHTML = (dark ? SUN : MOON) + "<span>" + (dark ? "Light mode" : "Dark mode") + "</span>";
+    btn.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+  }
+  btn.addEventListener("click", () => {
+    const next = current() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("ccprep-theme", next); } catch (e) {}
+    paint();
+  });
+  if (mq && mq.addEventListener) mq.addEventListener("change", paint);
+  paint();
+})();
+
+/* ---------- Most repeated ---------- */
+const RUNS = [["19","2019"],["23","2023"],["24","24–25"],["26a","Jan 26"],["26b","Your run"]];
+const REP = [
+{w:"W1", q:"Which service model is Google Docs / Sheets / Slides / Gmail? Which is EC2?", a:"Google's apps and Gmail are SaaS. EC2 VMs where you manage the OS are IaaS.", r:["19","23","24","26a","26b"]},
+{w:"W6", q:"Which security property does this attack break? (fabrication, interception, replay, phishing, fake login page, a bug that changes data)", a:"Fabrication, replay and a fake portal break authenticity. Interception breaks confidentiality. Modification, including a buggy update, breaks integrity. Interruption/DoS breaks availability.", r:["19","23","24","26a","26b"]},
+{w:"W7·9", q:"Fog computing: which devices are fog nodes, and what does fog improve?", a:"Routers, switches, base stations and Wi-Fi gateways. Fog gives lower latency, location awareness and less congestion. It is one hop from users; the cloud is multi-hop.", r:["19","23","24","26a","26b"]},
+{w:"W3·5", q:"SLA availability numerical: hours per day × days, outages given; find allowed downtime or which outage breaks the SLA", a:"Availability = 1 − downtime/uptime (Lecture 11). Allowed downtime ≈ (1 − SLA%) × scheduled hours, e.g. 99% of 12 h × 30 days = 3.6 h.", r:["23","24","26a","26b"]},
+{w:"W3·5", q:"Cloud vs owning: peak P, average A, utility premium U, or a demand curve D(t)", a:"Cloud is cheaper when U < P/A. With D(t): own = P × B × T, cloud = ∫C·D(t)dt; solve for T.", r:["19","23","24","26b"]},
+{w:"W10", q:"VM migration time for memory M over bandwidth B", a:"Non-live: total time = downtime = M/B with 1 GB = 1024 MB. 32 GB at 16 MB/s ≈ 34 min; 1024 GB at 16 MB/s ≈ 18 h.", r:["23","24","26a","26b"]},
+{w:"W5", q:"How many HDFS blocks or map tasks?", a:"Blocks = ceil(size ÷ block size) per file; one map task per block (700 MB at 128 MB → 6). Bigger blocks mean fewer mappers.", r:["19","24","26a","26b"]},
+{w:"W7·12", q:"What mobile cloud computing does for a phone, and what it can't do", a:"Offloads heavy work, saves battery, adds storage, scales on demand. It never removes wireless delay. Its parts are the Profiler, Solver and Synchronizer.", r:["19","23","26a","26b"], x:1},
+{w:"W7", q:"Why use a cloudlet?", a:"A small data center one hop away over Wi-Fi or short-range radio, for low-latency work such as AR. 'Multi-hop' is the trap.", r:["23","24","26a","26b"]},
+{w:"W8·10", q:"Docker: who builds, who stores, what runs?", a:"The daemon (Docker Engine) builds images and runs containers; Docker Hub or a private registry stores images. docker build → image → docker run → container.", r:["23","24","26a","26b"]},
+{w:"W8·10", q:"Containers vs VMs", a:"Containers share the host kernel (no full guest OS): higher density, weaker isolation. VMs reach hardware through a hypervisor and run their own kernel.", r:["23","24","26a","26b"]},
+{w:"W10", q:"Live migration: pre-copy vs post-copy, dirty pages", a:"Both are live. Pre-copy copies memory in rounds and uses the most bandwidth; a high dirty-page rate makes it longer. Post-copy starts the VM at the destination and pulls pages on demand.", r:["23","24","26a","26b"]},
+{w:"W9", q:"Cloud federation: types, benefits, trust", a:"Loosely, partially (agreement on terms) and tightly coupled (cross-site networks, VM migration); the aggregated architecture pools resources. Benefits: maximum utilization, minimum power. Trust comes from federated identity and enforced SLAs.", r:["23","24","26a","26b"]},
+{w:"W3·4", q:"OpenStack: which service does what?", a:"Nova = compute + ephemeral storage (its scheduler picks the host). Cinder = persistent block. Swift = object. Keystone = identity. Neutron = networking, DHCP, routing. vCPUs = physical × overcommit.", r:["19","23","26a","26b"]},
+{w:"W4", q:"Which GCP service fits the scenario?", a:"Spanner = global relational. Bigtable = huge IoT writes. BigQuery = analytics warehouse. Cloud Run = containers without a cluster. App Engine = PaaS.", r:["19","23","26a","26b"]},
+{w:"W1", q:"Cluster vs grid", a:"Cluster: co-located stand-alone computers, tightly coupled, one integrated resource. Grid: geographically spread, heterogeneous, many administrative domains, loosely coupled.", r:["23","24","26a","26b"]},
+{w:"W7", q:"Geospatial cloud", a:"It integrates heterogeneous back-end data services inside or outside the cloud, needs service-level interoperability, and splits rasters into tiles for parallel work (watch tile boundaries).", r:["19","23","26a","26b"]},
+{w:"W5·8", q:"Green cloud: best way to save energy", a:"Consolidate VMs onto fewer hosts and power down idle ones (energy-aware scheduling). PUE = total facility power ÷ IT power.", r:["23","24","26a","26b"]},
+{w:"W1", q:"NIST essential characteristics", a:"On-demand self-service, broad network access, resource pooling, rapid elasticity, measured service. Latency and zero downtime are not on the list.", r:["24","26a","26b"]},
+{w:"W1", q:"SOA combined with cloud gives…?", a:"XaaS (anything as a service).", r:["24","26a","26b"], x:1},
+{w:"W1", q:"Benefits of PaaS", a:"Focus on code, a managed platform with automatic updates, integrated databases and messaging, faster deployment. No root or hardware control.", r:["24","26a","26b"], x:1},
+{w:"W1", q:"Most accurate statement about virtualization", a:"VMs with different operating systems can share one physical machine at the same time.", r:["24","26a","26b"], x:1},
+{w:"W2", q:"What web services solve, and what they don't", a:"They cross firewalls over HTTP, give cross-language interoperability and discovery via UDDI; WSDL describes the interface. They don't give ultra-low latency.", r:["19","26a","26b"], x:1},
+{w:"W6", q:"Passive vs active attacks", a:"Passive: sniffing, eavesdropping, traffic analysis, release of contents. Active: replay, masquerade, session hijacking, modification, DoS.", r:["19","26a","26b"]},
+{w:"W6", q:"Authentication vs authorization (and IDS)", a:"Authentication verifies identity; authorization decides what you may do; an IDS raises alerts on suspected attacks.", r:["23","26a","26b"]},
+{w:"W3", q:"What makes a parallel database faster?", a:"Shared-nothing, multi-node parallel query execution over partitioned data.", r:["23","26a","26b"]},
+{w:"W5", q:"Power vs number of active cores", a:"More active cores draw more power; the relationship is nonlinear, and performance per watt does not follow Moore's law.", r:["24","26a","26b"]},
+{w:"W8·10", q:"Kubernetes roles", a:"Orchestrates containers at container level, not hardware. Workers are nodes; kube-scheduler places pods; etcd stores cluster state.", r:["23","26a","26b"]},
+{w:"W11", q:"FaaS limits", a:"Functions are triggered by events, not always running, and time-limited (Lambda: 15 min). Serverless = FaaS + BaaS.", r:["23","26a","26b"]},
+{w:"W11", q:"Dew computing", a:"Works offline, independent of yet collaborative with the cloud; syncs later and resolves conflicts on reconnect.", r:["23","26a","26b"]},
+{w:"W12", q:"What is real-time sensor–actuator feedback in CPS for?", a:"Closed-loop control.", r:["23","26a","26b"], x:1},
+{w:"W12", q:"Spatial cloud data and trajectories", a:"Maps, GPS points, satellite imagery. A trajectory is the time-ordered positions of a moving object. Spatial cloud offers shared resource pooling.", r:["23","26a","26b"]},
+{w:"W12", q:"V2V and mobility analytics", a:"V2V shares safety data (speed, position, braking); live analytics retimes traffic signals; an ITS's key aspect is efficient mobility.", r:["23","26a","26b"], x:1},
+{w:"W12", q:"5G eMBB", a:"Very high data rates and lower cost per bit (video, AR). mMTC = massive IoT; URLLC = low-latency control.", r:["23","26a","26b"]},
+{w:"W11", q:"Cloud data warehouses", a:"BigQuery (Google, serverless) and Redshift (AWS).", r:["23","26a","26b"]},
+{w:"W3", q:"Least likely item in an SLA", a:"The exact encryption algorithm and key-storage steps.", r:["26a","26b"], x:1},
+{w:"W3", q:"Multilevel SLA: its levels, and which one binds the provider", a:"Corporate, customer and service level; the provider is bound by the service-level SLA.", r:["26a","26b"], x:1},
+{w:"W3", q:"A reducer runs out of disk merging word counts", a:"Configure a combiner to shrink map output locally.", r:["26a","26b"], x:1},
+{w:"W9·10", q:"Many edge devices overload nearby fog nodes", a:"Load-balance across fog nodes.", r:["26a","26b"], x:1},
+{w:"W11", q:"Why serverless functions are stateless; what a cold start is", a:"Statelessness lets instances scale and run in parallel freely. A cold start is the delay of setting up an idle function's environment.", r:["26a","26b"], x:1},
+{w:"W7·9·12", q:"Edge, fog or cloud for this task?", a:"Millisecond safety (braking, ECG alerts) → edge/fog. Regional aggregation → fog. Training, history, global analytics → cloud. By distance: edge → fog → cloud.", r:["26a","26b"]},
+{w:"W6", q:"Data location and vendor lock-in", a:"Data stored or replicated abroad is a data-location risk. Lock-in is a long-term viability risk, reduced by open standards.", r:["26a","26b"]},
+{w:"W2", q:"Para vs full virtualization; Type-1 vs Type-2", a:"Para modifies the guest (hypercalls); full runs it unmodified (VT-x/AMD-V). Type-1 is bare metal (ESXi, Xen); Type-2 runs on a host OS (VirtualBox).", r:["26a","26b"]},
+{w:"W8", q:"Docker volumes after the container is deleted", a:"Named volumes keep the data; the container's writable layer is lost.", r:["26a","26b"]},
+{w:"W8", q:"PUE, IoT building blocks, sensor cloud, vehicular cloud", a:"PUE = total facility ÷ IT power. IoT = things, gateway, network & cloud. Sensor cloud shares WSNs among many users. Vehicles lending compute = IaaS.", r:["23","24"]},
+{w:"W5", q:"Resource-management approaches by category", a:"RL control policy and web-service prototype → adaptation. Network queueing → provisioning. Multi-agent and energy-aware → allocation.", r:["23","24"]},
+{w:"W5", q:"MapReduce: count 5-star ratings per restaurant", a:"Map emits (key, 1) only for matching rows; the reducer sums per key; keys with no matches don't appear.", r:["23","24"]},
+{w:"W3", q:"KPI, SLO and SLA", a:"KPIs aggregate into SLOs; the SLA, a formal provider–consumer contract, contains the SLOs.", r:["23","24"]}
+];
+
+function renderRep() {
+  const root = document.getElementById("replist");
+  root.innerHTML = "";
+  let rank = 0;
+  [5, 4, 3, 2].forEach(n => {
+    const items = REP.filter(it => it.r.length === n);
+    if (!items.length) return;
+    const g = document.createElement("div");
+    g.className = "repgroup";
+    const h = document.createElement("h3");
+    h.textContent = n === 5 ? "Asked in all 5 runs" : "Asked in " + n + " runs";
+    g.appendChild(h);
+    const ol = document.createElement("ol");
+    ol.className = "rep";
+    items.forEach(it => {
+      rank++;
+      const li = document.createElement("li");
+      li.className = "rep-item";
+      const rk = document.createElement("span"); rk.className = "rk"; rk.textContent = String(rank).padStart(2, "0");
+      const rb = document.createElement("div"); rb.className = "rb";
+      const q = document.createElement("p"); q.className = "rq"; q.textContent = it.q;
+      const a = document.createElement("p"); a.className = "ra"; a.textContent = it.a;
+      const show = document.createElement("button"); show.type = "button"; show.className = "btn show"; show.textContent = "Show answer";
+      show.addEventListener("click", () => li.classList.add("open"));
+      const m = document.createElement("div"); m.className = "rm";
+      const strip = document.createElement("span"); strip.className = "strip";
+      RUNS.forEach(([code, label]) => { const s = document.createElement("span"); s.textContent = label; if (it.r.includes(code)) s.className = "on"; strip.appendChild(s); });
+      const wk = document.createElement("span"); wk.textContent = it.w;
+      m.append(wk, strip);
+      if (it.x) { const x = document.createElement("span"); x.className = "xr"; x.textContent = "Same wording"; m.appendChild(x); }
+      rb.append(q, a, show, m);
+      li.append(rk, rb);
+      ol.appendChild(li);
+    });
+    g.appendChild(ol);
+    root.appendChild(g);
+  });
+  document.getElementById("repcount").textContent = REP.length + " ideas · " + REP.filter(it => it.x).length + " repeated word for word in your run";
+}
+document.getElementById("cover").addEventListener("click", e => {
+  const root = document.getElementById("replist");
+  const on = !root.classList.contains("covered");
+  root.classList.toggle("covered", on);
+  root.querySelectorAll(".rep-item.open").forEach(li => li.classList.remove("open"));
+  e.currentTarget.setAttribute("aria-pressed", String(on));
+  e.currentTarget.textContent = on ? "Show all answers" : "Hide answers to test yourself";
+});
+renderRep();
+
+/* ---------- Mock exams ---------- */
+const PAPERS = [
+  { id: "p1", name: "Paper 1", src: "Your Jul–Oct 2026 assignments", note: "4 per week + 2 numericals" },
+  { id: "p2", name: "Paper 2", src: "Past runs, set A (2019 – Jan 2026)", note: "4 per week + 2 prerequisite" },
+  { id: "p3", name: "Paper 3", src: "Past runs, set B (2019 – Jan 2026)", note: "No overlap with set A" },
+  { id: "p4", name: "Paper 4", src: "Past runs, set C (2019 – Jan 2026)", note: "No overlap with sets A or B" },
+  { id: "rand", name: "Random paper", src: "New mix from all 361 questions", note: "Different every time" }
+];
+const EXAM_KEY = KEY + "-exam", BEST_KEY = KEY + "-best";
+function loadJSON(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
+function saveJSON(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+let exam = loadJSON(EXAM_KEY, null);
+let best = loadJSON(BEST_KEY, {});
+let reviewAll = false;
+
+function rng(seed) {
+  return function () {
+    seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function shuf(arr, r) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function buildPaper(id) {
+  const mine = id === "p1", rand = id === "rand";
+  const pool = QS.map((_, i) => i).filter(i => rand ? true : mine ? QS[i][6] === "y" : QS[i][6] !== "y");
+  const slot = { p1: 0, p2: 0, p3: 1, p4: 2, rand: 0 }[id];
+  const seed = rand ? (Date.now() & 0x7fffffff) : (mine ? 11 : 7);
+  const r = rng(seed);
+  let pick = [];
+  for (let w = 1; w <= 12; w++) {
+    const wk = shuf(pool.filter(i => QS[i][0] === w), r);
+    pick = pick.concat(wk.slice(slot * 4, slot * 4 + 4));
+  }
+  const rest = pool.filter(i => !pick.includes(i));
+  let extra;
+  if (mine || rand) {
+    extra = shuf(rest.filter(i => QS[i][5] === "num"), r).concat(shuf(rest.filter(i => QS[i][5] !== "num"), r)).slice(0, 50 - pick.length);
+  } else {
+    extra = shuf(pool.filter(i => QS[i][0] === 0), r).slice(slot * 2, slot * 2 + 2);
+  }
+  return shuf(pick.concat(extra), rng(seed + 101 + slot));
+}
+
+function same(a, b) { return a.slice().sort().join() === b.slice().sort().join(); }
+function fmt(sec) { sec = Math.max(0, Math.round(sec)); const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60; return h + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0"); }
+function remaining() { return exam ? exam.dur - (Date.now() - exam.start) / 1000 : 0; }
+function paperName(id) { const p = PAPERS.find(p => p.id === id); return p ? p.name + " · " + p.src : id; }
+function score(ex) {
+  let correct = 0;
+  const byWeek = {};
+  ex.ids.forEach((qi, pos) => {
+    const ok = same(ex.ans[pos] || [], QS[qi][3]);
+    if (ok) correct++;
+    const w = QS[qi][0];
+    byWeek[w] = byWeek[w] || [0, 0];
+    byWeek[w][1]++; if (ok) byWeek[w][0]++;
+  });
+  const raw = Math.round(correct / ex.ids.length * 100);
+  return { correct, raw, out75: raw * 0.75, pass: raw * 0.75 >= 30, byWeek };
+}
+
+function startExam(id) {
+  exam = { id, ids: buildPaper(id), ans: {}, flag: {}, cur: 0, start: Date.now(), dur: 3 * 3600, done: false };
+  saveJSON(EXAM_KEY, exam); renderMock(); document.getElementById("mock").scrollIntoView();
+}
+function submitExam() {
+  if (!exam || exam.done) return;
+  exam.done = true; exam.end = Date.now();
+  const s = score(exam);
+  const prev = best[exam.id];
+  if (!prev || s.raw > prev.raw) { best[exam.id] = { raw: s.raw, at: exam.end }; saveJSON(BEST_KEY, best); }
+  saveJSON(EXAM_KEY, exam); reviewAll = false; renderMock(); document.getElementById("mock").scrollIntoView();
+}
+function armButton(btn, label, armedLabel, action) {
+  let t = null;
+  btn.addEventListener("click", () => {
+    if (!t) { btn.textContent = armedLabel; t = setTimeout(() => { t = null; btn.textContent = label; }, 3000); return; }
+    clearTimeout(t); t = null; action();
+  });
+}
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function renderMock() {
+  const root = document.getElementById("mockroot");
+  root.innerHTML = "";
+  if (!exam) root.appendChild(renderPapers());
+  else if (!exam.done) root.appendChild(renderExam());
+  else root.appendChild(renderResult());
+}
+
+function renderPapers() {
+  const wrap = el("div", "papers");
+  PAPERS.forEach(p => {
+    const c = el("div", "paper");
+    c.append(el("p", "eyebrow", p.name), el("h3", null, p.src), el("p", "src", "50 questions · 3 hours · " + p.note));
+    const b = best[p.id];
+    const bl = el("p", "best");
+    if (b) { bl.innerHTML = "Best: <b>" + b.raw + "/100</b> (" + (b.raw * 0.75).toFixed(1) + "/75)"; } else { bl.textContent = "Not attempted yet"; }
+    const go = el("button", "btn primary", "Start paper"); go.type = "button";
+    go.addEventListener("click", () => startExam(p.id));
+    c.append(bl, go);
+    wrap.appendChild(c);
+  });
+  return wrap;
+}
+
+function renderExam() {
+  const box = el("div", "result");
+  const bar = el("div", "exambar");
+  const who = el("span", "who", paperName(exam.id));
+  const timer = el("span", "timer"); timer.id = "timer"; timer.textContent = fmt(remaining());
+  const answered = Object.keys(exam.ans).filter(k => exam.ans[k].length).length;
+  const prog = el("span", "who", answered + "/" + exam.ids.length + " answered");
+  const right = el("div", "navbtns");
+  const quit = el("button", "btn", "Quit paper"); quit.type = "button";
+  armButton(quit, "Quit paper", "Tap again to discard", () => { exam = null; saveJSON(EXAM_KEY, null); renderMock(); });
+  const sub = el("button", "btn primary", "Submit"); sub.type = "button";
+  armButton(sub, "Submit", "Tap again to submit", submitExam);
+  const rd = el("div"); rd.append(quit, sub); right.appendChild(rd);
+  bar.append(who, timer, prog, right);
+
+  const grid = el("div", "exam-grid");
+  const pos = exam.cur, qi = exam.ids[pos];
+  const [w, text, opts, ans] = QS[qi];
+  const multi = ans.length > 1;
+  const sel = exam.ans[pos] || [];
+  const card = el("article", "q");
+  const meta = el("div", "q-meta");
+  meta.append(el("span", null, "Question " + (pos + 1) + " of " + exam.ids.length), el("span", null, w === 0 ? "Prerequisite" : "Week " + w), el("span", null, multi ? "Select all that apply" : "One answer"));
+  if (exam.flag[pos]) meta.appendChild(el("span", "k", "Marked for review"));
+  card.append(meta, el("p", "q-text", text));
+  const ob = el("div", "opts");
+  opts.forEach((o, k) => {
+    const b = el("button", "opt"); b.type = "button";
+    b.append(el("span", "key", LET[k]), el("span", null, o));
+    b.setAttribute("aria-pressed", String(sel.includes(k)));
+    b.addEventListener("click", () => {
+      let s = exam.ans[pos] || [];
+      s = multi ? (s.includes(k) ? s.filter(x => x !== k) : s.concat(k)) : (s.includes(k) ? [] : [k]);
+      exam.ans[pos] = s; saveJSON(EXAM_KEY, exam); renderMock();
+    });
+    ob.appendChild(b);
+  });
+  card.appendChild(ob);
+  const nav = el("div", "navbtns");
+  const left = el("div"), rgt = el("div");
+  const prev = el("button", "btn", "← Previous"); prev.type = "button"; prev.disabled = pos === 0;
+  prev.addEventListener("click", () => { exam.cur--; saveJSON(EXAM_KEY, exam); renderMock(); });
+  const flag = el("button", "btn", exam.flag[pos] ? "Unmark" : "Mark for review"); flag.type = "button";
+  flag.addEventListener("click", () => { exam.flag[pos] = !exam.flag[pos]; saveJSON(EXAM_KEY, exam); renderMock(); });
+  const clr = el("button", "btn", "Clear"); clr.type = "button";
+  clr.addEventListener("click", () => { delete exam.ans[pos]; saveJSON(EXAM_KEY, exam); renderMock(); });
+  const next = el("button", "btn primary", "Next →"); next.type = "button"; next.disabled = pos === exam.ids.length - 1;
+  next.addEventListener("click", () => { exam.cur++; saveJSON(EXAM_KEY, exam); renderMock(); });
+  left.append(prev, flag, clr); rgt.append(next); nav.append(left, rgt);
+  card.appendChild(nav);
+
+  const side = el("div", "side");
+  side.appendChild(el("p", "eyebrow", "Questions"));
+  const pal = el("div", "palette");
+  exam.ids.forEach((_, i) => {
+    const b = el("button", "pal", String(i + 1)); b.type = "button";
+    if ((exam.ans[i] || []).length) b.classList.add("ans");
+    if (exam.flag[i]) b.classList.add("flag");
+    if (i === pos) { b.classList.add("cur"); b.setAttribute("aria-current", "true"); }
+    b.addEventListener("click", () => { exam.cur = i; saveJSON(EXAM_KEY, exam); renderMock(); });
+    pal.appendChild(b);
+  });
+  const lg = el("p", "legend"); lg.innerHTML = "<span>Blue = answered</span><span>Amber underline = marked</span><span>Outline = current</span>";
+  side.append(pal, lg);
+  grid.append(card, side);
+  box.append(bar, grid);
+  return box;
+}
+
+function renderResult() {
+  const s = score(exam);
+  const box = el("div", "result");
+  box.appendChild(el("p", "eyebrow", paperName(exam.id) + " · submitted"));
+  const tiles = el("div", "tiles");
+  const t = (v, l) => { const d = el("div", "tile"); d.append(el("span", "l", l), el("span", "v", v)); return d; };
+  const used = Math.min(exam.dur, ((exam.end || Date.now()) - exam.start) / 1000);
+  tiles.append(t(s.raw + "/100", "Raw score"), t(s.out75.toFixed(1) + "/75", "Exam component"), t(s.correct + "/" + exam.ids.length, "Correct"), t(fmt(used), "Time used"));
+  const verdict = el("p");
+  const pill = el("span", "pill " + (s.pass ? "ok" : "no"), s.pass ? "Above the pass line" : "Below the pass line");
+  verdict.append(pill, document.createTextNode(s.pass ? "  You need ≥ 30/75 in the exam; you have " + s.out75.toFixed(1) + "." : "  You need ≥ 30/75 (40/100 raw). Review the misses below and retake."));
+
+  const wk = el("div", "tbl");
+  const tb = document.createElement("table");
+  tb.innerHTML = "<thead><tr><th>Week</th><th>Correct</th><th>Accuracy</th></tr></thead>";
+  const body = document.createElement("tbody");
+  Object.keys(s.byWeek).map(Number).sort((a, b) => a - b).forEach(w => {
+    const [c, n] = s.byWeek[w];
+    const tr = document.createElement("tr");
+    [w === 0 ? "W0 prereq" : "W" + w, c + "/" + n, Math.round(c / n * 100) + "%"].forEach(v => tr.appendChild(el("td", null, v)));
+    body.appendChild(tr);
+  });
+  tb.appendChild(body); wk.appendChild(tb);
+
+  const acts = el("div", "navbtns");
+  const a1 = el("div");
+  const again = el("button", "btn primary", "Retake this paper"); again.type = "button";
+  again.addEventListener("click", () => startExam(exam.id));
+  const back = el("button", "btn", "Back to papers"); back.type = "button";
+  back.addEventListener("click", () => { exam = null; saveJSON(EXAM_KEY, null); renderMock(); });
+  const tog = el("button", "btn", reviewAll ? "Show only mistakes" : "Show all questions"); tog.type = "button";
+  tog.addEventListener("click", () => { reviewAll = !reviewAll; renderMock(); });
+  a1.append(again, back); acts.append(a1, tog);
+
+  const list = el("div", "qlist");
+  exam.ids.forEach((qi, pos) => {
+    const [w, text, opts, ans, expl] = QS[qi];
+    const mineSel = exam.ans[pos] || [];
+    const ok = same(mineSel, ans);
+    if (ok && !reviewAll) return;
+    const c = el("article", "q");
+    const meta = el("div", "q-meta");
+    meta.append(el("span", null, "Q" + (pos + 1)), el("span", null, w === 0 ? "Prerequisite" : "Week " + w));
+    const v = el("span", "verdict " + (ok ? "ok" : "no"), ok ? "Correct" : (mineSel.length ? "Wrong" : "Not answered"));
+    meta.appendChild(v);
+    c.append(meta, el("p", "q-text", text));
+    const ob = el("div", "opts");
+    opts.forEach((o, k) => {
+      const b = el("button", "opt"); b.type = "button"; b.disabled = true;
+      b.append(el("span", "key", LET[k]), el("span", null, o));
+      if (ans.includes(k)) b.classList.add("correct"); else if (mineSel.includes(k)) b.classList.add("wrong");
+      ob.appendChild(b);
+    });
+    const why = el("p", "why");
+    why.append(el("b", null, "Answer " + ans.map(a => LET[a]).join(", ")), document.createTextNode(expl || ""));
+    c.append(ob, why);
+    list.appendChild(c);
+  });
+  if (!list.childNodes.length) list.appendChild(el("p", "callout", "No mistakes on this paper."));
+  box.append(tiles, verdict, wk, acts, list);
+  return box;
+}
+
+setInterval(() => {
+  if (!exam || exam.done) return;
+  const r = remaining();
+  const tEl = document.getElementById("timer");
+  if (tEl) { tEl.textContent = fmt(r); tEl.classList.toggle("low", r < 600); }
+  if (r <= 0) submitExam();
+}, 1000);
+renderMock();
+</script>
+</body>
+</html>
