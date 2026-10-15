@@ -184,6 +184,13 @@ th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:
 .pal.ans{background:var(--accent-soft);border-color:var(--accent)}
 .pal.flag{box-shadow:inset 0 -3px 0 var(--hi)}
 .pal.cur{outline:2px solid var(--ink);outline-offset:1px}
+.pal.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.pal.no{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.pal.rev{background:var(--hi-soft);border-color:var(--hi);color:var(--hi)}
+.verdict.rev{color:var(--hi)}
+.startrow{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
+.q-meta .rkn{color:var(--ink);font-weight:600}
+.repgroup .qlist{padding-top:6px}
 .legend{font-family:var(--mono);font-size:.7rem;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px}
 .navbtns{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}
 .navbtns div{display:flex;flex-wrap:wrap;gap:8px}
@@ -282,7 +289,7 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
           <li>Watch L21–L23 (the SLA, economics and MapReduce tutorials)</li>
           <li>Do every numerical in the practice bank</li>
           <li>Learn the week 6 security mapping table by heart</li>
-          <li>Go through "Most repeated" with answers hidden</li>
+          <li>Answer all 48 "Most repeated" questions</li>
           <li>Practice W5–W8 (your assignments first)</li>
         </ul>
       </div>
@@ -292,8 +299,8 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
         <ul>
           <li>Notes for weeks 9–12 (federation, migration, serverless, dew, 5G)</li>
           <li>Practice W9–W12 (your assignments first)</li>
-          <li>Afternoon: sit mock Paper 1 (your run) on the 3-hour timer</li>
-          <li>Evening: review your mistakes, then sit Paper 2 if you have time</li>
+          <li>Afternoon: sit mock Paper 1 (your run) in exam mode on the 3-hour timer</li>
+          <li>Evening: review your mistakes, then do Paper 2 in practice mode</li>
           <li>Read the traps list, then sleep</li>
         </ul>
       </div>
@@ -731,10 +738,13 @@ cache: address bits = tag + index + offset
     <div class="sec-head">
       <p class="eyebrow">Most repeated</p>
       <h2>Questions that keep coming back</h2>
-      <p>I compared five runs: 2019, Jul–Oct 2023 (NPTEL's official solutions), the 2024–25 compilation, Jan–Apr 2026 and your Jul–Oct 2026 run. Each row is one idea, ranked by how many runs asked it. Filled boxes show which runs. <span class="xr">Same wording</span> marks questions your run repeated almost word for word from Jan–Apr 2026.</p>
+      <p>I compared five runs: 2019, Jul–Oct 2023 (NPTEL's official solutions), the 2024–25 compilation, Jan–Apr 2026 and your Jul–Oct 2026 run. Each card is one idea that keeps coming back, written as an exam-style MCQ and ranked by how many runs asked it. Pick an answer to see if you're right, then read the key idea. Filled boxes show which runs asked it. <span class="xr">Same wording</span> marks questions your run repeated almost word for word from Jan–Apr 2026.</p>
     </div>
     <div class="actions">
-      <button class="btn" id="cover" type="button" aria-pressed="false">Hide answers to test yourself</button>
+      <div class="left">
+        <button class="btn" id="repreveal" type="button" aria-pressed="false">Show all answers</button>
+        <button class="btn" id="represet" type="button">Reset answers</button>
+      </div>
       <p class="score" id="repcount"></p>
     </div>
     <div id="replist"></div>
@@ -768,7 +778,8 @@ cache: address bits = tag + index + offset
     <div class="sec-head">
       <p class="eyebrow">Full mock exams</p>
       <h2>Sit a full paper under exam conditions</h2>
-      <p>NPTEL never publishes its past proctored papers, so each paper here is built from one source of previous assignments. Every paper has 50 questions covering all 12 weeks, at 2 marks each, on a 3-hour timer, and shows no answers until you submit. NPTEL doesn't publish the real question count either, only that the exam is 3 hours of MCQs. The pass line shown is the certificate rule: exam ≥ 30/75, which is ≥ 40/100 raw. A paper in progress survives a page reload, and the clock keeps running.</p>
+      <p>NPTEL never publishes its past proctored papers, so each paper here is built from one source of previous assignments: 50 questions covering all 12 weeks, 2 marks each, on a 3-hour timer. You get your final score, a week-by-week breakdown and a review of every miss at the end. NPTEL doesn't publish the real question count either, only that the exam is 3 hours of MCQs. The pass line shown is the certificate rule: exam ≥ 30/75, which is ≥ 40/100 raw. A paper in progress survives a page reload, and the clock keeps running.</p>
+      <p><b>Practice mode</b> marks each answer right or wrong as you go and has a <b>Reveal answer</b> button (a revealed question counts as wrong). <b>Exam mode</b> works like the real exam: no answers until you finish.</p>
     </div>
     <div id="mockroot"></div>
   </div>
@@ -1501,106 +1512,164 @@ render();
   paint();
 })();
 
-/* ---------- Most repeated ---------- */
-const RUNS = [["19","2019"],["23","2023"],["24","24–25"],["26a","Jan 26"],["26b","Your run"]];
-const REP = [
-{w:"W1", q:"Which service model is Google Docs / Sheets / Slides / Gmail? Which is EC2?", a:"Google's apps and Gmail are SaaS. EC2 VMs where you manage the OS are IaaS.", r:["19","23","24","26a","26b"]},
-{w:"W6", q:"Which security property does this attack break? (fabrication, interception, replay, phishing, fake login page, a bug that changes data)", a:"Fabrication, replay and a fake portal break authenticity. Interception breaks confidentiality. Modification, including a buggy update, breaks integrity. Interruption/DoS breaks availability.", r:["19","23","24","26a","26b"]},
-{w:"W7·9", q:"Fog computing: which devices are fog nodes, and what does fog improve?", a:"Routers, switches, base stations and Wi-Fi gateways. Fog gives lower latency, location awareness and less congestion. It is one hop from users; the cloud is multi-hop.", r:["19","23","24","26a","26b"]},
-{w:"W3·5", q:"SLA availability numerical: hours per day × days, outages given; find allowed downtime or which outage breaks the SLA", a:"Availability = 1 − downtime/uptime (Lecture 11). Allowed downtime ≈ (1 − SLA%) × scheduled hours, e.g. 99% of 12 h × 30 days = 3.6 h.", r:["23","24","26a","26b"]},
-{w:"W3·5", q:"Cloud vs owning: peak P, average A, utility premium U, or a demand curve D(t)", a:"Cloud is cheaper when U < P/A. With D(t): own = P × B × T, cloud = ∫C·D(t)dt; solve for T.", r:["19","23","24","26b"]},
-{w:"W10", q:"VM migration time for memory M over bandwidth B", a:"Non-live: total time = downtime = M/B with 1 GB = 1024 MB. 32 GB at 16 MB/s ≈ 34 min; 1024 GB at 16 MB/s ≈ 18 h.", r:["23","24","26a","26b"]},
-{w:"W5", q:"How many HDFS blocks or map tasks?", a:"Blocks = ceil(size ÷ block size) per file; one map task per block (700 MB at 128 MB → 6). Bigger blocks mean fewer mappers.", r:["19","24","26a","26b"]},
-{w:"W7·12", q:"What mobile cloud computing does for a phone, and what it can't do", a:"Offloads heavy work, saves battery, adds storage, scales on demand. It never removes wireless delay. Its parts are the Profiler, Solver and Synchronizer.", r:["19","23","26a","26b"], x:1},
-{w:"W7", q:"Why use a cloudlet?", a:"A small data center one hop away over Wi-Fi or short-range radio, for low-latency work such as AR. 'Multi-hop' is the trap.", r:["23","24","26a","26b"]},
-{w:"W8·10", q:"Docker: who builds, who stores, what runs?", a:"The daemon (Docker Engine) builds images and runs containers; Docker Hub or a private registry stores images. docker build → image → docker run → container.", r:["23","24","26a","26b"]},
-{w:"W8·10", q:"Containers vs VMs", a:"Containers share the host kernel (no full guest OS): higher density, weaker isolation. VMs reach hardware through a hypervisor and run their own kernel.", r:["23","24","26a","26b"]},
-{w:"W10", q:"Live migration: pre-copy vs post-copy, dirty pages", a:"Both are live. Pre-copy copies memory in rounds and uses the most bandwidth; a high dirty-page rate makes it longer. Post-copy starts the VM at the destination and pulls pages on demand.", r:["23","24","26a","26b"]},
-{w:"W9", q:"Cloud federation: types, benefits, trust", a:"Loosely, partially (agreement on terms) and tightly coupled (cross-site networks, VM migration); the aggregated architecture pools resources. Benefits: maximum utilization, minimum power. Trust comes from federated identity and enforced SLAs.", r:["23","24","26a","26b"]},
-{w:"W3·4", q:"OpenStack: which service does what?", a:"Nova = compute + ephemeral storage (its scheduler picks the host). Cinder = persistent block. Swift = object. Keystone = identity. Neutron = networking, DHCP, routing. vCPUs = physical × overcommit.", r:["19","23","26a","26b"]},
-{w:"W4", q:"Which GCP service fits the scenario?", a:"Spanner = global relational. Bigtable = huge IoT writes. BigQuery = analytics warehouse. Cloud Run = containers without a cluster. App Engine = PaaS.", r:["19","23","26a","26b"]},
-{w:"W1", q:"Cluster vs grid", a:"Cluster: co-located stand-alone computers, tightly coupled, one integrated resource. Grid: geographically spread, heterogeneous, many administrative domains, loosely coupled.", r:["23","24","26a","26b"]},
-{w:"W7", q:"Geospatial cloud", a:"It integrates heterogeneous back-end data services inside or outside the cloud, needs service-level interoperability, and splits rasters into tiles for parallel work (watch tile boundaries).", r:["19","23","26a","26b"]},
-{w:"W5·8", q:"Green cloud: best way to save energy", a:"Consolidate VMs onto fewer hosts and power down idle ones (energy-aware scheduling). PUE = total facility power ÷ IT power.", r:["23","24","26a","26b"]},
-{w:"W1", q:"NIST essential characteristics", a:"On-demand self-service, broad network access, resource pooling, rapid elasticity, measured service. Latency and zero downtime are not on the list.", r:["24","26a","26b"]},
-{w:"W1", q:"SOA combined with cloud gives…?", a:"XaaS (anything as a service).", r:["24","26a","26b"], x:1},
-{w:"W1", q:"Benefits of PaaS", a:"Focus on code, a managed platform with automatic updates, integrated databases and messaging, faster deployment. No root or hardware control.", r:["24","26a","26b"], x:1},
-{w:"W1", q:"Most accurate statement about virtualization", a:"VMs with different operating systems can share one physical machine at the same time.", r:["24","26a","26b"], x:1},
-{w:"W2", q:"What web services solve, and what they don't", a:"They cross firewalls over HTTP, give cross-language interoperability and discovery via UDDI; WSDL describes the interface. They don't give ultra-low latency.", r:["19","26a","26b"], x:1},
-{w:"W6", q:"Passive vs active attacks", a:"Passive: sniffing, eavesdropping, traffic analysis, release of contents. Active: replay, masquerade, session hijacking, modification, DoS.", r:["19","26a","26b"]},
-{w:"W6", q:"Authentication vs authorization (and IDS)", a:"Authentication verifies identity; authorization decides what you may do; an IDS raises alerts on suspected attacks.", r:["23","26a","26b"]},
-{w:"W3", q:"What makes a parallel database faster?", a:"Shared-nothing, multi-node parallel query execution over partitioned data.", r:["23","26a","26b"]},
-{w:"W5", q:"Power vs number of active cores", a:"More active cores draw more power; the relationship is nonlinear, and performance per watt does not follow Moore's law.", r:["24","26a","26b"]},
-{w:"W8·10", q:"Kubernetes roles", a:"Orchestrates containers at container level, not hardware. Workers are nodes; kube-scheduler places pods; etcd stores cluster state.", r:["23","26a","26b"]},
-{w:"W11", q:"FaaS limits", a:"Functions are triggered by events, not always running, and time-limited (Lambda: 15 min). Serverless = FaaS + BaaS.", r:["23","26a","26b"]},
-{w:"W11", q:"Dew computing", a:"Works offline, independent of yet collaborative with the cloud; syncs later and resolves conflicts on reconnect.", r:["23","26a","26b"]},
-{w:"W12", q:"What is real-time sensor–actuator feedback in CPS for?", a:"Closed-loop control.", r:["23","26a","26b"], x:1},
-{w:"W12", q:"Spatial cloud data and trajectories", a:"Maps, GPS points, satellite imagery. A trajectory is the time-ordered positions of a moving object. Spatial cloud offers shared resource pooling.", r:["23","26a","26b"]},
-{w:"W12", q:"V2V and mobility analytics", a:"V2V shares safety data (speed, position, braking); live analytics retimes traffic signals; an ITS's key aspect is efficient mobility.", r:["23","26a","26b"], x:1},
-{w:"W12", q:"5G eMBB", a:"Very high data rates and lower cost per bit (video, AR). mMTC = massive IoT; URLLC = low-latency control.", r:["23","26a","26b"]},
-{w:"W11", q:"Cloud data warehouses", a:"BigQuery (Google, serverless) and Redshift (AWS).", r:["23","26a","26b"]},
-{w:"W3", q:"Least likely item in an SLA", a:"The exact encryption algorithm and key-storage steps.", r:["26a","26b"], x:1},
-{w:"W3", q:"Multilevel SLA: its levels, and which one binds the provider", a:"Corporate, customer and service level; the provider is bound by the service-level SLA.", r:["26a","26b"], x:1},
-{w:"W3", q:"A reducer runs out of disk merging word counts", a:"Configure a combiner to shrink map output locally.", r:["26a","26b"], x:1},
-{w:"W9·10", q:"Many edge devices overload nearby fog nodes", a:"Load-balance across fog nodes.", r:["26a","26b"], x:1},
-{w:"W11", q:"Why serverless functions are stateless; what a cold start is", a:"Statelessness lets instances scale and run in parallel freely. A cold start is the delay of setting up an idle function's environment.", r:["26a","26b"], x:1},
-{w:"W7·9·12", q:"Edge, fog or cloud for this task?", a:"Millisecond safety (braking, ECG alerts) → edge/fog. Regional aggregation → fog. Training, history, global analytics → cloud. By distance: edge → fog → cloud.", r:["26a","26b"]},
-{w:"W6", q:"Data location and vendor lock-in", a:"Data stored or replicated abroad is a data-location risk. Lock-in is a long-term viability risk, reduced by open standards.", r:["26a","26b"]},
-{w:"W2", q:"Para vs full virtualization; Type-1 vs Type-2", a:"Para modifies the guest (hypercalls); full runs it unmodified (VT-x/AMD-V). Type-1 is bare metal (ESXi, Xen); Type-2 runs on a host OS (VirtualBox).", r:["26a","26b"]},
-{w:"W8", q:"Docker volumes after the container is deleted", a:"Named volumes keep the data; the container's writable layer is lost.", r:["26a","26b"]},
-{w:"W8", q:"PUE, IoT building blocks, sensor cloud, vehicular cloud", a:"PUE = total facility ÷ IT power. IoT = things, gateway, network & cloud. Sensor cloud shares WSNs among many users. Vehicles lending compute = IaaS.", r:["23","24"]},
-{w:"W5", q:"Resource-management approaches by category", a:"RL control policy and web-service prototype → adaptation. Network queueing → provisioning. Multi-agent and energy-aware → allocation.", r:["23","24"]},
-{w:"W5", q:"MapReduce: count 5-star ratings per restaurant", a:"Map emits (key, 1) only for matching rows; the reducer sums per key; keys with no matches don't appear.", r:["23","24"]},
-{w:"W3", q:"KPI, SLO and SLA", a:"KPIs aggregate into SLOs; the SLA, a formal provider–consumer contract, contains the SLOs.", r:["23","24"]}
-];
+/* ---------- Shared helpers ---------- */
+function loadJSON(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
+function saveJSON(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function same(a, b) { return a.slice().sort().join() === b.slice().sort().join(); }
+function armButton(btn, label, armedLabel, action) {
+  let t = null;
+  btn.addEventListener("click", () => {
+    if (!t) { btn.textContent = armedLabel; t = setTimeout(() => { t = null; btn.textContent = label; }, 3000); return; }
+    clearTimeout(t); t = null; btn.textContent = label; action();
+  });
+}
+function optionButton(k, text) {
+  const b = el("button", "opt"); b.type = "button";
+  b.append(el("span", "key", LET[k]), el("span", null, text));
+  return b;
+}
+function whyBox(ans, label, text) {
+  const why = el("p", "why");
+  why.append(el("b", null, "Answer " + ans.map(a => LET[a]).join(", ")));
+  if (label) why.append(el("b", null, label));
+  why.append(document.createTextNode(text || ""));
+  return why;
+}
 
+/* ---------- Most repeated (as MCQs) ---------- */
+const RUNS = [["19","2019"],["23","2023"],["24","24–25"],["26a","Jan 26"],["26b","Your run"]];
+// w = week, r = runs that asked the idea, x = same wording in your run, q/o/k = the MCQ, e = key idea
+const REP = [
+{w:"W1", r:["19","23","24","26a","26b"], q:"Google Docs used in a browser, with nothing to install or manage, is an example of:", o:["SaaS","PaaS","IaaS","FaaS"], k:[0], e:"Google's apps and Gmail are SaaS. EC2 VMs where you manage the OS are IaaS."},
+{w:"W6", r:["19","23","24","26a","26b"], q:"An attacker sends forged messages that look as if they come from a trusted user (fabrication). Which property is attacked?", o:["Confidentiality","Integrity","Availability","Authenticity"], k:[3], e:"Fabrication, replay and a fake login page break authenticity. Interception breaks confidentiality. Modification, including a buggy update, breaks integrity. Interruption/DoS breaks availability."},
+{w:"W7·9", r:["19","23","24","26a","26b"], q:"Which of these can act as fog nodes? (select all)", o:["Network routers","Cellular base stations","Wi-Fi gateways","A remote hyperscale data center"], k:[0,1,2], e:"Routers, switches, base stations and Wi-Fi gateways. Fog gives lower latency, location awareness and less congestion. It is one hop from users; the cloud is multi-hop."},
+{w:"W3·5", r:["23","24","26a","26b"], q:"An app runs 10 h/day for 30 days under a 99% availability SLA. About how much downtime is allowed?", o:["3 h","6 h","7.2 h","30 h"], k:[0], e:"Scheduled = 300 h; 1% of 300 = 3 h. Lecture 11: availability = 1 − downtime/uptime."},
+{w:"W3·5", r:["19","23","24","26b"], q:"Peak demand 300 units, average 100 units, utility premium 2.5. Which is cheaper?", o:["Cloud (pay per use)","Owning the infrastructure","They cost the same","Can't tell without D(t)"], k:[0], e:"Cloud is cheaper when U < P/A. Here P/A = 3 > 2.5. With D(t): own = P × B × T, cloud = ∫C·D(t)dt."},
+{w:"W10", r:["23","24","26a","26b"], q:"A 64 GB VM moves over a 32 MB/s link with non-live migration. Total migration time and downtime?", o:["≈34 min each","≈34 min total, ≈0 downtime","≈17 min each","≈68 min each"], k:[0], e:"64 × 1024 ÷ 32 = 2,048 s ≈ 34 min. In non-live migration, downtime = total time."},
+{w:"W5", r:["19","24","26a","26b"], q:"A 1 GB file is stored with a 128 MB HDFS block size, one map task per block. How many map tasks?", o:["4","8","9","16"], k:[1], e:"1024 ÷ 128 = 8 blocks → 8 map tasks. Bigger blocks mean fewer mappers."},
+{w:"W7·12", r:["19","23","26a","26b"], x:1, q:"Which is NOT something mobile cloud computing can do for a phone?", o:["Offload heavy computation","Save battery","Extend storage","Remove wireless network delay completely"], k:[3], e:"MCC offloads work, saves battery, adds storage and scales on demand. It never removes wireless delay. Its parts: Profiler, Solver, Synchronizer."},
+{w:"W7", r:["23","24","26a","26b"], q:"Why is a cloudlet used for AR apps on phones?", o:["It is one hop away, so latency is low","It replaces the cloud entirely","It removes the need for encryption","It is reached over many network hops"], k:[0], e:"A small data center one hop away over Wi-Fi or short-range radio. 'Multi-hop' is the trap."},
+{w:"W8·10", r:["23","24","26a","26b"], q:"Which Docker component builds images and runs containers?", o:["Docker Hub","Docker daemon (Engine)","Docker Compose","A registry"], k:[1], e:"The daemon builds and runs; Hub or a private registry stores images. docker build → image → docker run → container."},
+{w:"W8·10", r:["23","24","26a","26b"], q:"Which statement about containers and VMs is correct?", o:["Containers share the host OS kernel","Each container needs its own full guest OS","VMs share the host kernel","Containers always isolate better than VMs"], k:[0], e:"Containers share the host kernel: higher density, weaker isolation. VMs reach hardware through a hypervisor with their own kernel."},
+{w:"W10", r:["23","24","26a","26b"], q:"In which migration does the VM start at the destination first and fetch memory pages on demand?", o:["Pre-copy","Post-copy","Cold (non-live)","Offline image copy"], k:[1], e:"Both pre-copy and post-copy are live. Pre-copy copies memory in rounds (most bandwidth; dirty pages make it longer)."},
+{w:"W9", r:["23","24","26a","26b"], q:"Cross-site networks and cross-site VM migration are features of which federation?", o:["Loosely coupled","Partially coupled","Tightly coupled","Broker only"], k:[2], e:"Partially coupled = agreement on terms; aggregated architecture pools resources. Benefits: max utilization, min power. Trust via federated identity + SLAs."},
+{w:"W3·4", r:["19","23","26a","26b"], q:"Which OpenStack service provides persistent block volumes that survive VM deletion?", o:["Nova","Cinder","Swift","Keystone"], k:[1], e:"Nova = compute + ephemeral storage; Swift = object; Keystone = identity; Neutron = networking/DHCP. vCPUs = physical × overcommit."},
+{w:"W4", r:["19","23","26a","26b"], q:"Which GCP database is globally distributed and relational with strong consistency?", o:["Bigtable","Cloud Spanner","BigQuery","Firestore"], k:[1], e:"Bigtable = huge IoT writes; BigQuery = analytics warehouse; Cloud Run = containers without a cluster; App Engine = PaaS."},
+{w:"W1", r:["23","24","26a","26b"], q:"Geographically spread, heterogeneous resources across many administrative domains, loosely coupled for one big task, form a:", o:["Cluster","Grid","Node","Hypervisor"], k:[1], e:"A cluster is co-located, tightly coupled stand-alone computers managed as one resource."},
+{w:"W7", r:["19","23","26a","26b"], q:"Which interoperability level ensures information can be exchanged and consumed in a geospatial cloud?", o:["Data level","Service level","Security level","Hardware level"], k:[1], e:"Geospatial cloud integrates heterogeneous back-end services inside or outside the cloud; rasters are split into tiles for parallel work (watch tile boundaries)."},
+{w:"W5·8", r:["23","24","26a","26b"], q:"Best way to cut energy in an under-used data center while keeping SLAs:", o:["Spread VMs over all servers","Consolidate VMs and power down idle hosts","Raise CPU clock on every server","Duplicate every VM"], k:[1], e:"Energy-aware scheduling = consolidation. PUE = total facility power ÷ IT power."},
+{w:"W1", r:["24","26a","26b"], q:"Which is NOT a NIST essential characteristic of cloud computing?", o:["Resource pooling","Rapid elasticity","Measured service","Guaranteed low latency"], k:[3], e:"The five: on-demand self-service, broad network access, resource pooling, rapid elasticity, measured service."},
+{w:"W1", r:["24","26a","26b"], x:1, q:"SOA combined with cloud computing, delivering almost any IT capability as a service, is called:", o:["FaaS","XaaS","SNMP","EDI"], k:[1], e:"XaaS = anything as a service. FaaS is just one model."},
+{w:"W1", r:["24","26a","26b"], x:1, q:"Which is NOT a benefit of PaaS?", o:["Focus on application code","Managed platform with automatic updates","Full control of physical hardware","Faster deployment"], k:[2], e:"PaaS hides infrastructure; root and hardware control belong to IaaS."},
+{w:"W1", r:["24","26a","26b"], x:1, q:"Which statement about virtualization is most accurate?", o:["Every VM shares the host kernel","VMs with different OSs can run on one physical machine at once","Virtualization exists only in clouds","Virtualization prevents overcommitment"], k:[1], e:"Kernel sharing describes containers; overcommitment is a common feature."},
+{w:"W2", r:["19","26a","26b"], x:1, q:"Which problem do classic SOAP web services NOT solve?", o:["Passing firewalls over HTTP","Interoperability across languages","Service discovery via UDDI","Ultra-low-latency real-time calls"], k:[3], e:"WSDL describes the interface, UDDI finds it. XML processing adds latency."},
+{w:"W6", r:["19","26a","26b"], q:"Which of these is a passive attack?", o:["Replay","Session hijacking","Traffic analysis","Denial of service"], k:[2], e:"Passive: sniffing, eavesdropping, traffic analysis, release of contents. Active: replay, masquerade, hijacking, modification, DoS."},
+{w:"W6", r:["23","26a","26b"], q:"Authorization decides:", o:["Who the user is","What an authenticated user may do","Whether traffic is encrypted","Where data is stored"], k:[1], e:"Authentication verifies identity; an IDS raises alerts on suspected attacks."},
+{w:"W3", r:["23","26a","26b"], q:"What lets a parallel database answer big analytical queries faster?", o:["Using only SQL","Shared-nothing parallel execution across nodes","Removing indexes","Keeping all data on one server"], k:[1], e:"Tables are partitioned across nodes and queried in parallel."},
+{w:"W5", r:["24","26a","26b"], q:"A server switches on more CPU cores for a traffic spike. Its power draw:", o:["Falls","Stays the same","Rises (and not linearly)","Depends only on RAM"], k:[2], e:"Performance per watt doesn't follow Moore's law; power vs cores is nonlinear."},
+{w:"W8·10", r:["23","26a","26b"], q:"Which is NOT a Kubernetes job?", o:["Scheduling pods onto nodes","Restarting failed containers","Hardware virtualization with a hypervisor","Scaling replicas"], k:[2], e:"Kubernetes works at container level. Workers are nodes; kube-scheduler places pods; etcd stores state."},
+{w:"W11", r:["23","26a","26b"], q:"The maximum run time of a single AWS Lambda invocation is:", o:["5 min","15 min","1 hour","Unlimited"], k:[1], e:"FaaS functions are event-triggered, not always running, and time-limited. Serverless = FaaS + BaaS."},
+{w:"W11", r:["23","26a","26b"], q:"Which describes dew computing?", o:["Needs a permanent cloud connection","Works offline and syncs with the cloud later","Replaces the cloud entirely","Only stores data, never computes"], k:[1], e:"Independent of, yet collaborative with, the cloud; conflicts are resolved on reconnect."},
+{w:"W12", r:["23","26a","26b"], x:1, q:"Real-time sensor-to-actuator feedback in a cyber-physical system is for:", o:["Data archiving","Closed-loop control","Batch processing","Static analysis"], k:[1], e:"Sensing → computation → actuation in a loop."},
+{w:"W12", r:["23","26a","26b"], q:"A time-ordered sequence of positions of a moving object is a:", o:["Time series","Spatial trajectory","Road topology","Spatial index"], k:[1], e:"Spatial cloud handles maps, GPS and satellite data with shared resource pooling."},
+{w:"W12", r:["23","26a","26b"], x:1, q:"The main goal of V2V communication is:", o:["Internet access in cars","Sharing safety data like speed, position and braking","Infotainment","Uploading to cloud storage"], k:[1], e:"Live mobility analytics retimes traffic signals; an ITS's key aspect is efficient mobility."},
+{w:"W12", r:["23","26a","26b"], q:"Streaming very high-resolution video and AR to phones fits which 5G category?", o:["eMBB","mMTC","URLLC","NFC"], k:[0], e:"eMBB = high data rates, lower cost per bit. mMTC = massive IoT; URLLC = low-latency control."},
+{w:"W11", r:["23","26a","26b"], q:"Amazon's managed cloud data warehouse is:", o:["BigQuery","Redshift","Bigtable","DynamoDB"], k:[1], e:"BigQuery is Google's serverless warehouse."},
+{w:"W3", r:["26a","26b"], x:1, q:"Least likely to be written into an operational cloud SLA:", o:["Recovery Time Objective","Mean Time To Repair","Exact encryption algorithm and key-storage steps","Downtime penalty / credit"], k:[2], e:"SLAs state service outcomes, not implementation details."},
+{w:"W3", r:["26a","26b"], x:1, q:"Corporate SLA 95%, customer SLA 98%, service-level SLA 99.9%. Which binds the provider after an outage?", o:["Corporate","Customer","Service level","Whichever is lowest"], k:[2], e:"Multilevel SLA = corporate + customer + service level; the most specific one binds."},
+{w:"W3", r:["26a","26b"], x:1, q:"A word-count reducer runs out of disk while merging intermediate data. Best fix?", o:["Rewrite the mapper","Configure a combiner","Add network bandwidth","Use fewer reducers"], k:[1], e:"A combiner pre-aggregates map output locally."},
+{w:"W9·10", r:["26a","26b"], x:1, q:"Many edge devices overload nearby fog nodes. Key strategy?", o:["Bigger storage on one node","Static task allocation","Load balancing across fog nodes","Send everything to the cloud"], k:[2], e:"Spread tasks across fog nodes to keep latency low."},
+{w:"W11", r:["26a","26b"], x:1, q:"Why are serverless functions designed to be stateless?", o:["To save electricity","So instances can scale and run in parallel freely","Because local storage is unlimited","To avoid APIs"], k:[1], e:"A cold start is the delay of setting up an idle function's environment."},
+{w:"W7·9·12", r:["26a","26b"], q:"An autonomous car must brake the instant it detects an obstacle. Where should detection run?", o:["Cloud","Fog","Edge","Data warehouse"], k:[2], e:"Millisecond safety → edge/fog; regional aggregation → fog; training and history → cloud. Order by distance: edge → fog → cloud."},
+{w:"W6", r:["26a","26b"], q:"Backups are silently replicated to another country. Which risk is this?", o:["Data location","Recovery","Resource pooling","Virtualization"], k:[0], e:"Vendor lock-in is a long-term viability risk, reduced by open standards."},
+{w:"W2", r:["26a","26b"], q:"In para-virtualization, the guest OS:", o:["Runs unmodified","Is modified to make hypercalls","Shares the host kernel","Needs no hypervisor"], k:[1], e:"Full virtualization runs the guest unmodified (VT-x/AMD-V). Type-1 = bare metal (ESXi, Xen); Type-2 = on a host OS (VirtualBox)."},
+{w:"W8", r:["26a","26b"], q:"A container is deleted, but its data was in a named volume. The data:", o:["Is deleted too","Stays in the volume","Becomes an image","Comes back only on restart"], k:[1], e:"Volumes outlive containers; the writable layer does not."},
+{w:"W8", r:["23","24"], q:"Power Usage Effectiveness (PUE) is:", o:["IT power ÷ total facility power","Total facility power ÷ IT power","IT power × total power","Cooling power ÷ IT power"], k:[1], e:"IoT = things, gateway, network & cloud. Sensor cloud shares WSNs among users. Vehicles lending compute = IaaS."},
+{w:"W5", r:["23","24"], q:"A reinforcement-learning guided control policy is a resource ______ approach.", o:["provisioning","allocation","adaptation","mapping"], k:[2], e:"Network queueing → provisioning; multi-agent and energy-aware → allocation; web-service prototype → adaptation."},
+{w:"W5", r:["23","24"], q:"Map input (user, shop, stars): (u1,A,5) (u2,A,4) (u3,B,5) (u4,A,5). The reducer counts 5-star ratings per shop. Output?", o:["<A,2> <B,1>","<A,3> <B,1>","<A,2>","<A,5> <B,5>"], k:[0], e:"Map emits (shop, 1) only for 5-star rows; the reducer sums per key."},
+{w:"W3", r:["23","24"], q:"Multiple KPIs are aggregated into a(n):", o:["SLA","SLO","Invoice","RTO"], k:[1], e:"KPIs → SLOs; the SLA (formal provider–consumer contract) contains the SLOs."}
+];
+const REP_KEY = KEY + "-rep";
+let repStore = loadJSON(REP_KEY, {});
+let repReveal = false;
+
+function repCard(i, rank) {
+  const it = REP[i];
+  const multi = it.k.length > 1;
+  const st = repStore[i] || { sel: [], done: false };
+  const show = st.done || repReveal;
+  const c = el("article", "q"); c.id = "rep" + i; c.dataset.rank = rank;
+  const meta = el("div", "q-meta");
+  meta.append(el("span", "rkn", "#" + String(rank).padStart(2, "0")), el("span", null, it.w));
+  const strip = el("span", "strip");
+  RUNS.forEach(([code, label]) => { const s = el("span", it.r.includes(code) ? "on" : null, label); strip.appendChild(s); });
+  meta.appendChild(strip);
+  if (it.x) meta.appendChild(el("span", "xr", "Same wording"));
+  meta.appendChild(el("span", null, multi ? "Select all that apply" : "One answer"));
+  c.append(meta, el("p", "q-text", it.q));
+  const ob = el("div", "opts");
+  it.o.forEach((o, k) => {
+    const b = optionButton(k, o);
+    const picked = st.sel.includes(k);
+    b.setAttribute("aria-pressed", String(picked && !show));
+    if (show) { b.disabled = true; if (it.k.includes(k)) b.classList.add("correct"); else if (picked) b.classList.add("wrong"); }
+    else b.addEventListener("click", () => repPick(i, k));
+    ob.appendChild(b);
+  });
+  c.appendChild(ob);
+  const foot = el("div", "q-foot");
+  if (multi && !show) {
+    const chk = el("button", "btn primary", "Check"); chk.type = "button"; chk.disabled = st.sel.length === 0;
+    chk.addEventListener("click", () => repCheck(i));
+    foot.appendChild(chk);
+  }
+  if (st.done) foot.appendChild(el("span", "verdict " + (st.ok ? "ok" : "no"), st.ok ? "Correct" : "Not quite"));
+  if (foot.childNodes.length) c.appendChild(foot);
+  if (show) c.appendChild(whyBox(it.k, "Key idea", it.e));
+  return c;
+}
+function repRedraw(i) { const old = document.getElementById("rep" + i); if (old) old.replaceWith(repCard(i, Number(old.dataset.rank))); repScore(); }
+function repPick(i, k) {
+  const it = REP[i]; const st = repStore[i] || { sel: [], done: false };
+  if (st.done) return;
+  if (it.k.length === 1) { st.sel = [k]; st.done = true; st.ok = k === it.k[0]; }
+  else st.sel = st.sel.includes(k) ? st.sel.filter(x => x !== k) : st.sel.concat(k);
+  repStore[i] = st; saveJSON(REP_KEY, repStore); repRedraw(i);
+}
+function repCheck(i) {
+  const st = repStore[i]; if (!st || !st.sel.length) return;
+  st.done = true; st.ok = same(st.sel, REP[i].k);
+  saveJSON(REP_KEY, repStore); repRedraw(i);
+}
+function repScore() {
+  let done = 0, ok = 0;
+  REP.forEach((_, i) => { const s = repStore[i]; if (s && s.done) { done++; if (s.ok) ok++; } });
+  document.getElementById("repcount").innerHTML = "<b>" + done + "</b>/" + REP.length + " answered · <b>" + ok + "</b> correct" + (done ? " (" + Math.round(ok * 100 / done) + "%)" : "") + " · " + REP.filter(it => it.x).length + " same-wording repeats";
+}
 function renderRep() {
   const root = document.getElementById("replist");
   root.innerHTML = "";
   let rank = 0;
   [5, 4, 3, 2].forEach(n => {
-    const items = REP.filter(it => it.r.length === n);
-    if (!items.length) return;
-    const g = document.createElement("div");
-    g.className = "repgroup";
-    const h = document.createElement("h3");
-    h.textContent = n === 5 ? "Asked in all 5 runs" : "Asked in " + n + " runs";
-    g.appendChild(h);
-    const ol = document.createElement("ol");
-    ol.className = "rep";
-    items.forEach(it => {
-      rank++;
-      const li = document.createElement("li");
-      li.className = "rep-item";
-      const rk = document.createElement("span"); rk.className = "rk"; rk.textContent = String(rank).padStart(2, "0");
-      const rb = document.createElement("div"); rb.className = "rb";
-      const q = document.createElement("p"); q.className = "rq"; q.textContent = it.q;
-      const a = document.createElement("p"); a.className = "ra"; a.textContent = it.a;
-      const show = document.createElement("button"); show.type = "button"; show.className = "btn show"; show.textContent = "Show answer";
-      show.addEventListener("click", () => li.classList.add("open"));
-      const m = document.createElement("div"); m.className = "rm";
-      const strip = document.createElement("span"); strip.className = "strip";
-      RUNS.forEach(([code, label]) => { const s = document.createElement("span"); s.textContent = label; if (it.r.includes(code)) s.className = "on"; strip.appendChild(s); });
-      const wk = document.createElement("span"); wk.textContent = it.w;
-      m.append(wk, strip);
-      if (it.x) { const x = document.createElement("span"); x.className = "xr"; x.textContent = "Same wording"; m.appendChild(x); }
-      rb.append(q, a, show, m);
-      li.append(rk, rb);
-      ol.appendChild(li);
-    });
-    g.appendChild(ol);
+    const ids = REP.map((_, i) => i).filter(i => REP[i].r.length === n);
+    if (!ids.length) return;
+    const g = el("div", "repgroup");
+    g.appendChild(el("h3", null, n === 5 ? "Asked in all 5 runs" : "Asked in " + n + " runs"));
+    const list = el("div", "qlist");
+    ids.forEach(i => { rank++; list.appendChild(repCard(i, rank)); });
+    g.appendChild(list);
     root.appendChild(g);
   });
-  document.getElementById("repcount").textContent = REP.length + " ideas · " + REP.filter(it => it.x).length + " repeated word for word in your run";
+  repScore();
 }
-document.getElementById("cover").addEventListener("click", e => {
-  const root = document.getElementById("replist");
-  const on = !root.classList.contains("covered");
-  root.classList.toggle("covered", on);
-  root.querySelectorAll(".rep-item.open").forEach(li => li.classList.remove("open"));
-  e.currentTarget.setAttribute("aria-pressed", String(on));
-  e.currentTarget.textContent = on ? "Show all answers" : "Hide answers to test yourself";
+document.getElementById("repreveal").addEventListener("click", e => {
+  repReveal = !repReveal;
+  e.currentTarget.setAttribute("aria-pressed", String(repReveal));
+  e.currentTarget.textContent = repReveal ? "Hide answers" : "Show all answers";
+  renderRep();
 });
+armButton(document.getElementById("represet"), "Reset answers", "Tap again to clear", () => { repStore = {}; saveJSON(REP_KEY, repStore); renderRep(); });
 renderRep();
 
 /* ---------- Mock exams ---------- */
@@ -1611,10 +1680,10 @@ const PAPERS = [
   { id: "p4", name: "Paper 4", src: "Past runs, set C (2019 – Jan 2026)", note: "No overlap with sets A or B" },
   { id: "rand", name: "Random paper", src: "New mix from all 361 questions", note: "Different every time" }
 ];
-const EXAM_KEY = KEY + "-exam", BEST_KEY = KEY + "-best";
-function loadJSON(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
-function saveJSON(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+const MODES = { learn: "Practice mode", exam: "Exam mode" };
+const EXAM_KEY = KEY + "-exam", BEST_KEY = KEY + "-best2";
 let exam = loadJSON(EXAM_KEY, null);
+if (exam) { exam.mode = exam.mode || "exam"; exam.lock = exam.lock || {}; exam.rev = exam.rev || {}; exam.flag = exam.flag || {}; }
 let best = loadJSON(BEST_KEY, {});
 let reviewAll = false;
 
@@ -1649,44 +1718,39 @@ function buildPaper(id) {
   return shuf(pick.concat(extra), rng(seed + 101 + slot));
 }
 
-function same(a, b) { return a.slice().sort().join() === b.slice().sort().join(); }
 function fmt(sec) { sec = Math.max(0, Math.round(sec)); const h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60), s = sec % 60; return h + ":" + String(m).padStart(2, "0") + ":" + String(s).padStart(2, "0"); }
 function remaining() { return exam ? exam.dur - (Date.now() - exam.start) / 1000 : 0; }
 function paperName(id) { const p = PAPERS.find(p => p.id === id); return p ? p.name + " · " + p.src : id; }
+function isRight(ex, pos) { return !(ex.rev && ex.rev[pos]) && same(ex.ans[pos] || [], QS[ex.ids[pos]][3]); }
 function score(ex) {
-  let correct = 0;
+  let correct = 0, revealed = 0;
   const byWeek = {};
   ex.ids.forEach((qi, pos) => {
-    const ok = same(ex.ans[pos] || [], QS[qi][3]);
+    const ok = isRight(ex, pos);
     if (ok) correct++;
+    if (ex.rev && ex.rev[pos]) revealed++;
     const w = QS[qi][0];
     byWeek[w] = byWeek[w] || [0, 0];
     byWeek[w][1]++; if (ok) byWeek[w][0]++;
   });
   const raw = Math.round(correct / ex.ids.length * 100);
-  return { correct, raw, out75: raw * 0.75, pass: raw * 0.75 >= 30, byWeek };
+  return { correct, revealed, raw, out75: raw * 0.75, pass: raw * 0.75 >= 30, byWeek };
 }
 
-function startExam(id) {
-  exam = { id, ids: buildPaper(id), ans: {}, flag: {}, cur: 0, start: Date.now(), dur: 3 * 3600, done: false };
+function startExam(id, mode) {
+  exam = { id, mode, ids: buildPaper(id), ans: {}, flag: {}, lock: {}, rev: {}, cur: 0, start: Date.now(), dur: 3 * 3600, done: false };
   saveJSON(EXAM_KEY, exam); renderMock(); document.getElementById("mock").scrollIntoView();
 }
 function submitExam() {
   if (!exam || exam.done) return;
   exam.done = true; exam.end = Date.now();
   const s = score(exam);
-  const prev = best[exam.id];
-  if (!prev || s.raw > prev.raw) { best[exam.id] = { raw: s.raw, at: exam.end }; saveJSON(BEST_KEY, best); }
+  const key = exam.id + "|" + exam.mode;
+  const prev = best[key];
+  if (!prev || s.raw > prev.raw) { best[key] = { raw: s.raw, at: exam.end }; saveJSON(BEST_KEY, best); }
   saveJSON(EXAM_KEY, exam); reviewAll = false; renderMock(); document.getElementById("mock").scrollIntoView();
 }
-function armButton(btn, label, armedLabel, action) {
-  let t = null;
-  btn.addEventListener("click", () => {
-    if (!t) { btn.textContent = armedLabel; t = setTimeout(() => { t = null; btn.textContent = label; }, 3000); return; }
-    clearTimeout(t); t = null; action();
-  });
-}
-function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function persist() { saveJSON(EXAM_KEY, exam); renderMock(); }
 
 function renderMock() {
   const root = document.getElementById("mockroot");
@@ -1701,66 +1765,117 @@ function renderPapers() {
   PAPERS.forEach(p => {
     const c = el("div", "paper");
     c.append(el("p", "eyebrow", p.name), el("h3", null, p.src), el("p", "src", "50 questions · 3 hours · " + p.note));
-    const b = best[p.id];
-    const bl = el("p", "best");
-    if (b) { bl.innerHTML = "Best: <b>" + b.raw + "/100</b> (" + (b.raw * 0.75).toFixed(1) + "/75)"; } else { bl.textContent = "Not attempted yet"; }
-    const go = el("button", "btn primary", "Start paper"); go.type = "button";
-    go.addEventListener("click", () => startExam(p.id));
-    c.append(bl, go);
+    ["learn", "exam"].forEach(m => {
+      const b = best[p.id + "|" + m];
+      const bl = el("p", "best");
+      bl.append(document.createTextNode(MODES[m] + ": "));
+      if (b) bl.append(el("b", null, "best " + b.raw + "/100"), document.createTextNode(" (" + (b.raw * 0.75).toFixed(1) + "/75)"));
+      else bl.append(document.createTextNode("not attempted"));
+      c.appendChild(bl);
+    });
+    const row = el("div", "startrow");
+    const learn = el("button", "btn primary", "Practice mode"); learn.type = "button";
+    learn.addEventListener("click", () => startExam(p.id, "learn"));
+    const ex = el("button", "btn", "Exam mode"); ex.type = "button";
+    ex.addEventListener("click", () => startExam(p.id, "exam"));
+    row.append(learn, ex);
+    c.appendChild(row);
     wrap.appendChild(c);
   });
   return wrap;
 }
 
 function renderExam() {
+  const learn = exam.mode === "learn";
+  const N = exam.ids.length;
   const box = el("div", "result");
   const bar = el("div", "exambar");
-  const who = el("span", "who", paperName(exam.id));
+  const who = el("span", "who", paperName(exam.id) + " · " + MODES[exam.mode]);
   const timer = el("span", "timer"); timer.id = "timer"; timer.textContent = fmt(remaining());
-  const answered = Object.keys(exam.ans).filter(k => exam.ans[k].length).length;
-  const prog = el("span", "who", answered + "/" + exam.ids.length + " answered");
+  let progText;
+  if (learn) {
+    const checked = Object.keys(exam.lock).filter(k => exam.lock[k]).length;
+    const right = Object.keys(exam.lock).filter(k => exam.lock[k] && isRight(exam, Number(k))).length;
+    progText = checked + "/" + N + " checked · " + right + " right";
+  } else {
+    progText = Object.keys(exam.ans).filter(k => exam.ans[k].length).length + "/" + N + " answered";
+  }
+  const prog = el("span", "who", progText);
   const right = el("div", "navbtns");
   const quit = el("button", "btn", "Quit paper"); quit.type = "button";
   armButton(quit, "Quit paper", "Tap again to discard", () => { exam = null; saveJSON(EXAM_KEY, null); renderMock(); });
-  const sub = el("button", "btn primary", "Submit"); sub.type = "button";
-  armButton(sub, "Submit", "Tap again to submit", submitExam);
+  const sub = el("button", "btn primary", "Finish & see score"); sub.type = "button";
+  armButton(sub, "Finish & see score", "Tap again to finish", submitExam);
   const rd = el("div"); rd.append(quit, sub); right.appendChild(rd);
   bar.append(who, timer, prog, right);
 
   const grid = el("div", "exam-grid");
   const pos = exam.cur, qi = exam.ids[pos];
-  const [w, text, opts, ans] = QS[qi];
+  const [w, text, opts, ans, expl] = QS[qi];
   const multi = ans.length > 1;
   const sel = exam.ans[pos] || [];
+  const locked = learn && !!exam.lock[pos];
+  const revealed = !!exam.rev[pos];
   const card = el("article", "q");
   const meta = el("div", "q-meta");
-  meta.append(el("span", null, "Question " + (pos + 1) + " of " + exam.ids.length), el("span", null, w === 0 ? "Prerequisite" : "Week " + w), el("span", null, multi ? "Select all that apply" : "One answer"));
+  meta.append(el("span", null, "Question " + (pos + 1) + " of " + N), el("span", null, w === 0 ? "Prerequisite" : "Week " + w), el("span", null, multi ? "Select all that apply" : "One answer"));
   if (exam.flag[pos]) meta.appendChild(el("span", "k", "Marked for review"));
   card.append(meta, el("p", "q-text", text));
   const ob = el("div", "opts");
   opts.forEach((o, k) => {
-    const b = el("button", "opt"); b.type = "button";
-    b.append(el("span", "key", LET[k]), el("span", null, o));
-    b.setAttribute("aria-pressed", String(sel.includes(k)));
-    b.addEventListener("click", () => {
-      let s = exam.ans[pos] || [];
-      s = multi ? (s.includes(k) ? s.filter(x => x !== k) : s.concat(k)) : (s.includes(k) ? [] : [k]);
-      exam.ans[pos] = s; saveJSON(EXAM_KEY, exam); renderMock();
-    });
+    const b = optionButton(k, o);
+    if (locked) {
+      b.disabled = true;
+      if (ans.includes(k)) b.classList.add("correct"); else if (sel.includes(k)) b.classList.add("wrong");
+    } else {
+      b.setAttribute("aria-pressed", String(sel.includes(k)));
+      b.addEventListener("click", () => {
+        let s = exam.ans[pos] || [];
+        if (multi) s = s.includes(k) ? s.filter(x => x !== k) : s.concat(k);
+        else s = learn ? [k] : (s.includes(k) ? [] : [k]);
+        exam.ans[pos] = s;
+        if (learn && !multi) exam.lock[pos] = true;
+        persist();
+      });
+    }
     ob.appendChild(b);
   });
   card.appendChild(ob);
+
+  if (learn) {
+    const foot = el("div", "q-foot");
+    if (!locked) {
+      if (multi) {
+        const chk = el("button", "btn primary", "Check"); chk.type = "button"; chk.disabled = sel.length === 0;
+        chk.addEventListener("click", () => { exam.lock[pos] = true; persist(); });
+        foot.appendChild(chk);
+      }
+      const rv = el("button", "btn", "Reveal answer"); rv.type = "button";
+      rv.addEventListener("click", () => { exam.rev[pos] = true; exam.lock[pos] = true; persist(); });
+      foot.appendChild(rv);
+    } else {
+      const ok = isRight(exam, pos);
+      foot.appendChild(el("span", "verdict " + (revealed ? "rev" : ok ? "ok" : "no"), revealed ? "Revealed (counts as wrong)" : ok ? "Correct" : "Not quite"));
+    }
+    card.appendChild(foot);
+    if (locked) card.appendChild(whyBox(ans, null, expl));
+  }
+
   const nav = el("div", "navbtns");
   const left = el("div"), rgt = el("div");
   const prev = el("button", "btn", "← Previous"); prev.type = "button"; prev.disabled = pos === 0;
-  prev.addEventListener("click", () => { exam.cur--; saveJSON(EXAM_KEY, exam); renderMock(); });
+  prev.addEventListener("click", () => { exam.cur--; persist(); });
   const flag = el("button", "btn", exam.flag[pos] ? "Unmark" : "Mark for review"); flag.type = "button";
-  flag.addEventListener("click", () => { exam.flag[pos] = !exam.flag[pos]; saveJSON(EXAM_KEY, exam); renderMock(); });
-  const clr = el("button", "btn", "Clear"); clr.type = "button";
-  clr.addEventListener("click", () => { delete exam.ans[pos]; saveJSON(EXAM_KEY, exam); renderMock(); });
-  const next = el("button", "btn primary", "Next →"); next.type = "button"; next.disabled = pos === exam.ids.length - 1;
-  next.addEventListener("click", () => { exam.cur++; saveJSON(EXAM_KEY, exam); renderMock(); });
-  left.append(prev, flag, clr); rgt.append(next); nav.append(left, rgt);
+  flag.addEventListener("click", () => { exam.flag[pos] = !exam.flag[pos]; persist(); });
+  left.append(prev, flag);
+  if (!locked) {
+    const clr = el("button", "btn", "Clear"); clr.type = "button";
+    clr.addEventListener("click", () => { delete exam.ans[pos]; persist(); });
+    left.appendChild(clr);
+  }
+  const next = el("button", "btn primary", "Next →"); next.type = "button"; next.disabled = pos === N - 1;
+  next.addEventListener("click", () => { exam.cur++; persist(); });
+  rgt.append(next); nav.append(left, rgt);
   card.appendChild(nav);
 
   const side = el("div", "side");
@@ -1768,13 +1883,16 @@ function renderExam() {
   const pal = el("div", "palette");
   exam.ids.forEach((_, i) => {
     const b = el("button", "pal", String(i + 1)); b.type = "button";
-    if ((exam.ans[i] || []).length) b.classList.add("ans");
+    if (learn && exam.lock[i]) b.classList.add(exam.rev[i] ? "rev" : isRight(exam, i) ? "ok" : "no");
+    else if ((exam.ans[i] || []).length) b.classList.add("ans");
     if (exam.flag[i]) b.classList.add("flag");
     if (i === pos) { b.classList.add("cur"); b.setAttribute("aria-current", "true"); }
-    b.addEventListener("click", () => { exam.cur = i; saveJSON(EXAM_KEY, exam); renderMock(); });
+    b.addEventListener("click", () => { exam.cur = i; persist(); });
     pal.appendChild(b);
   });
-  const lg = el("p", "legend"); lg.innerHTML = "<span>Blue = answered</span><span>Amber underline = marked</span><span>Outline = current</span>";
+  const lg = el("p", "legend");
+  const items = learn ? ["Green = right", "Red = wrong", "Amber = revealed", "Blue = picked, not checked", "Outline = current"] : ["Blue = answered", "Amber underline = marked", "Outline = current"];
+  items.forEach(t => lg.appendChild(el("span", null, t)));
   side.append(pal, lg);
   grid.append(card, side);
   box.append(bar, grid);
@@ -1784,14 +1902,15 @@ function renderExam() {
 function renderResult() {
   const s = score(exam);
   const box = el("div", "result");
-  box.appendChild(el("p", "eyebrow", paperName(exam.id) + " · submitted"));
+  box.appendChild(el("p", "eyebrow", paperName(exam.id) + " · " + MODES[exam.mode] + " · finished"));
   const tiles = el("div", "tiles");
   const t = (v, l) => { const d = el("div", "tile"); d.append(el("span", "l", l), el("span", "v", v)); return d; };
   const used = Math.min(exam.dur, ((exam.end || Date.now()) - exam.start) / 1000);
-  tiles.append(t(s.raw + "/100", "Raw score"), t(s.out75.toFixed(1) + "/75", "Exam component"), t(s.correct + "/" + exam.ids.length, "Correct"), t(fmt(used), "Time used"));
+  tiles.append(t(s.raw + "/100", "Final score"), t(s.out75.toFixed(1) + "/75", "Exam component"), t(s.correct + "/" + exam.ids.length, "Correct"), t(fmt(used), "Time used"));
+  if (s.revealed) tiles.appendChild(t(String(s.revealed), "Answers revealed"));
   const verdict = el("p");
-  const pill = el("span", "pill " + (s.pass ? "ok" : "no"), s.pass ? "Above the pass line" : "Below the pass line");
-  verdict.append(pill, document.createTextNode(s.pass ? "  You need ≥ 30/75 in the exam; you have " + s.out75.toFixed(1) + "." : "  You need ≥ 30/75 (40/100 raw). Review the misses below and retake."));
+  verdict.append(el("span", "pill " + (s.pass ? "ok" : "no"), s.pass ? "Above the pass line" : "Below the pass line"),
+    document.createTextNode(s.pass ? "  You need ≥ 30/75 in the exam; you have " + s.out75.toFixed(1) + "." : "  You need ≥ 30/75 (40/100 raw). Review the misses below and retake."));
 
   const wk = el("div", "tbl");
   const tb = document.createElement("table");
@@ -1808,7 +1927,7 @@ function renderResult() {
   const acts = el("div", "navbtns");
   const a1 = el("div");
   const again = el("button", "btn primary", "Retake this paper"); again.type = "button";
-  again.addEventListener("click", () => startExam(exam.id));
+  again.addEventListener("click", () => startExam(exam.id, exam.mode));
   const back = el("button", "btn", "Back to papers"); back.type = "button";
   back.addEventListener("click", () => { exam = null; saveJSON(EXAM_KEY, null); renderMock(); });
   const tog = el("button", "btn", reviewAll ? "Show only mistakes" : "Show all questions"); tog.type = "button";
@@ -1819,24 +1938,21 @@ function renderResult() {
   exam.ids.forEach((qi, pos) => {
     const [w, text, opts, ans, expl] = QS[qi];
     const mineSel = exam.ans[pos] || [];
-    const ok = same(mineSel, ans);
+    const ok = isRight(exam, pos);
     if (ok && !reviewAll) return;
     const c = el("article", "q");
     const meta = el("div", "q-meta");
     meta.append(el("span", null, "Q" + (pos + 1)), el("span", null, w === 0 ? "Prerequisite" : "Week " + w));
-    const v = el("span", "verdict " + (ok ? "ok" : "no"), ok ? "Correct" : (mineSel.length ? "Wrong" : "Not answered"));
-    meta.appendChild(v);
+    const label = exam.rev[pos] ? "Revealed" : ok ? "Correct" : (mineSel.length ? "Wrong" : "Not answered");
+    meta.appendChild(el("span", "verdict " + (exam.rev[pos] ? "rev" : ok ? "ok" : "no"), label));
     c.append(meta, el("p", "q-text", text));
     const ob = el("div", "opts");
     opts.forEach((o, k) => {
-      const b = el("button", "opt"); b.type = "button"; b.disabled = true;
-      b.append(el("span", "key", LET[k]), el("span", null, o));
+      const b = optionButton(k, o); b.disabled = true;
       if (ans.includes(k)) b.classList.add("correct"); else if (mineSel.includes(k)) b.classList.add("wrong");
       ob.appendChild(b);
     });
-    const why = el("p", "why");
-    why.append(el("b", null, "Answer " + ans.map(a => LET[a]).join(", ")), document.createTextNode(expl || ""));
-    c.append(ob, why);
+    c.append(ob, whyBox(ans, null, expl));
     list.appendChild(c);
   });
   if (!list.childNodes.length) list.appendChild(el("p", "callout", "No mistakes on this paper."));
