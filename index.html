@@ -64,7 +64,8 @@ p{margin:0}
 
 /* tabs */
 .tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
-.tabs .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+.tabs .wrap{padding-block:10px}
+.tablist{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin-right:150px}
 .tabs a{flex:none;font-family:var(--mono);font-size:.82rem;text-decoration:none;color:var(--ink);padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
 .tabs a:hover{border-color:var(--accent);color:var(--accent)}
 
@@ -207,14 +208,25 @@ th{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:
 footer .wrap{padding-block:28px;color:var(--muted);font-size:.86rem}
 @media (prefers-reduced-motion: reduce){*{scroll-behavior:auto!important;transition:none!important}}
 html{scroll-behavior:smooth}
-.tabs .themebtn{flex:none;margin-left:auto;display:inline-flex;align-items:center;gap:6px;font:inherit;font-family:var(--mono);font-size:.82rem;cursor:pointer;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--accent)}
-.tabs .themebtn svg{width:15px;height:15px}
+/* theme toggle: fixed in the top-right corner, aligned with the content column; the tab strip reserves room for it */
+.themebtn{position:fixed;z-index:30;top:calc(env(safe-area-inset-top,0px) + 10px);right:max(16px, calc((100vw - 72rem) / 2 + clamp(16px,4vw,40px)));display:inline-flex;align-items:center;gap:6px;font:inherit;font-family:var(--mono);font-size:.82rem;line-height:1.6;cursor:pointer;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.themebtn svg{width:15px;height:15px;flex:none}
+.themebtn:hover{background:var(--accent);color:var(--on-accent)}
+.top .eyebrow{padding-right:150px}
+@media (max-width:640px){
+  .themebtn{padding:7px 10px}
+  .themebtn span{display:none}
+  .tablist{margin-right:52px}
+  .top .eyebrow{padding-right:52px}
+}
 </style>
 <script>
 try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 === "dark") document.documentElement.setAttribute("data-theme", t0); } catch (e) {}
 </script>
 </head>
 <body>
+<button class="themebtn" id="theme" type="button" aria-label="Switch color theme"></button>
+
 <header class="top">
   <div class="wrap">
     <p class="eyebrow">noc26_cs150 · IIT Kharagpur · Prof. Soumya Kanti Ghosh · Jul–Oct 2026</p>
@@ -230,7 +242,7 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
 </header>
 
 <nav class="tabs" aria-label="Sections">
-  <div class="wrap">
+  <div class="wrap"><div class="tablist">
     <a href="#plan">3-day plan</a>
     <a href="#formulas">Numericals</a>
     <a href="#notes">Week notes</a>
@@ -240,8 +252,7 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
     <a href="#traps">Last-minute traps</a>
     <a href="#videos">Videos</a>
     <a href="#sources">Sources</a>
-    <button class="themebtn" id="theme" type="button" aria-label="Switch color theme"></button>
-  </div>
+  </div></div>
 </nav>
 
 <main>
