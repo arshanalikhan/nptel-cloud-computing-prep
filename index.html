@@ -209,6 +209,83 @@ a.btn{text-decoration:none;display:inline-flex;align-items:center}
 .kitcard p{color:var(--muted);font-size:.92rem}
 .kitcard .go{font-family:var(--mono);font-size:.8rem;color:var(--accent);padding-top:4px}
 
+/* app layout: sidebar on desktop, top bar + bottom tabs on phones */
+.sidebar{position:fixed;top:0;bottom:0;left:0;width:248px;z-index:25;display:flex;flex-direction:column;gap:20px;padding:22px 14px calc(16px + env(safe-area-inset-bottom,0px));border-right:1px solid var(--line);background:var(--surface);overflow-y:auto}
+.sidebar .brand{padding:0 8px}
+.brand span small{display:block;font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.side-nav{display:grid;gap:2px}
+.side-nav a{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:10px;color:var(--muted);text-decoration:none;font-weight:500;font-size:.95rem;transition:background .15s,color .15s}
+.side-nav a svg{width:18px;height:18px;flex:none}
+.side-nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.side-foot{margin-top:auto;display:grid;gap:10px}
+.side-count{display:flex;align-items:baseline;gap:8px;padding:12px 14px;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.side-count b{font-family:var(--display);font-size:1.9rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.side-count span{font-size:.8rem;color:var(--muted)}
+.sidebar .themebtn{justify-content:center;width:100%;padding:8px 12px}
+main,footer{margin-left:248px}
+.topbar,.bottombar{display:none}
+.exambar{top:calc(env(safe-area-inset-top,0px) + var(--navh,0px) + 12px)}
+@media (hover:hover){ .side-nav a:not(.on):hover{background:var(--bg);color:var(--ink)} }
+@media (max-width:1023px){
+  .sidebar{display:none}
+  main,footer{margin-left:0}
+  .topbar{display:flex;align-items:center;gap:12px;position:sticky;top:env(safe-area-inset-top,0px);z-index:25;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line);background:var(--surface)}
+  .topbar-title{flex:1;margin:0;font-family:var(--display);font-weight:700;font-size:1.15rem;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bottombar{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;position:fixed;left:0;right:0;bottom:0;z-index:25;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--surface)}
+  .bottombar a,.bottombar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:54px;padding:6px 2px;border:0;border-radius:12px;background:none;font:inherit;font-size:.7rem;font-weight:600;color:var(--muted);text-decoration:none;cursor:pointer}
+  .bottombar svg{width:22px;height:22px}
+  .bottombar .on{color:var(--accent);background:var(--accent-soft)}
+  body{padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .totop{bottom:calc(env(safe-area-inset-bottom,0px) + 86px)}
+  .exambar{top:calc(env(safe-area-inset-top,0px) + var(--navh,54px))}
+}
+/* frosted glass where supported */
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) and (background:color-mix(in srgb, red 50%, transparent)){
+  .topbar,.bottombar{background:color-mix(in srgb, var(--surface) 80%, transparent);-webkit-backdrop-filter:saturate(1.5) blur(14px);backdrop-filter:saturate(1.5) blur(14px)}
+}
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;background:rgba(4,10,14,.45)}
+.sheet[hidden]{display:none}
+.sheet-panel{width:100%;display:grid;gap:4px;padding:8px 14px calc(18px + env(safe-area-inset-bottom,0px));border-radius:20px 20px 0 0;background:var(--surface);box-shadow:0 -12px 32px rgba(0,0,0,.22);animation:sheetUp .24s cubic-bezier(.2,.7,.2,1) both}
+.sheet-grip{width:42px;height:4px;border-radius:999px;background:var(--line);justify-self:center;margin:6px 0 10px}
+.sheet a{display:flex;align-items:center;gap:14px;padding:12px;border-radius:12px;text-decoration:none;color:var(--ink)}
+.sheet a svg{width:22px;height:22px;color:var(--accent);flex:none}
+.sheet a b{display:block;font-weight:600}
+.sheet a small{display:block;color:var(--muted);font-size:.82rem}
+.sheet a.on{background:var(--accent-soft)}
+@keyframes sheetUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+
+/* page transitions (View Transitions API where available) */
+main{view-transition-name:pagebody}
+::view-transition-old(pagebody){animation:vtOut .16s ease both}
+::view-transition-new(pagebody){animation:vtIn .32s cubic-bezier(.2,.7,.2,1) both}
+@keyframes vtOut{to{opacity:0;transform:translateY(-6px)}}
+@keyframes vtIn{from{opacity:0;transform:translateY(12px)}}
+@media (prefers-reduced-motion:reduce){ ::view-transition-old(pagebody),::view-transition-new(pagebody){animation:none} .sheet-panel{animation:none} }
+
+/* home polish */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero-net{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))) and (background:color-mix(in srgb, red 50%, transparent)){
+  .countdown-card{background:color-mix(in srgb, var(--bg) 70%, transparent);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+}
+.today-focus{display:inline-flex;align-items:center;gap:10px;justify-self:start;padding:6px 12px 6px 6px;border-radius:999px;border:1px solid var(--line);background:var(--surface);text-decoration:none;color:var(--ink);font-size:.9rem}
+.today-focus .tf-l{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--accent);color:var(--on-accent)}
+.day.today{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.todaybadge{margin-left:8px;font-family:var(--mono);font-size:.66rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:999px;background:var(--accent);color:var(--on-accent);vertical-align:1px}
+.stat{grid-template-columns:64px minmax(0,1fr);align-items:center;gap:14px}
+.stat .sx{display:grid;gap:2px;min-width:0}
+.stat .v{font-size:1.75rem}
+.ring{position:relative;width:64px;height:64px;display:block}
+.ring svg:first-child{width:64px;height:64px;transform:rotate(-90deg)}
+.ring .rt{fill:none;stroke:var(--bg);stroke-width:7}
+.ring .rf{fill:none;stroke:var(--accent);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.7,.2,1)}
+.stat.good .rf{stroke:var(--ok)}
+.ring .lucide,.ring > i{position:absolute;inset:0;margin:auto;width:22px;height:22px;color:var(--accent)}
+.stat.good .ring .lucide{color:var(--ok)}
+.kitcard .ic{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:var(--accent-soft);color:var(--accent);margin-bottom:4px}
+.kitcard .ic svg{width:20px;height:20px}
+@media (prefers-reduced-motion:reduce){ .ring .rf{transition:none} }
+
 /* bottom pager and week pager */
 .pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-block:6px 40px}
 .pg{display:grid;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s}
@@ -410,42 +487,69 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
 <body>
 <button class="totop" id="totop" type="button" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 
-<nav class="tabs" aria-label="Pages">
-  <div class="wrap navrow">
-    <a class="brand" href="#home" aria-label="Home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" class="brand-bg"/><path d="M10 22h12a4.5 4.5 0 0 0 .6-9 6 6 0 0 0-11.5 1.6A3.8 3.8 0 0 0 10 22z" class="brand-fg"/></svg><span>CC Prep</span></a>
-    <div class="tablist">
-      <a href="#home" data-page="home">Home</a>
-      <a href="#notes" data-page="notes">Week notes</a>
-      <a href="#map" data-page="map">Course map</a>
-      <a href="#formulas" data-page="formulas">Numericals</a>
-      <a href="#repeated" data-page="repeated">Most repeated</a>
-      <a href="#practice" data-page="practice">Practice</a>
-      <a href="#mock" data-page="mock">Mock exams</a>
-      <a href="#traps" data-page="traps">Traps</a>
-      <a href="#resources" data-page="resources">Resources</a>
-    </div>
-    <button class="themebtn" id="theme" type="button" aria-label="Switch color theme"></button>
+<aside class="sidebar" aria-label="Pages">
+  <a class="brand" href="#home" aria-label="Home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" class="brand-bg"/><path d="M10 22h12a4.5 4.5 0 0 0 .6-9 6 6 0 0 0-11.5 1.6A3.8 3.8 0 0 0 10 22z" class="brand-fg"/></svg><span>CC Prep<small>NPTEL · noc26_cs150</small></span></a>
+  <nav class="side-nav">
+      <a href="#home" data-page="home"><i data-lucide="layout-dashboard"></i><span>Home</span></a>
+      <a href="#notes" data-page="notes"><i data-lucide="book-open"></i><span>Week notes</span></a>
+      <a href="#map" data-page="map"><i data-lucide="map"></i><span>Course map</span></a>
+      <a href="#formulas" data-page="formulas"><i data-lucide="calculator"></i><span>Numericals</span></a>
+      <a href="#repeated" data-page="repeated"><i data-lucide="repeat"></i><span>Most repeated</span></a>
+      <a href="#practice" data-page="practice"><i data-lucide="list-checks"></i><span>Practice</span></a>
+      <a href="#mock" data-page="mock"><i data-lucide="timer"></i><span>Mock exams</span></a>
+      <a href="#traps" data-page="traps"><i data-lucide="triangle-alert"></i><span>Traps</span></a>
+      <a href="#resources" data-page="resources"><i data-lucide="library"></i><span>Resources</span></a>
+  </nav>
+  <div class="side-foot">
+    <div class="side-count"><b id="sidecd">2</b><span id="sidecdl">days to the exam</span></div>
+    <button class="themebtn" type="button" aria-label="Switch color theme"></button>
   </div>
+</aside>
+
+<header class="topbar">
+  <a class="brand" href="#home" aria-label="Home"><svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" class="brand-bg"/><path d="M10 22h12a4.5 4.5 0 0 0 .6-9 6 6 0 0 0-11.5 1.6A3.8 3.8 0 0 0 10 22z" class="brand-fg"/></svg></a>
+  <p class="topbar-title" id="topTitle">Home</p>
+  <button class="themebtn" type="button" aria-label="Switch color theme"></button>
+</header>
+
+<nav class="bottombar" aria-label="Pages">
+  <a href="#home" data-page="home"><i data-lucide="layout-dashboard"></i><span>Home</span></a>
+  <a href="#notes" data-page="notes"><i data-lucide="book-open"></i><span>Notes</span></a>
+  <a href="#practice" data-page="practice"><i data-lucide="list-checks"></i><span>Practice</span></a>
+  <a href="#mock" data-page="mock"><i data-lucide="timer"></i><span>Mock</span></a>
+  <button type="button" id="moreBtn" aria-expanded="false" aria-controls="moreSheet"><i data-lucide="ellipsis"></i><span>More</span></button>
 </nav>
+<div class="sheet" id="moreSheet" hidden>
+  <div class="sheet-panel" role="dialog" aria-label="More pages">
+    <span class="sheet-grip" aria-hidden="true"></span>
+      <a href="#map" data-page="map"><i data-lucide="map"></i><span><b>Course map</b><small>All 12 weeks on one picture</small></span></a>
+      <a href="#formulas" data-page="formulas"><i data-lucide="calculator"></i><span><b>Numericals</b><small>SLA, cost, HDFS, migration formulas</small></span></a>
+      <a href="#repeated" data-page="repeated"><i data-lucide="repeat"></i><span><b>Most repeated</b><small>48 ideas asked across past runs</small></span></a>
+      <a href="#traps" data-page="traps"><i data-lucide="triangle-alert"></i><span><b>Traps</b><small>Read on exam morning</small></span></a>
+      <a href="#resources" data-page="resources"><i data-lucide="library"></i><span><b>Resources</b><small>Lectures, playlists, sources</small></span></a>
+  </div>
+</div>
 
 <main>
 <section id="home" class="page">
   <div class="wrap">
     <div class="hero">
+      <canvas class="hero-net" aria-hidden="true"></canvas>
       <div class="hero-main">
         <p class="eyebrow">noc26_cs150 · IIT Kharagpur · Prof. Soumya Kanti Ghosh · Jul–Oct 2026</p>
         <h1>Cloud Computing exam prep</h1>
         <p class="lede">Notes, a formula sheet and 361 practice questions: all 120 from your own Jul–Oct 2026 assignments with NPTEL's official answers, plus 241 built from the 2019, 2023, 2024–25 and Jan–Apr 2026 runs. Facts were checked against the official lecture transcripts.</p>
+        <a class="today-focus" id="todayFocus" href="#plan" hidden></a>
         <div class="cta">
           <a class="btn primary big" id="cta-notes" href="#notes">Start week notes</a>
           <a class="btn big" href="#mock">Take a mock paper</a>
           <a class="btn big" href="#repeated">Most repeated</a>
         </div>
       </div>
-      <div class="countdown-card" aria-live="polite"><span class="cd-num" id="cdnum">3</span><span class="cd-l" id="cdlabel">days to the exam</span><span class="cd-d">Sun 18 Oct 2026</span></div>
+      <div class="countdown-card" aria-live="polite"><span class="cd-num" id="cdnum">2</span><span class="cd-l" id="cdlabel">days to the exam</span><span class="cd-d">Sun 18 Oct 2026</span></div>
     </div>
     <dl class="ticket">
-      <div><dt>Exam</dt><dd>Sun 18 Oct 2026 <small id="countdown">3 days to go</small></dd></div>
+      <div><dt>Exam</dt><dd>Sun 18 Oct 2026 <small id="countdown">2 days to go</small></dd></div>
       <div><dt>Sessions</dt><dd>9:00–12:00 or 14:00–17:00 <small>Your slot is on the hall ticket</small></dd></div>
       <div><dt>Score</dt><dd>25% assignments + 75% exam <small>Best 8 of 12 assignments count</small></dd></div>
       <div><dt>To pass</dt><dd>Exam ≥ 30/75 <small>That is ≥ 40/100 raw, plus assignments ≥ 10/25</small></dd></div>
@@ -506,14 +610,14 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
   
     <div class="sec-head"><p class="eyebrow">Everything in this kit</p><h2>Pick a page</h2></div>
     <div class="kit">
-      <a class="kitcard" href="#notes"><span class="k">12 weeks · 20 diagrams</span><h3>Week notes</h3><p>One week at a time, each opening with a diagram of how it works.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#map"><span class="k">1 poster</span><h3>Course map</h3><p>All 12 weeks on one picture, from the data center down to devices.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#formulas"><span class="k">6 formula cards</span><h3>Numericals</h3><p>SLA downtime, cloud vs owning, HDFS blocks, migration time, overcommit.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#repeated"><span class="k">48 questions</span><h3>Most repeated</h3><p>Ideas asked in 2 to 5 past runs, as exam-style MCQs.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#practice"><span class="k">361 questions</span><h3>Practice</h3><p>Your 120 assignment questions plus 241 from older runs, by week.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#mock"><span class="k">5 papers · 50 questions each</span><h3>Mock exams</h3><p>3-hour papers in practice or exam mode, with a final score.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#traps"><span class="k">Read on exam morning</span><h3>Last-minute traps</h3><p>One-line statements the answer keys keep turning on.</p><span class="go">Open →</span></a>
-      <a class="kitcard" href="#resources"><span class="k">60 lectures · 65 PDFs</span><h3>Videos &amp; sources</h3><p>Lecture links, playlists, and where every question came from.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#notes"><span class="ic"><i data-lucide="book-open"></i></span><span class="k">12 weeks · 20 diagrams</span><h3>Week notes</h3><p>One week at a time, each opening with a diagram of how it works.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#map"><span class="ic"><i data-lucide="map"></i></span><span class="k">1 poster</span><h3>Course map</h3><p>All 12 weeks on one picture, from the data center down to devices.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#formulas"><span class="ic"><i data-lucide="calculator"></i></span><span class="k">6 formula cards</span><h3>Numericals</h3><p>SLA downtime, cloud vs owning, HDFS blocks, migration time, overcommit.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#repeated"><span class="ic"><i data-lucide="repeat"></i></span><span class="k">48 questions</span><h3>Most repeated</h3><p>Ideas asked in 2 to 5 past runs, as exam-style MCQs.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#practice"><span class="ic"><i data-lucide="list-checks"></i></span><span class="k">361 questions</span><h3>Practice</h3><p>Your 120 assignment questions plus 241 from older runs, by week.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#mock"><span class="ic"><i data-lucide="timer"></i></span><span class="k">5 papers · 50 questions each</span><h3>Mock exams</h3><p>3-hour papers in practice or exam mode, with a final score.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#traps"><span class="ic"><i data-lucide="triangle-alert"></i></span><span class="k">Read on exam morning</span><h3>Last-minute traps</h3><p>One-line statements the answer keys keep turning on.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#resources"><span class="ic"><i data-lucide="library"></i></span><span class="k">60 lectures · 65 PDFs</span><h3>Videos &amp; sources</h3><p>Lecture links, playlists, and where every question came from.</p><span class="go">Open →</span></a>
     </div>
   </div>
 </section>
@@ -1169,6 +1273,9 @@ cache: address bits = tag + index + offset
 
 <footer><div class="wrap">Made for NPTEL noc26_cs150 (Cloud Computing, Jul–Oct 2026). Check exam time and centre on your hall ticket.</div></footer>
 
+<script>window.ccIcons = function () { try { if (window.lucide) window.lucide.createIcons({ attrs: { "aria-hidden": "true" } }); } catch (e) {} };</script>
+<script async src="https://cdn.jsdelivr.net/npm/lucide@0.453.0/dist/umd/lucide.min.js" onload="ccIcons()"></script>
+<script async src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 <script>
 // Your own Jul–Oct 2026 assignments (official answers), reworded. [week, question, options, correct, explanation, kind, "y"]
 const MINE = [
@@ -1756,7 +1863,7 @@ document.getElementById("reset").addEventListener("click", e => {
 (function countdown() {
   const el = document.getElementById("countdown");
   const exam = new Date("2026-10-18T09:00:00+05:30").getTime();
-  const days = Math.ceil((exam - Date.now()) / 86400000);
+  const days = daysToExam();
   if (days > 1) el.textContent = days + " days to go";
   else if (days === 1) el.textContent = "Tomorrow";
   else if (days === 0) el.textContent = "Today";
@@ -1768,7 +1875,7 @@ render();
 
 /* ---------- Light / dark toggle ---------- */
 (function themeToggle() {
-  const btn = document.getElementById("theme");
+  const btns = [...document.querySelectorAll(".themebtn")];
   const root = document.documentElement;
   const mq = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
   const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
@@ -1780,16 +1887,19 @@ render();
   }
   function paint() {
     const dark = current() === "dark";
-    btn.innerHTML = (dark ? SUN : MOON) + "<span>" + (dark ? "Light mode" : "Dark mode") + "</span>";
-    btn.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    btns.forEach(btn => {
+      btn.innerHTML = (dark ? SUN : MOON) + "<span>" + (dark ? "Light mode" : "Dark mode") + "</span>";
+      btn.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode");
+    });
   }
-  btn.addEventListener("click", () => {
+  btns.forEach(btn => btn.addEventListener("click", () => {
     const next = current() === "dark" ? "light" : "dark";
     root.setAttribute("data-theme", next);
     try { localStorage.setItem("ccprep-theme", next); } catch (e) {}
     paint();
-  });
-  if (mq && mq.addEventListener) mq.addEventListener("change", paint);
+    document.dispatchEvent(new Event("themechange"));
+  }));
+  if (mq && mq.addEventListener) mq.addEventListener("change", () => { paint(); document.dispatchEvent(new Event("themechange")); });
   paint();
 })();
 
@@ -1797,6 +1907,8 @@ render();
 function loadJSON(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
 function saveJSON(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function daysToExam() { const ist = new Date(Date.now() + 5.5 * 3600e3); return Math.round((Date.UTC(2026, 9, 18) - Date.UTC(ist.getUTCFullYear(), ist.getUTCMonth(), ist.getUTCDate())) / 86400000); }
+const REDUCE = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 function same(a, b) { return a.slice().sort().join() === b.slice().sort().join(); }
 function armButton(btn, label, armedLabel, action) {
   let t = null;
@@ -2029,7 +2141,12 @@ function submitExam() {
   const key = exam.id + "|" + exam.mode;
   const prev = best[key];
   if (!prev || s.raw > prev.raw) { best[key] = { raw: s.raw, at: exam.end }; saveJSON(BEST_KEY, best); }
-  saveJSON(EXAM_KEY, exam); reviewAll = false; renderMock(); document.getElementById("mock").scrollIntoView();
+  saveJSON(EXAM_KEY, exam); reviewAll = false; renderMock(); window.scrollTo({ top: 0, behavior: "instant" });
+  if (s.pass && window.confetti && !REDUCE) {
+    const cs = getComputedStyle(document.documentElement);
+    const colors = ["--accent", "--ok", "--hi"].map(v => cs.getPropertyValue(v).trim()).filter(Boolean);
+    setTimeout(() => window.confetti({ particleCount: 140, spread: 80, startVelocity: 42, origin: { y: 0.3 }, colors }), 250);
+  }
 }
 function persist() { saveJSON(EXAM_KEY, exam); renderMock(); }
 // After moving to another question, bring its card into view below the sticky bars (matters on phones).
@@ -2037,7 +2154,7 @@ function focusQuestion() {
   const go = () => {
     const c = document.querySelector("#mockroot .q"); if (!c) return;
     const bar = document.querySelector(".exambar");
-    const off = (document.querySelector(".tabs") || { offsetHeight: 0 }).offsetHeight + (bar ? bar.offsetHeight : 0) + 12;
+    const off = (document.querySelector(".topbar") || { offsetHeight: 0 }).offsetHeight + (bar ? bar.offsetHeight : 0) + 12;
     const top = c.getBoundingClientRect().top;
     if (top < off || top > window.innerHeight * 0.5) window.scrollTo({ top: Math.max(0, window.scrollY + top - off), behavior: "instant" });
   };
@@ -2253,7 +2370,7 @@ function renderResult() {
 
 /* ---------- Phone helpers ---------- */
 (function phoneHelpers() {
-  const nav = document.querySelector(".tabs");
+  const nav = document.querySelector(".topbar");
   const setNavH = () => document.documentElement.style.setProperty("--navh", nav.offsetHeight + "px");
   setNavH();
   window.addEventListener("resize", setNavH);
@@ -2331,28 +2448,45 @@ function renderHome() {
   const wk = WEEK_IDS.filter(id => reviewed[id]).length;
   const nextWeek = WEEK_IDS.find(id => !reviewed[id]);
   const cards = [
-    { href: "#" + (nextWeek || curWeek), label: "Weeks reviewed", v: wk + "/12", sub: nextWeek ? "next up: week " + nextWeek.slice(1) : "all 12 done", pct: wk / 12 },
-    { href: "#practice", label: "Practice", v: done.length + "/" + QS.length, sub: done.length ? Math.round(ok * 100 / done.length) + "% correct so far" : "not started yet", pct: done.length / QS.length },
-    { href: "#repeated", label: "Most repeated", v: rdone.length + "/" + REP.length, sub: rdone.length ? Math.round(rok * 100 / rdone.length) + "% correct so far" : "not started yet", pct: rdone.length / REP.length },
-    { href: "#mock", label: "Best mock score", v: bestRaw >= 0 ? bestRaw + "/100" : "—", sub: bestRaw >= 0 ? (bestRaw >= 40 ? "above the 40/100 pass line" : "pass line is 40/100") : "no paper finished yet", pct: Math.max(0, bestRaw) / 100 }
+    { icon: "calendar-check", href: "#" + (nextWeek || curWeek), label: "Weeks reviewed", v: wk + "/12", sub: nextWeek ? "next up: week " + nextWeek.slice(1) : "all 12 done", pct: wk / 12 },
+    { icon: "list-checks", href: "#practice", label: "Practice", v: done.length + "/" + QS.length, sub: done.length ? Math.round(ok * 100 / done.length) + "% correct so far" : "not started yet", pct: done.length / QS.length },
+    { icon: "repeat", href: "#repeated", label: "Most repeated", v: rdone.length + "/" + REP.length, sub: rdone.length ? Math.round(rok * 100 / rdone.length) + "% correct so far" : "not started yet", pct: rdone.length / REP.length },
+    { icon: "timer", href: "#mock", label: "Best mock score", v: bestRaw >= 0 ? bestRaw + "/100" : "—", sub: bestRaw >= 0 ? (bestRaw >= 40 ? "above the 40/100 pass line" : "pass line is 40/100") : "no paper finished yet", pct: Math.max(0, bestRaw) / 100, good: bestRaw >= 40 }
   ];
   box.innerHTML = "";
-  const fills = [];
+  const C = 2 * Math.PI * 26, fills = [];
   cards.forEach(c => {
-    const a = el("a", "stat"); a.href = c.href;
-    a.append(el("span", "l", c.label), el("span", "v", c.v), el("span", "s", c.sub));
-    const bar = el("span", "bar"), fill = el("i");
-    bar.appendChild(fill); a.appendChild(bar); box.appendChild(a);
-    fills.push([fill, Math.round(c.pct * 100)]);
+    const a = el("a", "stat" + (c.good ? " good" : "")); a.href = c.href;
+    const ring = el("span", "ring");
+    ring.innerHTML = '<svg viewBox="0 0 64 64" aria-hidden="true"><circle class="rt" cx="32" cy="32" r="26"/><circle class="rf" cx="32" cy="32" r="26" stroke-dasharray="' + C.toFixed(2) + '" stroke-dashoffset="' + C.toFixed(2) + '"/></svg><i data-lucide="' + c.icon + '"></i>';
+    const tx = el("span", "sx");
+    tx.append(el("span", "l", c.label), el("span", "v", c.v), el("span", "s", c.sub));
+    a.append(ring, tx); box.appendChild(a);
+    fills.push([ring.querySelector(".rf"), Math.min(1, c.pct)]);
   });
-  requestAnimationFrame(() => requestAnimationFrame(() => fills.forEach(([f, p]) => { f.style.width = p + "%"; })));
+  window.ccIcons && window.ccIcons();
+  requestAnimationFrame(() => requestAnimationFrame(() => fills.forEach(([f, p]) => { f.style.strokeDashoffset = (C * (1 - p)).toFixed(2); })));
+  const ist = new Date(Date.now() + 5.5 * 3600e3).toISOString().slice(0, 10);
+  const dayIdx = ["2026-10-15", "2026-10-16", "2026-10-17", "2026-10-18"].indexOf(ist);
+  const dayCards = [...document.querySelectorAll("#home .days .day")];
+  dayCards.forEach((d, i) => {
+    d.classList.toggle("today", i === dayIdx);
+    const w = d.querySelector(".when"); let badge = w.querySelector(".todaybadge");
+    if (i === dayIdx && !badge) w.appendChild(el("span", "todaybadge", "Today"));
+    if (i !== dayIdx && badge) badge.remove();
+  });
+  const tf = document.getElementById("todayFocus");
+  if (tf) {
+    tf.hidden = dayIdx < 0;
+    if (dayIdx >= 0) { tf.innerHTML = ""; tf.append(el("span", "tf-l", "Today"), el("span", "tf-v", dayCards[dayIdx].querySelector("h3").textContent + " — see the plan")); }
+  }
   const cta = document.getElementById("cta-notes");
   if (cta) {
     const target = nextWeek || curWeek;
     cta.href = "#" + target;
     cta.textContent = wk === 0 && curWeek === "w1" ? "Start week notes" : "Continue: week " + target.slice(1);
   }
-  const days = Math.ceil((new Date("2026-10-18T09:00:00+05:30").getTime() - Date.now()) / 86400000);
+  const days = daysToExam();
   const n = document.getElementById("cdnum"), l = document.getElementById("cdlabel");
   if (n && l) {
     if (days > 1) { n.textContent = days; l.textContent = "days to the exam"; }
@@ -2395,35 +2529,104 @@ document.addEventListener("click", e => {
   e.preventDefault();
   go(h);
 });
+const MORE_PAGES = ["map", "formulas", "repeated", "traps", "resources"];
+function openSheet() { const s = document.getElementById("moreSheet"); if (!s) return; s.hidden = false; document.getElementById("moreBtn").setAttribute("aria-expanded", "true"); }
+function closeSheet() { const s = document.getElementById("moreSheet"); if (!s || s.hidden) return; s.hidden = true; document.getElementById("moreBtn").setAttribute("aria-expanded", "false"); }
+document.getElementById("moreBtn").addEventListener("click", () => { document.getElementById("moreSheet").hidden ? openSheet() : closeSheet(); });
+document.getElementById("moreSheet").addEventListener("click", e => { if (e.target.id === "moreSheet") closeSheet(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+
+function updateCountdowns() {
+  const days = daysToExam();
+  const set = (nId, lId) => {
+    const n = document.getElementById(nId), l = document.getElementById(lId); if (!n || !l) return;
+    if (days > 1) { n.textContent = days; l.textContent = "days to the exam"; }
+    else if (days === 1) { n.textContent = "1"; l.textContent = "day to the exam"; }
+    else if (days === 0) { n.textContent = "0"; l.textContent = "exam is today"; }
+    else { n.textContent = "✓"; l.textContent = "exam day has passed"; }
+  };
+  set("cdnum", "cdlabel"); set("sidecd", "sidecdl");
+}
+
+// Animated cloud ← fog ← edge network behind the home heading: data packets travel upward.
+const heroNet = (function () {
+  const cv = document.querySelector(".hero-net");
+  if (!cv || !cv.getContext) return () => {};
+  const ctx = cv.getContext("2d");
+  let raf = 0, running = false, nodes = [], links = [], packets = [], W = 0, H = 0, col = "#0b6a87", muted = "#51626c";
+  const readColor = () => { const cs = getComputedStyle(document.documentElement); col = cs.getPropertyValue("--accent").trim() || col; muted = cs.getPropertyValue("--muted").trim() || muted; };
+  function layout() {
+    const r = cv.getBoundingClientRect(); const dpr = Math.min(2, window.devicePixelRatio || 1);
+    W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // keep the network in the right-hand column, clear of the heading and intro text
+    const hm = document.querySelector(".hero-main"), cr = cv.getBoundingClientRect();
+    const x0 = hm ? hm.getBoundingClientRect().right - cr.left + 28 : W * 0.6, x1 = W - 20;
+    nodes = []; links = []; packets = [];
+    if (W < 760 || x1 - x0 < 140) return;
+    const tier = (n, y, rad) => Array.from({ length: n }, (_, i) => ({ x: x0 + (x1 - x0) * (n === 1 ? 0.5 : i / (n - 1)), y, r: rad }));
+    const c = tier(3, H * 0.14, 5), f = tier(4, H * 0.5, 3.6), e = tier(7, H * 0.86, 2.6);
+    nodes = [...c, ...f, ...e];
+    e.forEach((n, i) => links.push([n, f[Math.min(3, Math.floor(i / 2))]]));
+    f.forEach((n, i) => links.push([n, c[Math.min(2, Math.round(i * 2 / 3))]]));
+  }
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = 1;
+    ctx.globalAlpha = 0.22; links.forEach(([a, b]) => { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); });
+    ctx.globalAlpha = 0.55; nodes.forEach(n => { ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill(); });
+    if (running && links.length && packets.length < 16 && Math.random() < 0.09) packets.push({ l: links[Math.floor(Math.random() * links.length)], p: 0, s: 0.004 + Math.random() * 0.006 });
+    ctx.globalAlpha = 0.9;
+    packets = packets.filter(k => { k.p += k.s; if (k.p >= 1) return false; const [a, b] = k.l; ctx.beginPath(); ctx.arc(a.x + (b.x - a.x) * k.p, a.y + (b.y - a.y) * k.p, 2.2, 0, Math.PI * 2); ctx.fill(); return true; });
+    ctx.globalAlpha = 1;
+    if (running) raf = requestAnimationFrame(frame);
+  }
+  function start() { readColor(); layout(); if (REDUCE || !links.length) { stop(); frame(); return; } if (!running) { running = true; raf = requestAnimationFrame(frame); } }
+  function stop() { running = false; cancelAnimationFrame(raf); }
+  window.addEventListener("resize", () => { if (currentPage === "home") start(); });
+  document.addEventListener("visibilitychange", () => { if (document.hidden) stop(); else if (currentPage === "home") start(); });
+  document.addEventListener("themechange", () => { readColor(); if (!running) frame(); });
+  return on => (on ? start() : stop());
+})();
+
 function route(hIn) {
   const h = hIn == null ? hashNow() : hIn;
-  let page = h || "home", target = null;
-  if (/^w([1-9]|1[0-2])$/.test(h)) { page = "notes"; showWeek(h); }
+  let page = h || "home", target = null, week = null;
+  if (/^w([1-9]|1[0-2])$/.test(h)) { page = "notes"; week = h; }
   else if (ALIAS[h]) { [page, target] = ALIAS[h]; }
   if (!PAGE_ORDER.includes(page)) page = "home";
-  if (page === "notes" && !/^w/.test(h)) showWeek(curWeek);
-  document.querySelectorAll("main > section.page").forEach(s => {
-    const on = s.id === page;
-    if (on && (s.hidden || currentPage !== page)) { s.hidden = false; s.classList.remove("enter"); void s.offsetWidth; s.classList.add("enter"); }
-    if (!on) s.hidden = true;
-  });
-  document.querySelectorAll(".tablist a").forEach(a => {
-    const on = a.dataset.page === page;
-    a.classList.toggle("on", on);
-    if (on) { a.setAttribute("aria-current", "page"); a.scrollIntoView({ block: "nearest", inline: "center" }); }
-    else a.removeAttribute("aria-current");
-  });
-  renderPager(page);
-  if (page === "home") renderHome();
-  currentPage = page;
-  document.title = (page === "home" ? "" : PAGE_NAMES[page] + " · ") + "NPTEL Cloud Computing Prep";
-  const t = target ? document.getElementById(target) : null;
-  if (t) t.scrollIntoView(); else window.scrollTo({ top: 0, behavior: "instant" });
+  const pageChanged = currentPage !== page;
+  const useVT = pageChanged && currentPage !== null && !!document.startViewTransition && !REDUCE;
+  const apply = () => {
+    if (page === "notes") showWeek(week || curWeek);
+    document.querySelectorAll("main > section.page").forEach(s => {
+      const on = s.id === page;
+      s.hidden = !on;
+      if (on && pageChanged && !useVT) { s.classList.remove("enter"); void s.offsetWidth; s.classList.add("enter"); }
+    });
+    document.querySelectorAll("[data-page]").forEach(a => {
+      const on = a.dataset.page === page;
+      a.classList.toggle("on", on);
+      if (on) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    });
+    const mb = document.getElementById("moreBtn"); if (mb) mb.classList.toggle("on", MORE_PAGES.includes(page));
+    const tt = document.getElementById("topTitle"); if (tt) tt.textContent = PAGE_NAMES[page];
+    closeSheet();
+    renderPager(page);
+    currentPage = page;
+    if (page === "home") renderHome();
+    heroNet(page === "home");
+    document.title = (page === "home" ? "" : PAGE_NAMES[page] + " · ") + "NPTEL Cloud Computing Prep";
+    const t = target ? document.getElementById(target) : null;
+    if (t) t.scrollIntoView(); else window.scrollTo({ top: 0, behavior: "instant" });
+  };
+  if (useVT) { try { document.startViewTransition(apply); } catch (e) { apply(); } } else apply();
 }
+updateCountdowns();
 buildWeekFooters();
 window.addEventListener("hashchange", () => route());
 window.addEventListener("popstate", () => route());
 route();
+window.ccIcons && window.ccIcons();
 </script>
 </body>
 </html>
