@@ -231,7 +231,7 @@ main,footer{margin-left:248px}
   main,footer{margin-left:0}
   .topbar{display:flex;align-items:center;gap:12px;position:sticky;top:env(safe-area-inset-top,0px);z-index:25;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line);background:var(--surface)}
   .topbar-title{flex:1;margin:0;font-family:var(--display);font-weight:700;font-size:1.15rem;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .bottombar{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;position:fixed;left:0;right:0;bottom:0;z-index:25;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--surface)}
+  .bottombar{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;position:fixed;left:0;right:0;bottom:0;z-index:25;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--surface)}
   .bottombar a,.bottombar button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:54px;padding:6px 2px;border:0;border-radius:12px;background:none;font:inherit;font-size:.7rem;font-weight:600;color:var(--muted);text-decoration:none;cursor:pointer}
   .bottombar svg{width:22px;height:22px}
   .bottombar .on{color:var(--accent);background:var(--accent-soft)}
@@ -285,6 +285,24 @@ main{view-transition-name:pagebody}
 .kitcard .ic{display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:var(--accent-soft);color:var(--accent);margin-bottom:4px}
 .kitcard .ic svg{width:20px;height:20px}
 @media (prefers-reduced-motion:reduce){ .ring .rf{transition:none} }
+
+/* videos page */
+.vbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));gap:16px}
+.vcard{display:grid;gap:10px;align-content:start;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);scroll-margin-top:calc(var(--navh,0px) + 14px)}
+.vcard.focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.vhead{display:flex;align-items:center;gap:12px}
+.vhead > div{flex:1;min-width:0}
+.vhead h3{font-size:1.08rem;line-height:1.25}
+.vnum{flex:none;font-family:var(--mono);font-weight:600;font-size:.85rem;color:var(--accent);background:var(--accent-soft);border-radius:8px;padding:6px 8px}
+.vmeta{font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.vcard video{display:block;width:100%;aspect-ratio:16/9;border-radius:10px;background:#0e161b}
+.vsoon{display:grid;place-items:center;gap:6px;aspect-ratio:16/9;border-radius:10px;border:1px dashed var(--line);background:var(--bg);color:var(--muted);font-family:var(--mono);font-size:.82rem;text-align:center}
+.vsoon svg{width:26px;height:26px}
+.valt{display:flex;flex-wrap:wrap;gap:6px}
+.watchbtn{justify-self:start;gap:8px}
+.watchbtn svg{width:16px;height:16px}
+@media (max-width:360px){ .bottombar a,.bottombar button{font-size:.62rem} }
 
 /* bottom pager and week pager */
 .pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-block:6px 40px}
@@ -492,6 +510,7 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
   <nav class="side-nav">
       <a href="#home" data-page="home"><i data-lucide="layout-dashboard"></i><span>Home</span></a>
       <a href="#notes" data-page="notes"><i data-lucide="book-open"></i><span>Week notes</span></a>
+      <a href="#videos" data-page="videos"><i data-lucide="circle-play"></i><span>Videos</span></a>
       <a href="#map" data-page="map"><i data-lucide="map"></i><span>Course map</span></a>
       <a href="#formulas" data-page="formulas"><i data-lucide="calculator"></i><span>Numericals</span></a>
       <a href="#repeated" data-page="repeated"><i data-lucide="repeat"></i><span>Most repeated</span></a>
@@ -515,6 +534,7 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
 <nav class="bottombar" aria-label="Pages">
   <a href="#home" data-page="home"><i data-lucide="layout-dashboard"></i><span>Home</span></a>
   <a href="#notes" data-page="notes"><i data-lucide="book-open"></i><span>Notes</span></a>
+  <a href="#videos" data-page="videos"><i data-lucide="circle-play"></i><span>Videos</span></a>
   <a href="#practice" data-page="practice"><i data-lucide="list-checks"></i><span>Practice</span></a>
   <a href="#mock" data-page="mock"><i data-lucide="timer"></i><span>Mock</span></a>
   <button type="button" id="moreBtn" aria-expanded="false" aria-controls="moreSheet"><i data-lucide="ellipsis"></i><span>More</span></button>
@@ -611,6 +631,7 @@ try { var t0 = localStorage.getItem("ccprep-theme"); if (t0 === "light" || t0 ==
     <div class="sec-head"><p class="eyebrow">Everything in this kit</p><h2>Pick a page</h2></div>
     <div class="kit">
       <a class="kitcard" href="#notes"><span class="ic"><i data-lucide="book-open"></i></span><span class="k">12 weeks · 20 diagrams</span><h3>Week notes</h3><p>One week at a time, each opening with a diagram of how it works.</p><span class="go">Open →</span></a>
+      <a class="kitcard" href="#videos"><span class="ic"><i data-lucide="circle-play"></i></span><span class="k">12 weeks · Hinglish</span><h3>Videos</h3><p>Short narrated explainers for each week, built from past exam questions.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#map"><span class="ic"><i data-lucide="map"></i></span><span class="k">1 poster</span><h3>Course map</h3><p>All 12 weeks on one picture, from the data center down to devices.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#formulas"><span class="ic"><i data-lucide="calculator"></i></span><span class="k">6 formula cards</span><h3>Numericals</h3><p>SLA downtime, cloud vs owning, HDFS blocks, migration time, overcommit.</p><span class="go">Open →</span></a>
       <a class="kitcard" href="#repeated"><span class="ic"><i data-lucide="repeat"></i></span><span class="k">48 questions</span><h3>Most repeated</h3><p>Ideas asked in 2 to 5 past runs, as exam-style MCQs.</p><span class="go">Open →</span></a>
@@ -1086,6 +1107,18 @@ cache: address bits = tag + index + offset
 
     
     </div>
+  </div>
+</section>
+
+<section id="videos" class="page" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Videos</p>
+      <h2>Week-by-week explainers in Hinglish</h2>
+      <p>Short narrated videos built only from what past exams ask, with Hinglish captions on screen. Speed them up if you're short on time. New weeks appear here as soon as they're published.</p>
+    </div>
+    <div class="vbar"><span class="score">Playback speed</span><div class="chips" id="vspeed" role="group" aria-label="Playback speed"></div><span class="score" id="vcount"></span></div>
+    <div class="vgrid" id="vgrid"></div>
   </div>
 </section>
 
@@ -2391,9 +2424,9 @@ setInterval(() => {
 renderMock();
 
 /* ---------- Pages & routing ---------- */
-const PAGE_ORDER = ["home", "notes", "map", "formulas", "repeated", "practice", "mock", "traps", "resources"];
-const PAGE_NAMES = { home: "Home", notes: "Week notes", map: "Course map", formulas: "Numericals", repeated: "Most repeated", practice: "Practice", mock: "Mock exams", traps: "Last-minute traps", resources: "Videos & sources" };
-const ALIAS = { plan: ["home", "plan"], videos: ["resources", "videos-block"], sources: ["resources", "sources-block"], poster: ["map", null] };
+const PAGE_ORDER = ["home", "notes", "videos", "map", "formulas", "repeated", "practice", "mock", "traps", "resources"];
+const PAGE_NAMES = { home: "Home", notes: "Week notes", videos: "Videos", map: "Course map", formulas: "Numericals", repeated: "Most repeated", practice: "Practice", mock: "Mock exams", traps: "Last-minute traps", resources: "Videos & sources" };
+const ALIAS = { plan: ["home", "plan"], lectures: ["resources", "videos-block"], sources: ["resources", "sources-block"], poster: ["map", null] };
 const WEEKS_KEY = KEY + "-weeks", CURWEEK_KEY = KEY + "-curweek";
 let reviewed = loadJSON(WEEKS_KEY, {});
 let curWeek = loadJSON(CURWEEK_KEY, "w1");
@@ -2514,7 +2547,7 @@ function renderPager(page) {
 
 let currentPage = null;
 function hashNow() { try { return decodeURIComponent((location.hash || "").slice(1)); } catch (e) { return ""; } }
-function isRoute(h) { return PAGE_ORDER.includes(h) || !!ALIAS[h] || /^w([1-9]|1[0-2])$/.test(h); }
+function isRoute(h) { return PAGE_ORDER.includes(h) || !!ALIAS[h] || /^[wv]([1-9]|1[0-2])$/.test(h); }
 // Page switches never depend on the URL changing (some embedded viewers ignore hash changes);
 // the URL is updated when the browser allows it, so links and the back button still work.
 function go(h) {
@@ -2592,11 +2625,14 @@ function route(hIn) {
   const h = hIn == null ? hashNow() : hIn;
   let page = h || "home", target = null, week = null;
   if (/^w([1-9]|1[0-2])$/.test(h)) { page = "notes"; week = h; }
+  else if (/^v([1-9]|1[0-2])$/.test(h)) { page = "videos"; target = "vid-" + h.slice(1); }
   else if (ALIAS[h]) { [page, target] = ALIAS[h]; }
   if (!PAGE_ORDER.includes(page)) page = "home";
   const pageChanged = currentPage !== page;
-  const useVT = pageChanged && currentPage !== null && !!document.startViewTransition && !REDUCE;
+  const useVT = pageChanged && currentPage !== null && !!document.startViewTransition && !REDUCE && document.visibilityState === "visible";
+  let applied = false;
   const apply = () => {
+    if (applied) return; applied = true;
     if (page === "notes") showWeek(week || curWeek);
     document.querySelectorAll("main > section.page").forEach(s => {
       const on = s.id === page;
@@ -2614,14 +2650,94 @@ function route(hIn) {
     renderPager(page);
     currentPage = page;
     if (page === "home") renderHome();
+    if (page === "videos") focusVideo(target);
     heroNet(page === "home");
     document.title = (page === "home" ? "" : PAGE_NAMES[page] + " · ") + "NPTEL Cloud Computing Prep";
     const t = target ? document.getElementById(target) : null;
     if (t) t.scrollIntoView(); else window.scrollTo({ top: 0, behavior: "instant" });
   };
-  if (useVT) { try { document.startViewTransition(apply); } catch (e) { apply(); } } else apply();
+  if (useVT) {
+    // never let the animation hold up navigation: if it hasn't run shortly, switch pages directly
+    try { const vt = document.startViewTransition(apply); setTimeout(() => { if (!applied) { try { vt.skipTransition(); } catch (e) {} apply(); } }, 400); }
+    catch (e) { apply(); }
+  } else apply();
 }
 updateCountdowns();
+/* ---------- Videos ---------- */
+// One entry per week; set src/poster/dur when a week's video is published.
+const VIDEO_LIST = [
+  { w: 1, title: "Introduction to cloud computing", src: "videos/week-01.mp4", poster: "videos/week-01.jpg", dur: "4:38",
+    alt: { label: "English", src: "videos/week-01-en.mp4", dur: "3:56" } },
+  { w: 2, title: "Architecture, virtualization, XML & web services" },
+  { w: 3, title: "SLA, cloud economics, data, MapReduce & OpenStack" },
+  { w: 4, title: "OpenStack demo, Microsoft Azure & Google Cloud" },
+  { w: 5, title: "Numericals tutorials & resource management" },
+  { w: 6, title: "Cloud security" },
+  { w: 7, title: "Mobile cloud, fog computing & geospatial cloud" },
+  { w: 8, title: "Docker, green cloud, sensor & IoT cloud" },
+  { w: 9, title: "Cloud–fog–edge & cloud federation" },
+  { w: 10, title: "VM migration, containers & Kubernetes" },
+  { w: 11, title: "Dew, serverless & sustainable cloud" },
+  { w: 12, title: "5G, CPS, spatial cloud & health IoT" }
+];
+const VSPEED_KEY = KEY + "-vspeed";
+let vspeed = loadJSON(VSPEED_KEY, 1);
+function allVideos() { return [...document.querySelectorAll("#vgrid video")]; }
+function paintSpeed() {
+  const box = document.getElementById("vspeed"); box.innerHTML = "";
+  [1, 1.25, 1.5, 1.75].forEach(s => {
+    const b = el("button", "chip", s + "×"); b.type = "button"; b.setAttribute("aria-pressed", String(s === vspeed));
+    b.addEventListener("click", () => { vspeed = s; saveJSON(VSPEED_KEY, s); allVideos().forEach(v => { v.playbackRate = s; }); paintSpeed(); });
+    box.appendChild(b);
+  });
+}
+function renderVideos() {
+  const grid = document.getElementById("vgrid"); grid.innerHTML = "";
+  VIDEO_LIST.forEach(it => {
+    const c = el("article", "vcard"); c.id = "vid-" + it.w;
+    const head = el("div", "vhead");
+    const txt = el("div"); txt.append(el("h3", null, it.title), el("p", "vmeta", it.src ? it.dur + " · Hinglish" : "coming soon"));
+    const notes = el("a", "btn", "Notes"); notes.href = "#w" + it.w;
+    head.append(el("span", "vnum", "W" + it.w), txt, notes);
+    c.appendChild(head);
+    if (it.src) {
+      const v = document.createElement("video");
+      v.controls = true; v.preload = "none"; v.playsInline = true; v.src = it.src; if (it.poster) v.poster = it.poster;
+      v.addEventListener("play", () => { v.playbackRate = vspeed; allVideos().forEach(o => { if (o !== v) o.pause(); }); });
+      v.addEventListener("ratechange", () => { if ([1, 1.25, 1.5, 1.75].includes(v.playbackRate) && v.playbackRate !== vspeed) { vspeed = v.playbackRate; saveJSON(VSPEED_KEY, vspeed); paintSpeed(); } });
+      c.appendChild(v);
+      if (it.alt) {
+        const alt = el("div", "valt");
+        const mk = (label, src, dur) => { const b = el("button", "chip", label); b.type = "button"; b.setAttribute("aria-pressed", String(v.getAttribute("src") === src));
+          b.addEventListener("click", () => { v.pause(); v.src = src; txt.querySelector(".vmeta").textContent = dur + " · " + label; alt.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); }); return b; };
+        alt.append(mk("Hinglish", it.src, it.dur), mk(it.alt.label, it.alt.src, it.alt.dur));
+        c.appendChild(alt);
+      }
+    } else {
+      const s = el("div", "vsoon"); s.innerHTML = '<i data-lucide="clock"></i><span>Being made · check back soon</span>'; c.appendChild(s);
+    }
+    grid.appendChild(c);
+  });
+  const n = VIDEO_LIST.filter(x => x.src).length;
+  document.getElementById("vcount").textContent = n + " of 12 weeks published";
+  paintSpeed();
+  window.ccIcons && window.ccIcons();
+}
+function focusVideo(target) {
+  document.querySelectorAll(".vcard.focus").forEach(x => x.classList.remove("focus"));
+  const t = target && document.getElementById(target); if (t) t.classList.add("focus");
+}
+function addWatchButtons() {
+  VIDEO_LIST.filter(it => it.src).forEach(it => {
+    const body = document.querySelector("#w" + it.w + " .body"); if (!body || body.querySelector(".watchbtn")) return;
+    const a = el("a", "btn primary watchbtn"); a.href = "#v" + it.w;
+    a.innerHTML = '<i data-lucide="circle-play"></i><span></span>'; a.querySelector("span").textContent = "Watch the Week " + it.w + " video (" + it.dur + ")";
+    const h3 = body.querySelector("h3"); h3.insertAdjacentElement("afterend", a);
+  });
+}
+renderVideos();
+addWatchButtons();
+
 buildWeekFooters();
 window.addEventListener("hashchange", () => route());
 window.addEventListener("popstate", () => route());
